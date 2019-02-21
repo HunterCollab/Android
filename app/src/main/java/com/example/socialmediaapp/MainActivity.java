@@ -18,15 +18,15 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     //Variable Declarations
-        //Connects XML view to this logic file.
-        private NavigationView navigationView;
-        private DrawerLayout drawerLayout;
-        private RecyclerView recyclerView;
-        private Toolbar mToolbar;
-        private ActionBarDrawerToggle actionBarDrawerToggle;
+    //Connects XML view to this logic file.
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private RecyclerView recyclerView;
+    private Toolbar mToolbar;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
-        private RecyclerView.Adapter mAdapter;
-        private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private View navView;
 

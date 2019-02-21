@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.socialmediaapp.config.GlobalConfig;
+import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.*;
 
 import cz.msebera.android.httpclient.Header;
@@ -46,30 +49,29 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = UserEmail.getText().toString();
                 String password = UserPassword.getText().toString();
-                AsyncHttpClient httpClient = Tools.createAsyncHTTPClient(getApplicationContext());
+                AsyncHttpClient httpClient = GeneralTools.createAsyncHttpClient(getApplicationContext());
                 RequestParams params = new RequestParams();
                 params.put("username", email);
                 params.put("password", password);
-                httpClient.get(Tools.BASE_API_URL + "/auth/login", params, new JsonHttpResponseHandler() {
+                httpClient.get(GlobalConfig.BASE_API_URL + "/auth/login", params, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             if (response.has("success") && response.getBoolean("success")) { //Success variable is true.
                                 String token = response.getString("token"); //Extract the token
-                                //Create cookie
+                                // Retrieve cookie store for this application context.
+                                PersistentCookieStore myCookieStore = new PersistentCookieStore(getApplicationContext());
+                                // Create & save cookie into the cookie store.
                                 BasicClientCookie newCookie = new BasicClientCookie("capstoneAuth", token);
                                 newCookie.setDomain("huntercollabapi.herokuapp.com");
                                 newCookie.setPath("/");
-
-                                //Store that cookie in the PersistentCookieStore so future api calls automatically include it.
-                                PersistentCookieStore myCookieStore = new PersistentCookieStore(getApplicationContext());
                                 myCookieStore.addCookie(newCookie);
                                 System.out.println("Token successfully retrieved and saved to cookie store: " + token);
-                                //Send user to main page.
+                                //TODO: Send user to main page.
                             } else {
                                 String error = response.getString("error"); //Extract the error
                                 System.out.println("Error: " + error);
-                                //Push error to screen
+                                //TODO: Push error to screen
                             }
                         } catch (JSONException je) {
                             je.printStackTrace();
@@ -79,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                         // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        // Push error to screen
+                        // TODO: Push error to screen
                     }
                 });
             }
