@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = Password.getText().toString();
                 UserEmail.setText("");
                 Password.setText("");
-                myLoopTask.executeLoopjCall(email,password);
+               // myLoopTask.executeLoopjCall(email,password);
 
             }
         });

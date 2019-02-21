@@ -20,6 +20,7 @@ import java.net.URL;
 import com.loopj.android.http.*;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,9 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 AsyncHttpClient client = new AsyncHttpClient();
                 client.get("https://huntercollabapi.herokuapp.com/user/createUser?username=newuser@myhunter.cuny.edu&password=Password123", new AsyncHttpResponseHandler() {
                     @Override
@@ -78,47 +76,51 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = UserEmail.getText().toString();
                 String password = UserPassword.getText().toString();
+                AsyncHttpClient httpClient = Tools.createAsyncHTTPClient(getApplicationContext());
+                RequestParams params = new RequestParams();
+                params.put("username", email);
+                params.put("password", password);
+                httpClient.get(Tools.BASE_API_URL + "/auth/login", params, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            if (response.getBoolean("success")) { //Success variable is true.
+                                String token = response.getString("token"); //Extract the token
+                                //Create cookie
+                                BasicClientCookie newCookie = new BasicClientCookie("capstoneAuth", token);
+                                newCookie.setDomain("huntercollabapi.herokuapp.com");
+                                newCookie.setPath("/");
+
+                                //Store that cookie in the PersistentCookieStore so future api calls automatically include it.
+                                PersistentCookieStore myCookieStore = new PersistentCookieStore(getApplicationContext());
+                                myCookieStore.addCookie(newCookie);
+                                System.out.println("Token successfully retrieved and saved to cookie store: " + token);
+                                //Send user to main page.
+                            } else {
+                                String error = response.getString("error"); //Extract the error
+                                System.out.println("Error: " + error);
+                                //Push error to screen
+                            }
+                        } catch (JSONException je) {
+                            //push error to screen
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                        // Push error to screen
+                    }
+                });
             }
         });
-
-
-
-
     }
-
 
     private void sendUserToRegisterActivity() {
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
 
     }
-/*
-        public static void call_me() throws Exception {
-            String url = " https://huntercollabapi.herokuapp.com/user/createUser?username=newuser@myhunter.cuny.edu?password=whasd";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            // optional default is GET
-            con.setRequestMethod("GET");
-            //add request header
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            //print in String
-            System.out.println(response.toString());
-            //Read JSON response and print
-            JSONObject myResponse = new JSONObject(response.toString());
-            System.out.println("result after Reading JSON Response");
-            System.out.println("statusCode- "+myResponse.getBoolean("success"));
-            System.out.println("statusCode- " + myResponse.getString("error"));
-        }
-*/
 }
