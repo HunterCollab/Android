@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -42,14 +43,25 @@ public class LoginActivity extends AppCompatActivity {
         NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendUserToRegisterActivity();
+
 
 
                 AsyncHttpClient client = new AsyncHttpClient();
-                client.get("https://huntercollabapi.herokuapp.com/user/createUser?username=newuser@myhunter.cuny.edu?password=whasd", new AsyncHttpResponseHandler() {
+                client.get("https://huntercollabapi.herokuapp.com/user/createUser?username=newuser@myhunter.cuny.edu&password=Password123", new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        System.out.println(responseBody);
+                        String testV = null;
+                        JSONObject parsed = null;
+                        try {
+                            testV = new JSONObject(new String(responseBody)).toString();
+                            parsed = new JSONObject(new String(responseBody));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("String: " + testV);
+                        System.out.println("JSONobject" + parsed);
+
+                        sendUserToRegisterActivity();
                     }
 
                     @Override
