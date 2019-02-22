@@ -24,7 +24,6 @@ public class DoLogin {
         this.context = context;
         this.loginCompleteListener = listener;
     }
-    //This is a comment on line 27 in DoLogin.java
 
     public void doLogin(String username, String password){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
