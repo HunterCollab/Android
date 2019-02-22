@@ -17,7 +17,7 @@ Now type "git status", it should say that you are on the nameBranch.
   
 You can commit all changes using the command "git commit --all --message "Commit message""
 That only does a local commit.
-To push your changes to the actual github server, type "git push -u origin nameBranch" BUT you DON'T need to do it.
+To push your changes to the actual github server, type "git push -u origin nameBranch" BUT you DON'T need to do it, just keep your branch local to your machine.
 
 DO NOT PUSH TO MASTER, DO NOT WORK ON THE MASTER, DO NOT COMMIT TO MASTER!!!
 
@@ -27,13 +27,14 @@ Please consult Ram/Edwin before doing any of the following if it's your first ti
 
 If you finished a feature and tested it completely, you can do the following to merge update the master branch:
 
-First, update all your branches to what the remote server has by running "git remote update", "git checkout master", "git pull", "git checkout nameBranch", "git pull". (MAKE SURE YOU COMMIT & PUSH YOUR LOCAL BRANCHES CHANGES BEFORE DOING THIS BECAUSE IF YOU DON'T, YOUR CODE MIGHT REVERT TO WHAT THE GITHUB SERVER HAS.")
+First, update all your master branch to the latest version the remote server has by running "git remote update", "git checkout master", "git pull".
 
-First, while on your branch, run the command "git rebase master" --> This will "rebase" your branch. i.e. get the lastest version of the master branch and re-add all your changes onto it. You might have code conflicts after this, so you have to fix them and test the app again and make sure its working before doing the following:
+Now, use "git checkout nameBranch" to switch to your branch and while on your branch, run the command "git rebase master" --> 
 
-So now your branch is updated to the latest master branch code and your code and everything is working.
-Run "git push -u origin nameBranch" to push all your changes to your branch.
+This will "rebase" your branch. i.e. get the lastest version of the master branch and re-add all your changes onto it. You will have code conflicts after this, so you have to fix them and test the app again and make sure its working before doing the following:
+
+So now your branch is rebased to the latest master branch code and you fixed all the conflicts and after testing, everything is working.
   
-Then, run "git checkout master" to change to the master branch and then run "git merge nameBranch" on the master branch to merge the code.
-  
- https://hackernoon.com/git-merge-vs-rebase-whats-the-diff-76413c117333
+You can finally run "git checkout master" to change to the master branch and then run "git merge nameBranch" on the master branch to merge the code. Once that's done, run "git push -u origin master" to publish the changes to the remote server.
+
+https://hackernoon.com/git-merge-vs-rebase-whats-the-diff-76413c117333
