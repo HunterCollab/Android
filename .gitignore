@@ -19,3 +19,5 @@
 # Ignore various temporary files
 *.bak
 *.swp
+
+*.properties
