@@ -19,9 +19,11 @@ You can commit all changes using the command "git commit --all --message "Commit
 That only does a local commit.
 To push your changes to the actual github server, type "git push -u origin <name>Branch"
 
-DO NOT PUSH TO MASTER!!!
+DO NOT PUSH TO MASTER, DO NOT WORK ON THE MASTER, DO NOT COMMIT TO MASTER!!!
 
 If you finished a feature and tested it completely, you can do the following to update the master branch:
+
+First, update all your branches to what the remote server has by running "git remote update". (MAKE SURE YOU COMMIT & PUSH YOUR LOCAL BRANCHES CHANGES BEFORE DOING THIS BECAUSE IF YOU DON'T, YOUR CODE MIGHT REVERT TO WHAT THE GITHUB SERVER HAS.")
 
 First, while on your branch, run the command "git rebase master" --> This will get the lastest version of the master branch and re-add all your changes onto it. You might have code conflicts after this, so you have to fix them and test the app again and make sure its working before doing the following:
 
