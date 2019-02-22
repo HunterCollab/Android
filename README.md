@@ -1,6 +1,6 @@
 # FrontEnd
 
-HOW TO WORK ON THIS REPO:
+HOW TO WORK ON THIS REPO: (replace name with you name)
 
 
 First, clone the repo using the following command "git clone https://github.com/csci49900Gather/FrontEnd.git"
