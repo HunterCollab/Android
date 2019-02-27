@@ -8,23 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.loopjtasks.DoLogin;
-import com.example.socialmediaapp.tools.GeneralTools;
-import com.loopj.android.http.*;
-
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 
 public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLoginComplete {
 
-    private Button LoginButton;
-    private EditText UserEmail;
-    private EditText UserPassword;
-    private TextView NeedNewAccountLink;
+    private Button loginButton;
+    private EditText userEmail;
+    private EditText userPassword;
+    private TextView needNewAccountLink;
     private LoginActivity instance = null;
 
     @Override
@@ -35,23 +26,23 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
 
 
 
-        LoginButton = (Button) findViewById(R.id.login_button);
-        UserEmail = (EditText) findViewById(R.id.login_email);
-        UserPassword = (EditText) findViewById(R.id.login_password);
-        NeedNewAccountLink =  (TextView) findViewById(R.id.register_link);
-        NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
+        loginButton = (Button) findViewById(R.id.login_button);
+        userEmail = (EditText) findViewById(R.id.login_email);
+        userPassword = (EditText) findViewById(R.id.login_password);
+        needNewAccountLink =  (TextView) findViewById(R.id.register_link);
+        needNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendUserToRegisterActivity();
             }
         });
 
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Variables from xml
-                String email = UserEmail.getText().toString();
-                String password = UserPassword.getText().toString();
+                String email = userEmail.getText().toString();
+                String password = userPassword.getText().toString();
                 DoLogin loginTask = new DoLogin(getApplicationContext(), instance);
                 loginTask.doLogin(email, password);
             }

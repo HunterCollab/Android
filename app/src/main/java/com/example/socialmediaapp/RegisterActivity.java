@@ -22,8 +22,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText UserEmail;
     private EditText Password;
-    private EditText ConfirmPassword;
-    private  Button RegisterButton;
+    private EditText confirmPassword;
+    private  Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         UserEmail = (EditText) findViewById(R.id.register_email);
         Password = (EditText) findViewById(R.id.register_password);
-        ConfirmPassword = (EditText) findViewById(R.id.register_confirm_password);
-        RegisterButton = (Button) findViewById(R.id.register_create_account);
+        confirmPassword = (EditText) findViewById(R.id.register_confirm_password);
+        registerButton = (Button) findViewById(R.id.register_create_account);
         //MyLoopjTask myLoopTask = new MyLoopjTask(this, (MyLoopjTask.OnLoopComplete) this); //Not required -- At least for this page...
 
-        RegisterButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = UserEmail.getText().toString();
