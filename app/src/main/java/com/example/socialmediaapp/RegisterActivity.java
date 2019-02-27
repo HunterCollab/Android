@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.socialmediaapp.config.GlobalConfig;
+import com.example.socialmediaapp.loopjtasks.DoRegister;
 import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,34 +43,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = UserEmail.getText().toString();
                         String password = Password.getText().toString();
                         System.out.println(email);
-                        AsyncHttpClient httpClient = GeneralTools.createAsyncHttpClient(getApplicationContext());
-                        RequestParams params = new RequestParams();
-                        params.put("username", email);
-                        params.put("password", password);
-                        httpClient.get(GlobalConfig.BASE_API_URL + "/user/createUser", params, new JsonHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                try {
-                                    if (response.has("success") && response.getBoolean("success")) { //Success variable is true.
-                                        System.out.println(response.toString());
-                                        // TODO: Tell user account was successfully created
-                                        // TODO: Send user to login page so they can login with the account they just created.
-                                    } else {
-                                        String error = response.getString("error"); //Extract the error
-                                        System.out.println("Error: " + error);
-                                        // TODO: Push error to screen
-                                    }
-                                } catch (JSONException je) {
-                                    je.printStackTrace();
-                                }
-                    }
+                        DoRegister loginTask = new DoRegister();
+                        loginTask.doRegister(email, password);
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        // TODO: Push error to screen
-                    }
-                });
             }
         });
         

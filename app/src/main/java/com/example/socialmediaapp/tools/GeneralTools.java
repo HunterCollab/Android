@@ -24,6 +24,13 @@ public class GeneralTools {
         return client;
     }
 
+    //Creates an ASyncHttpClient, doesn't set cookies.
+    public static AsyncHttpClient createAsyncHttpClient() {
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        return client;
+    }
+
     //Test function to hit the /user/getUserDetails endpoint and print the response.
     public static void printCurrentUserDetails(final Context context) {
         createAsyncHttpClient(context).get(GlobalConfig.BASE_API_URL + "/user/getUserDetails", new JsonHttpResponseHandler() {
