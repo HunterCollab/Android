@@ -20,7 +20,7 @@ public class GeneralTools {
         PersistentCookieStore cookieStore = new PersistentCookieStore(context.getApplicationContext());
         //attach those cookies to the HttpClient which will be making the request
         client.setCookieStore(cookieStore);
-        client.setTimeout(60 * 1000); // 60 second timeout
+        client.setTimeout(30 * 1000); // 60 second timeout
         return client;
     }
 
