@@ -74,6 +74,7 @@ public class UserSkillsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_user_skills, container, false);
 
         AutoCompleteAdapter adapter = new AutoCompleteAdapter(getContext(), android.R.layout.simple_list_item_1);
+
         AutoCompleteTextView style =  rootView.findViewById(R.id.skills_auto_complete);
         style.setThreshold(1);
         style.setAdapter(adapter);
