@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // super calls on function from the extends <class> (protected and public only)
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_register);
@@ -46,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         registerButton = (Button) findViewById(R.id.register_create_account);
         //MyLoopjTask myLoopTask = new MyLoopjTask(this, (MyLoopjTask.OnLoopComplete) this); //Not required -- At least for this page...
 
+        // create account button
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,13 +58,14 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
                 String email = UserEmail.getText().toString();
                 String password = Password.getText().toString();
                 String confirmPass = confirmPassword.getText().toString();
-                // System.out.println(email);
                 DoRegister loginTask = new DoRegister(getApplicationContext(), instance);
-                if (password.equals(confirmPass) && password.length() > 5) {
+
+                // passwords must match in order to send HTTP request
+                if (password.equals(confirmPass)) {
                     loginTask.doRegister(email, password);
                 }
                 else {
-                    String message = "PASSWORDS MUST BE 6+ CHARACTERS AND MATCH";
+                    String message = "Passwords must match.";
                     Toast t = Toast.makeText(context, message, Toast.LENGTH_SHORT);
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
@@ -73,14 +76,11 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
 
     @Override
     public void registerCompleted(Boolean success, String message) {
-        System.out.println(success + ": " + message);
-        System.out.println("Listener implementation of registerCompleted working.");
         if (success) {
-            // TODO: Send to user details screen
+            // TODO: SEND TO USER DETAILS SCREEN
         } else {
-            // TODO: FIND A WAY TO PUSH ERROR MESSAGES FROM API TO USER
-            String register_error_message = "EMAIL MUST BE MYHUNTER.CUNY.EDU";
-            Toast t = Toast.makeText(context, register_error_message, Toast.LENGTH_LONG);
+            // show server error message to user
+            Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
         }

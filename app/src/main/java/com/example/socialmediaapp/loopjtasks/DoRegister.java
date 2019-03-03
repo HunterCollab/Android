@@ -20,15 +20,17 @@ public class DoRegister {
     private final Context context;
     private final OnDoRegisterComplete registerCompleteListener;
 
+    // constructor
     public DoRegister(Context context, OnDoRegisterComplete listener) {
         this.context = context;
         this.registerCompleteListener = listener;
     }
 
-    //First Step: Create a fucntion that takes email and password as parameters
+    // Async task for HTTP request
+    // First Step: Create a fucntion that takes email and password as parameters
     public void doRegister(String email, String password) {
-        //Second Step: Use AsyncHttpClient to execute HTTP requests
-        //This creates the client
+        // Second Step: Use AsyncHttpClient to execute HTTP requests
+        // This creates the client
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
         RequestParams requestParams = new RequestParams();
         requestParams.put("username", email);
@@ -83,6 +85,7 @@ public class DoRegister {
         });
     }
 
+    // interface
     public interface OnDoRegisterComplete {
         public void registerCompleted(Boolean success, String message);
     }
