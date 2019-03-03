@@ -62,6 +62,8 @@ public class DoLogin {
     }
 
     public interface OnDoLoginComplete {
+
         public void loginCompleted(Boolean success, String message);
+
     }
 }

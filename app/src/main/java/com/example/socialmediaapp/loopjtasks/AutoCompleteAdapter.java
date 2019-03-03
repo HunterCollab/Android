@@ -83,24 +83,23 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
                     }
                 });
 
-            } else {
-
             }
 
             System.out.println("results: " + results.values);
             return results;
         }
 
+
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
-                System.out.println("publishResults: " + results.values);
                 notifyDataSetChanged();
-
-
 
         }
     };
+
+
 
 
     @Nullable
