@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         startActivity(registerIntent);
     }
 
+    // abstract function from DoLogin.java defined here
     @Override
     public void loginCompleted(Boolean success, String message) {
         Log.i("received", "Success " + message);

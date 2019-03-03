@@ -74,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         });
     }
 
+    // abstract function from DoRegister.java defined here
     @Override
     public void registerCompleted(Boolean success, String message) {
         if (success) {

@@ -86,6 +86,7 @@ public class DoRegister {
     }
 
     // interface
+    // abstract function declared here
     public interface OnDoRegisterComplete {
         public void registerCompleted(Boolean success, String message);
     }
