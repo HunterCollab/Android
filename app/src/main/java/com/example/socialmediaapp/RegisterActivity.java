@@ -24,17 +24,20 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements DoRegister.OnDoRegisterComplete {
 
     private EditText UserEmail;
     private EditText Password;
     private EditText confirmPassword;
-    private  Button registerButton;
+    private Button registerButton;
+    private RegisterActivity instance = null;
     private long mLastClickTime = 0;
+    private Context context = RegisterActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_register);
 
         UserEmail = (EditText) findViewById(R.id.register_email);
@@ -52,18 +55,35 @@ public class RegisterActivity extends AppCompatActivity {
                 mLastClickTime = SystemClock.elapsedRealtime();
                 String email = UserEmail.getText().toString();
                 String password = Password.getText().toString();
-                System.out.println(email);
-                DoRegister loginTask = new DoRegister();
-                loginTask.doRegister(email, password);
-
-                Context context = RegisterActivity.this;
-                String error_message = "MAKE SURE EMAIL AND PASSWORDS ARE CORRECT";
-                Toast t = Toast.makeText(context, error_message, Toast.LENGTH_LONG);
-                t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-                t.show();
+                String confirmPass = confirmPassword.getText().toString();
+                // System.out.println(email);
+                DoRegister loginTask = new DoRegister(getApplicationContext(), instance);
+                if (password.equals(confirmPass) && password.length() > 5) {
+                    loginTask.doRegister(email, password);
+                }
+                else {
+                    String message = "PASSWORDS MUST BE 6+ CHARACTERS AND MATCH";
+                    Toast t = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
             }
         });
+    }
 
+    @Override
+    public void registerCompleted(Boolean success, String message) {
+        System.out.println(success + ": " + message);
+        System.out.println("Listener implementation of registerCompleted working.");
+        if (success) {
+            // TODO: Send to user details screen
+        } else {
+            // TODO: FIND A WAY TO PUSH ERROR MESSAGES FROM API TO USER
+            String register_error_message = "EMAIL MUST BE MYHUNTER.CUNY.EDU";
+            Toast t = Toast.makeText(context, register_error_message, Toast.LENGTH_LONG);
+            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+            t.show();
+        }
     }
 
 }
