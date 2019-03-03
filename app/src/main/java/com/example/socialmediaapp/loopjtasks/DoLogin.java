@@ -1,6 +1,7 @@
 package com.example.socialmediaapp.loopjtasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
@@ -20,23 +21,25 @@ public class DoLogin {
     private final Context context;
     private final OnDoLoginComplete loginCompleteListener;
 
+    // constructor
     public DoLogin(Context context, OnDoLoginComplete listener) {
         this.context = context;
         this.loginCompleteListener = listener;
     }
 
+    // Async task for HTTP request
     public void doLogin(String username, String password){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
         RequestParams requestParams = new RequestParams();
         requestParams.put("username", username);
         requestParams.put("password", password);
 
-        //Async variable that calls the createAsyncHttpClient() class
-        //"https://huntercollabapi.herokuapp.com" + /auth/login + ?username=admin ?password=admin
+        // Async variable that calls the createAsyncHttpClient() class
+        // "https://huntercollabapi.herokuapp.com" + /auth/login + ?username=admin ?password=admin
         asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/auth/login", requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                System.out.println(response.toString());
+                Log.i ("response", response.toString());
                 try {
                     if (response.has("success") && response.getBoolean("success") == true) { //Success variable is true.
                         String token = response.getString("token"); //Extract the token
@@ -47,11 +50,11 @@ public class DoLogin {
                         newCookie.setDomain("huntercollabapi.herokuapp.com");
                         newCookie.setPath("/");
                         myCookieStore.addCookie(newCookie);
-                        System.out.println("Token successfully retrieved and saved to cookie store: " + token);
+                        Log.i ("token", "Token successfully retrieved and saved to cookie store: " + token);
                         loginCompleteListener.loginCompleted(true, token);
                     } else {
                         String error = response.getString("error"); //Extract the error
-                        System.out.println("Error: " + error);
+                        Log.i ("error", "Error: " + error);
                         loginCompleteListener.loginCompleted(false, error);
                     }
                 } catch (JSONException je) {
@@ -61,6 +64,7 @@ public class DoLogin {
         });
     }
 
+    // interface
     public interface OnDoLoginComplete {
         public void loginCompleted(Boolean success, String message);
     }
