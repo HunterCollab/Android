@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         instance = this;
         setContentView(R.layout.activity_login);
 
-
+        // matching the variables to their views in res dir
         loginButton = (Button) findViewById(R.id.login_button);
         userEmail = (EditText) findViewById(R.id.login_email);
         userPassword = (EditText) findViewById(R.id.login_password);
@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
             }
         });
 
+        // login button implementation
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         });
     }
 
+    // sends user to register screen
     private void sendUserToRegisterActivity() {
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
@@ -67,8 +69,14 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         System.out.println(success + ": " + message);
         System.out.println("Listener implementation of loginCompleted working.");
         if (success) {
-            //Sent to main screen
-        } else {
+            Context context = LoginActivity.this;
+            String login_successful = "LOGIN SUCCESSFUL";
+            Toast t = Toast.makeText(context, login_successful, Toast.LENGTH_LONG);
+            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+            t.show();
+            // TODO: SEND TO COLLAB SCREEN
+        }
+        else {
             Context context = LoginActivity.this;
             String login_error_message = "INVALID LOGIN, PLEASE TRY AGAIN";
             Toast t = Toast.makeText(context, login_error_message, Toast.LENGTH_LONG);
