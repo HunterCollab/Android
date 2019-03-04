@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         System.out.println(success + ": " + message);
         System.out.println("Listener implementation of loginCompleted working.");
         if (success) {
-            Intent userDetailsIntent = new Intent(LoginActivity.this, UserDetailsActivity.class);
+            Intent userDetailsIntent = new Intent(LoginActivity.this, UserSkillsActivity.class);
             startActivity(userDetailsIntent);
         } else {
             //Show user the message which is an error

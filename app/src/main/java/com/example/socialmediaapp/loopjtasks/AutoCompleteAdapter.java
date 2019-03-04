@@ -36,79 +36,97 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
         this.data = new ArrayList<>();
     }
 
-    private Filter skillsFilter = new Filter(){
+    @Override
+    public Filter getFilter() {
+        Filter skillsFilter = new Filter(){
 
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
 
-            final FilterResults results = new FilterResults();
+                final FilterResults results = new FilterResults();
 
-
-            if(constraint != null)
-            { //If there is a constrain
-                //From this point we connect to the database using HTTP requests to retrieve data
                 AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(getContext());
-                final RequestParams requestParams = new RequestParams();
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                requestParams.put("query", filterPattern);
 
-                System.out.println("URL: " + GlobalConfig.BASE_API_URL + "/search/skills" + requestParams);
-                asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/search/skills", requestParams, new JsonHttpResponseHandler(){
+                if(constraint != null)
+                { //If there is a constrain
+                    //From this point we connect to the database using HTTP requests to retrieve data
+                    final List<String> suggestions = new ArrayList<>();
+                    final RequestParams requestParams = new RequestParams();
 
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
+                    requestParams.put("query", constraint);
+
+                    System.out.println("URL: " + GlobalConfig.BASE_API_URL + "/search/skills" + requestParams);
+                    asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/search/skills", requestParams, new JsonHttpResponseHandler(){
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            super.onSuccess(statusCode, headers, response);
+
+                            JSONArray terms = null;
+                            System.out.println("Response: " + response);
+                            try {
+                                terms = response.getJSONArray("matches");
 
 
-                        System.out.println("Response: " + response);
-                        try {
-                            JSONArray terms = response.getJSONArray("matches");
-                            List<String> suggestions = new ArrayList<>();
+                                System.out.println("here");
+                                for(int i=0; i < terms.length(); i++){
+                                    String term = terms.getString(i);
+                                    System.out.println("term: " + term);
+                                    suggestions.add(term);
+                                }
 
-                            System.out.println("here");
-                            for(int i=0; i < terms.length(); i++){
-                                String term = terms.getString(i);
-                                System.out.println("term: " + term);
-                                suggestions.add(term);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
+
                             results.values = suggestions;
                             results.count = suggestions.size();
                             data = suggestions;
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            System.out.println("results: " + results.count);
                         }
+                    });
 
+                }
 
-                    }
-                });
-
+                System.out.println("results: " + results.count);
+                return results;
             }
 
-            System.out.println("results: " + results.values);
-            return results;
-        }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
 
 
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
+                if (results != null && results.count > 0)
+                {
+                    System.out.println("result.count: " + results.count);
+                    notifyDataSetChanged();
+                }
+                else{
+                    notifyDataSetInvalidated();
+                }
 
-                notifyDataSetChanged();
+                clear();
+            }
+        };
 
-        }
-    };
+        return skillsFilter;
+    }
 
 
 
 
+
+/*
     @Nullable
     @Override
     public Filter getFilter()
     {
         return skillsFilter;
     }
-
+*/
     //Key word @Override will override tha method from its superclass with the same name.
     //Will return the number of items in the array ArrayList<String>
     @Override
@@ -125,4 +143,6 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     {
         return data.get(position);
     }
+
+
 }
