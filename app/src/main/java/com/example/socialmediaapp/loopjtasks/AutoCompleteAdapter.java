@@ -39,17 +39,15 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     @Override
     public Filter getFilter() {
         Filter skillsFilter = new Filter(){
-
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
-                final FilterResults results = new FilterResults();
-
-                AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(getContext());
+                final FilterResults filterResults = new FilterResults();
 
                 if(constraint != null)
                 { //If there is a constrain
                     //From this point we connect to the database using HTTP requests to retrieve data
+                    /*
                     final List<String> suggestions = new ArrayList<>();
                     final RequestParams requestParams = new RequestParams();
 
@@ -67,7 +65,6 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
                             try {
                                 terms = response.getJSONArray("matches");
 
-
                                 System.out.println("here");
                                 for(int i=0; i < terms.length(); i++){
                                     String term = terms.getString(i);
@@ -80,35 +77,34 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
                                 e.printStackTrace();
                             }
 
-                            results.values = suggestions;
-                            results.count = suggestions.size();
-                            data = suggestions;
+                            results.values = data;
+                            results.count = data.size();
+
+                            setData(suggestions);
                             System.out.println("results: " + results.count);
                         }
                     });
+                */
+                filterResults.values = data;
+                filterResults.count = data.size();
 
                 }
 
-                System.out.println("results: " + results.count);
-                return results;
+
+                return filterResults;
             }
 
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
-
-
-                if (results != null && results.count > 0)
-                {
-                    System.out.println("result.count: " + results.count);
+                if(results != null && (results.count > 0)){
                     notifyDataSetChanged();
-                }
-                else{
+                } else {
                     notifyDataSetInvalidated();
                 }
 
-                clear();
+
             }
         };
 
@@ -116,17 +112,11 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     }
 
 
-
-
-
-/*
-    @Nullable
-    @Override
-    public Filter getFilter()
-    {
-        return skillsFilter;
+    public void setData(List<String> list) {
+        data.clear();
+        data.addAll(list);
     }
-*/
+
     //Key word @Override will override tha method from its superclass with the same name.
     //Will return the number of items in the array ArrayList<String>
     @Override
