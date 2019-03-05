@@ -3,19 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.UserSkillsFragment">
+    tools:context=".UserSkillsActivity">
 
     <!-- TODO: Update blank fragment layout -->
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/user_skills_icon"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="25dp"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="false"
-        android:src="@drawable/profile"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp" />
 
     <AutoCompleteTextView
         android:id="@+id/skills_auto_complete"
@@ -23,5 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="227dp" />
+
+    <TextView
+        android:id="@+id/selected_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      android:layout_below="@+id/skills_auto_complete"
+        android:layout_marginTop="50dp"
+        android:padding="20dp"/>
 
 </RelativeLayout>
