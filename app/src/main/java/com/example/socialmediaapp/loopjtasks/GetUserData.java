@@ -19,15 +19,23 @@ import cz.msebera.android.httpclient.Header;
 
 public class GetUserData {
 
-    RequestParams requestParams;
+    private RequestParams requestParams;
     private final Context context;
-    String jsonResponse;
-    ArrayList<String> stringList;
+    private ArrayList<String> skillStringList;
+    private ArrayList<String> classStringList;
+    private String username;
+    private String github;
+    private String linkedIn;
+
 
     public GetUserData(Context context){
         this.context = context;
         requestParams = new RequestParams();
-        stringList = new ArrayList<>();
+        skillStringList = new ArrayList<>();
+        classStringList = new ArrayList<>();
+        username = new String();
+        github = new String();
+        linkedIn = new String();
     }
 
     public void getUserData(){
@@ -39,6 +47,10 @@ public class GetUserData {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("response: " + response);
                 setUserSkills(response);
+                setUserClasses(response);
+                setUserName(response);
+                setUserLinkedIn(response);
+                setUserGithub(response);
             }
 
             @Override
@@ -48,32 +60,98 @@ public class GetUserData {
         });
     }
 
-    public void setUserSkills(JSONObject response){
+    private void setUserName(JSONObject response){
 
         try {
+            username = response.getString("username");
+            System.out.println("username: " + username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
-            System.out.println("Response: " + response);
-            JSONArray terms = null;
-            terms = response.getJSONArray("skills");
-
-            System.out.println("here");
-            for(int i=0; i < terms.length(); i++){
-                String term = terms.getString(i);
-                System.out.println("term: " + term);
-                stringList.add(term);
-            }
-
-
+    private void setUserGithub(JSONObject response){
+        try {
+            username = response.getString("github");
+            System.out.println("github: " + github);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
+    private void setUserLinkedIn(JSONObject response){
+        try {
+            username = response.getString("linkedin");
+            System.out.println("linkedin: " + linkedIn);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setUserSkills(JSONObject response){
+
+        try {
+            JSONArray terms = null;
+            terms = response.getJSONArray("skills");
+
+            System.out.println("here");
+            for(int i=0; i < terms.length(); i++){
+                String term = terms.getString(i);
+                System.out.println("skill: " + term);
+                skillStringList.add(term);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setUserClasses(JSONObject response){
+
+        try {
+            JSONArray terms = null;
+            terms = response.getJSONArray("classes");
+
+            System.out.println("here");
+            for(int i=0; i < terms.length(); i++){
+                String term = terms.getString(i);
+                System.out.println("class: " + term);
+                classStringList.add(term);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getUserName(){
+
+        System.out.println("username" + username);
+        return username;
+    }
+
+    public String getUserGithub(){
+
+        System.out.println("github: " + github);
+        return github;
+    }
+
+    public String getUserLinkedIn(){
+
+        System.out.println("linkedin: " + linkedIn);
+        return linkedIn;
+    }
+
+    public ArrayList<String> getUserClasses(){
+
+        System.out.println("classList" + classStringList);
+        return classStringList;
+    }
+
     public ArrayList<String> getUserSkills(){
 
-        System.out.println("stringList" + stringList);
-        return stringList;
+        System.out.println("stringList" + skillStringList);
+        return skillStringList;
     }
 
 }

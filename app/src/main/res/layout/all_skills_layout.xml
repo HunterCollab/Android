@@ -23,22 +23,23 @@
             android:padding="5dp">
 
 
-                <TextView
-                    android:id="@+id/user_skill"
-                    android:layout_width="231dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="Skill"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="40dp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/user_skill"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Skill"
+                android:textColor="@android:color/black"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:gravity="start" />
 
             <Button
                 android:id="@+id/remove_skill_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Remove"
+                android:layout_marginLeft="75dp"
                 />
 
         </LinearLayout>
