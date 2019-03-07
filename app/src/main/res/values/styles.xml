@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppBaseTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:datePickerDialogTheme">@color/colorPrimary</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
