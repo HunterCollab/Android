@@ -38,7 +38,6 @@ public class UserSkillsActivity extends AppCompatActivity {
     private Handler handler;
     //Variable of our costume adapter that will listen to changes as we search for skills
     private AutoCompleteAdapter adapter;
-    private RecyclerView skillList;
     //List of arrays that will store both the skills retrieved from the server and the new ones added.
     private ArrayList<String> skillNames;
 
