@@ -1,5 +1,6 @@
 package com.example.socialmediaapp;
 
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.view.View;
+
+import com.example.socialmediaapp.loopjtasks.DoLogin;
 
 import java.util.Calendar;
 
@@ -24,6 +27,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private Button btnDatePicker;
     private Button btnTimePicker;
     private Button confirmAddCollab;
+    private long mLastClickTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
     @Override
@@ -39,13 +43,35 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        btnDatePicker=(Button) findViewById(R.id.btn_date);
-        btnTimePicker=(Button) findViewById(R.id.btn_time);
-        txtDate=(EditText) findViewById(R.id.in_date);
-        txtTime=(EditText) findViewById(R.id.in_time);
+        confirmAddCollab = (Button) findViewById(R.id.addCollab_button);
+        btnDatePicker= (Button) findViewById(R.id.btn_date);
+        btnTimePicker= (Button) findViewById(R.id.btn_time);
+        txtDate= (EditText) findViewById(R.id.in_date);
+        txtTime= (EditText) findViewById(R.id.in_time);
+        collabName = (EditText) findViewById(R.id.collab_name);
+        collabLocation = (EditText) findViewById(R.id.collab_location);
+        collabDescription = (EditText) findViewById(R.id.collab_description);
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
+
+        confirmAddCollab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Variables from xml
+                // if user clicks button again in less than 3 seconds, it will not work
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
+                    return;
+                mLastClickTime = SystemClock.elapsedRealtime();
+                String CollabName = collabName.getText().toString();
+                String CollabLocation = collabLocation.getText().toString();
+                String CollabDescription = collabDescription.getText().toString();
+                String CollabDate = txtDate.getText().toString();
+                String CollabTime = txtTime.getText().toString();
+                // TODO: ADD COLLAB (POST REQUEST)
+                finish();
+            }
+        });
     }
 
     // letting user select date and time
