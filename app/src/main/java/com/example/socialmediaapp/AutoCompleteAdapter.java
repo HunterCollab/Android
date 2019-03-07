@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.loopjtasks;
+package com.example.socialmediaapp;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -45,46 +45,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
                 final FilterResults filterResults = new FilterResults();
 
                 if(constraint != null)
-                { //If there is a constrain
-                    //From this point we connect to the database using HTTP requests to retrieve data
-                    /*
-                    final List<String> suggestions = new ArrayList<>();
-                    final RequestParams requestParams = new RequestParams();
-
-                    requestParams.put("query", constraint);
-
-                    System.out.println("URL: " + GlobalConfig.BASE_API_URL + "/search/skills" + requestParams);
-                    asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/search/skills", requestParams, new JsonHttpResponseHandler(){
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            super.onSuccess(statusCode, headers, response);
-
-                            JSONArray terms = null;
-                            System.out.println("Response: " + response);
-                            try {
-                                terms = response.getJSONArray("matches");
-
-                                System.out.println("here");
-                                for(int i=0; i < terms.length(); i++){
-                                    String term = terms.getString(i);
-                                    System.out.println("term: " + term);
-                                    suggestions.add(term);
-                                }
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            results.values = data;
-                            results.count = data.size();
-
-                            setData(suggestions);
-                            System.out.println("results: " + results.count);
-                        }
-                    });
-                */
+                {
                 filterResults.values = data;
                 filterResults.count = data.size();
 

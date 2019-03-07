@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.socialmediaapp.loopjtasks.DoLogin;
+import com.example.socialmediaapp.loopjtasks.GetUserData;
 
 public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLoginComplete {
 
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Variables from xml
                 String email = userEmail.getText().toString();
                 String password = userPassword.getText().toString();
