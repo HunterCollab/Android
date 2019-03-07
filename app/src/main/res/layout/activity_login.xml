@@ -65,6 +65,7 @@
         android:background="@color/design_default_color_primary"
         android:padding="15dp"
         android:text="LOGIN"
+        android:textSize="18sp"
         />
 
     <TextView

@@ -3,6 +3,7 @@ package com.example.socialmediaapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,19 +71,20 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         startActivity(registerIntent);
     }
 
+    // send user to collab screen (main screen)
+    private void sendUserToCollabActivity() {
+        Intent collabIntent = new Intent( LoginActivity.this, CollabListActivity.class);
+        startActivity(collabIntent);
+    }
+
     // abstract function from DoLogin.java defined here
     @Override
     public void loginCompleted(Boolean success, String message) {
         Log.i("received", "Success " + message);
         Log.i("listener implementation", "Listener implementation of loginCompleted working.");
         if (success) {
-            // show user toast on success
-            Context context = LoginActivity.this;
-            String login_successful = "LOGIN SUCCESSFUL";
-            Toast t = Toast.makeText(context, login_successful, Toast.LENGTH_LONG);
-            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-            t.show();
-            // TODO: SEND TO COLLAB SCREEN
+            sendUserToCollabActivity();
+            finish();
         }
         else {
             // show user toast on fail
