@@ -67,6 +67,8 @@ public class DoLogin {
     // interface
     // abstract function declared here, defined in LoginActivity.java
     public interface OnDoLoginComplete {
+
         public void loginCompleted(Boolean success, String message);
+
     }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserSkillsActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/first_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <AutoCompleteTextView
+            android:id="@+id/skills_auto_complete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+             />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/second_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="231dp" />
+
+    <LinearLayout
+        android:id="@+id/third_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/second_view"
+        android:orientation="horizontal">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/all_skills"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
