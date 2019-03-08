@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.DoLogin;
+import com.example.socialmediaapp.loopjtasks.GetUserData;
 
 public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLoginComplete {
 
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Variables from xml
                 // if user clicks button again in less than 3 seconds, it will not work
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
@@ -84,8 +86,14 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         Log.i("received", "Success " + message);
         Log.i("listener implementation", "Listener implementation of loginCompleted working.");
         if (success) {
+            /*
+            Intent userSkillsIntent = new Intent(LoginActivity.this, UserSkillsActivity.class);
+            startActivity(userSkillsIntent);
+            */
+
             sendUserToCollabActivity();
             finish();
+
         }
         else {
             // show user toast on fail
@@ -93,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
             Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
+
         }
     }
 }
