@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
@@ -39,7 +40,15 @@ public class UserSkillsActivity extends AppCompatActivity {
     //Variable of our costume adapter that will listen to changes as we search for skills
     private AutoCompleteAdapter adapter;
     //List of arrays that will store both the skills retrieved from the server and the new ones added.
-    private ArrayList<String> skillNames;
+    private ArrayList<String> skillNames = null;
+
+    private AutoCompleteTextView autoCompleteTextView = null;
+
+    private Button addSkillButton = null;
+
+    private RecyclerView recyclerView = null;
+
+    private RecyclerViewAdapter recyclerAdapter = null;
 
 
 
@@ -47,25 +56,28 @@ public class UserSkillsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_skills);
-        //final TextView selectedText = findViewById(R.id.selected_item);
-        skillNames = new ArrayList<String>();
 
 ////////////////////////////////////Display Skills/////////////////////////////////////////////////////////
 
         //skills
-
+        skillNames = new ArrayList<String>();
         GetUserData userData = new GetUserData(getApplicationContext());
         userData.getUserData();
         skillNames = userData.getUserSkills();
         Log.d(TAG, "onCreate: started");
+
+
+        Log.d(TAG, "onCreate: init recyclerview");
         initRecyclerView();
+        recyclerAdapter.update(skillNames);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////// Auto Complete /////////////////////////////////////////////////
+///////////////////////////////////// Auto Complete ////////////////////////////////////////////////////////////////
         //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
-       final AutoCompleteTextView autoCompleteTextView =
-               (AutoCompleteTextView) findViewById(R.id.skills_auto_complete);
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.skills_auto_complete);
+
+        Button addSkillButton = (Button) findViewById(R.id.add_skill_button);
 
         //Creates an adapter using our custom class AutoComplete Adapter
         adapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
@@ -77,6 +89,7 @@ public class UserSkillsActivity extends AppCompatActivity {
         autoCompleteTextView.setAdapter(adapter);
 
 
+        recyclerAdapter.update(skillNames);
         //Once we find a skill that we want to add to our list, we can click on it. This section handles that.
         //It also adds what we click on to our recycler view.
         autoCompleteTextView.setOnItemClickListener(
@@ -84,10 +97,27 @@ public class UserSkillsActivity extends AppCompatActivity {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        skillNames.add(adapter.getItem(position));
-                        //selectedText.setText(adapter.getItem(position));
+                        //skillNames.add(adapter.getItem(position));
+
+                        //This will add the autocompleted skill to the textView
+                        autoCompleteTextView.setText(adapter.getItem(position));
                     }
                 });
+
+        addSkillButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String skill = autoCompleteTextView.getText().toString();
+                        if(skill.length() != 0){
+                            skillNames.add(autoCompleteTextView.getText().toString());
+                            recyclerAdapter.update(skillNames);
+                        } else {
+
+                        }
+                    }
+                }
+        );
 
         //This section handles the api calls as we type characters in the autocompleteview section.
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
@@ -130,21 +160,19 @@ public class UserSkillsActivity extends AppCompatActivity {
 
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void initSkillsBitmap(){
-        Log.d(TAG, "onCreate: preparing bit maps");
+//////////////////////////Local Functions for Showing Current User SKills/////////////////////////////////////////
 
-    }
 
     private void initRecyclerView(){
         Log.d(TAG, "onCreate: init recyclerview");
-        RecyclerView recyclerView = findViewById(R.id.all_skills);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(skillNames,this);
-        recyclerView.setAdapter(adapter);
+        recyclerView = findViewById(R.id.all_skills);
+        recyclerAdapter = new RecyclerViewAdapter(skillNames,this);
+        recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAdapter.notifyDataSetChanged();
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////Local Function for Calling API to ///////////////////////////////
 
     private void makeApiCall(String constraint) {
 
@@ -180,6 +208,8 @@ public class UserSkillsActivity extends AppCompatActivity {
                 adapter.setData(stringList);
                 //Once the new data is set, notify the adapter and show the new data.
                 adapter.notifyDataSetChanged();
+
+
             }
         });
 

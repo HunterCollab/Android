@@ -20,7 +20,7 @@ import cz.msebera.android.httpclient.Header;
 public class GetUserData {
 
     private RequestParams requestParams;
-    private final Context context;
+    private Context context;
     private ArrayList<String> skillStringList;
     private ArrayList<String> classStringList;
     private String username;
@@ -41,7 +41,7 @@ public class GetUserData {
     public void getUserData(){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
-        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/getUserDetails", requestParams, new JsonHttpResponseHandler(){
+        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/", requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
