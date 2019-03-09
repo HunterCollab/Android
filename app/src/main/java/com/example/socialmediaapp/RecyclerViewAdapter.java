@@ -17,12 +17,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<String> skillNames;
-    private Context mContext;
+    private Context mContext = null;
 
 
-    public RecyclerViewAdapter(ArrayList<String> skillNames, Context mContext) {
-        this.skillNames = skillNames;
+    public RecyclerViewAdapter(ArrayList<String> skills, Context mContext) {
         this.mContext = mContext;
+        this.skillNames = new ArrayList<>();
+        update(skills);
     }
 
     @NonNull
@@ -50,7 +51,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return skillNames.size();
+
+
+            return skillNames.size();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -64,5 +68,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             removeSkill = itemView.findViewById(R.id.remove_skill_button);
             skillsParentLayout = itemView.findViewById(R.id.skills_parent_layout);
         }
+    }
+
+    public void update(ArrayList<String> data) {
+
+            skillNames.clear();
+            skillNames.addAll(data);
+            notifyDataSetChanged();
+
     }
 }
