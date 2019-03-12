@@ -45,7 +45,6 @@ public class GetUserData {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("response: " + response);
                 setUserSkills(response);
                 setUserClasses(response);
                 setUserName(response);
@@ -64,7 +63,6 @@ public class GetUserData {
 
         try {
             username = response.getString("username");
-            System.out.println("username: " + username);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -73,7 +71,6 @@ public class GetUserData {
     private void setUserGithub(JSONObject response){
         try {
             username = response.getString("github");
-            System.out.println("github: " + github);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,7 +80,6 @@ public class GetUserData {
     private void setUserLinkedIn(JSONObject response){
         try {
             username = response.getString("linkedin");
-            System.out.println("linkedin: " + linkedIn);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -96,10 +92,8 @@ public class GetUserData {
             JSONArray terms = null;
             terms = response.getJSONArray("skills");
 
-            System.out.println("here");
             for(int i=0; i < terms.length(); i++){
                 String term = terms.getString(i);
-                System.out.println("skill: " + term);
                 skillStringList.add(term);
             }
         } catch (JSONException e) {
@@ -113,10 +107,8 @@ public class GetUserData {
             JSONArray terms = null;
             terms = response.getJSONArray("classes");
 
-            System.out.println("here");
             for(int i=0; i < terms.length(); i++){
                 String term = terms.getString(i);
-                System.out.println("class: " + term);
                 classStringList.add(term);
             }
         } catch (JSONException e) {
@@ -126,31 +118,28 @@ public class GetUserData {
 
     public String getUserName(){
 
-        System.out.println("username" + username);
         return username;
     }
 
     public String getUserGithub(){
 
-        System.out.println("github: " + github);
         return github;
     }
 
     public String getUserLinkedIn(){
 
-        System.out.println("linkedin: " + linkedIn);
         return linkedIn;
     }
 
     public ArrayList<String> getUserClasses(){
 
-        System.out.println("classList" + classStringList);
         return classStringList;
     }
 
     public ArrayList<String> getUserSkills(){
 
-        System.out.println("stringList" + skillStringList);
+        System.out.println(skillStringList);
+
         return skillStringList;
     }
 
