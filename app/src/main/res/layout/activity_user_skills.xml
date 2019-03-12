@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserSkillsActivity"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
+
+
     <RelativeLayout
         android:id="@+id/first_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:orientation="horizontal"
         android:padding="25dp">
 
@@ -46,19 +48,36 @@
     <RelativeLayout
         android:id="@+id/third_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:layout_below="@id/first_layout"
         android:orientation="horizontal">
 
 
-        <android.support.v7.widget.RecyclerView
+        <com.baoyz.swipemenulistview.SwipeMenuListView
             android:id="@+id/all_skills"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/update_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/third_layout">
 
+        <Button
+            android:id="@+id/update_skills"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="UPDATE"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"/>
+    </RelativeLayout>
 
 
 
