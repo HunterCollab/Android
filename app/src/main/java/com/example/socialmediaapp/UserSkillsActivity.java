@@ -1,5 +1,7 @@
 package com.example.socialmediaapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -11,12 +13,16 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Property;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -35,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,13 +61,15 @@ public class UserSkillsActivity extends AppCompatActivity implements SetUserData
 
     private SwipeMenuListView listView;
 
-    private ArrayAdapter<String> skillAdapter = null;
+    //private ArrayAdapter<String> skillAdapter = null;
 
     private Button updateSkillsButton = null;
 
     private SetUserData updateSkills = null;
 
     private UserSkillsActivity instance = null;
+
+    private  ArrayAdapter<String> skillAdapter = null;
 
 
 
@@ -90,16 +99,22 @@ public class UserSkillsActivity extends AppCompatActivity implements SetUserData
 
 ////////////////////////////////////Display Skills/////////////////////////////////////////////////////////
 
+
+
         //skills
         skillNames = new ArrayList<String>();
         GetUserData userData = new GetUserData(getApplicationContext());
         userData.getUserData();
         skillNames = userData.getUserSkills();
 
-        listView = (SwipeMenuListView) findViewById(R.id.all_skills);
-        skillAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, skillNames);
-        listView.setAdapter(skillAdapter);
+        //Custom adapter implementation
+        skillAdapter = new skillArrayAdapter(this,  0,skillNames);
+        //
+
         skillAdapter.notifyDataSetChanged();
+        listView = (SwipeMenuListView) findViewById(R.id.all_skills);
+        //skillAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, skillNames);
+        listView.setAdapter(skillAdapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -107,8 +122,7 @@ public class UserSkillsActivity extends AppCompatActivity implements SetUserData
             public void create(SwipeMenu menu) {
 
                 // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
                         0x3F, 0x25)));
@@ -273,5 +287,49 @@ public class UserSkillsActivity extends AppCompatActivity implements SetUserData
     @Override
     public void skillUpdateComplete(Boolean success, String message) {
         System.out.println(message);
+    }
+
+
+    //Custom ArrayAdapter
+    public class skillArrayAdapter extends ArrayAdapter<String>{
+
+        Context mContext;
+        ArrayList<String> userData;
+
+        //Constructor used to create an instance of the object.
+        public skillArrayAdapter(Context context, int resource, ArrayList<String> objects) {
+            super(context,resource, objects);
+            this.mContext = context;
+            this.userData = objects;
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+                View v = convertView;
+
+                if(v == null) {
+                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    v = inflater.inflate(R.layout.user_data_layout, null);
+                    ViewHolder holder = new ViewHolder();
+                    holder.txtName = (TextView) v.findViewById(R.id.data_name);
+                    v.setTag(holder);
+                }
+
+
+                String skill = userData.get(position);
+                if(skill != null){
+                    ViewHolder holder = (ViewHolder)v.getTag();
+                    holder.txtName.setText(skill);
+                  }
+
+                return v;
+
+        }
+    }
+
+    static class ViewHolder {
+        TextView txtName;
     }
 }
