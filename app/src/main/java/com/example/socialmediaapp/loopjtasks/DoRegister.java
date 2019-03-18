@@ -1,6 +1,7 @@
 package com.example.socialmediaapp.loopjtasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
@@ -32,17 +33,16 @@ public class DoRegister {
         // Second Step: Use AsyncHttpClient to execute HTTP requests
         // This creates the client
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
-        RequestParams requestParams = new RequestParams();
-        requestParams.put("username", email);
-        requestParams.put("password", password);
-        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/createUser", requestParams, new JsonHttpResponseHandler() {
 
-            // pulled from login, testing now
+        //https://huntercollabapi.herokuapp.com/user?username=testuser69@myhunter.cuny.edu&password=password
+        asyncHttpClient.put(GlobalConfig.BASE_API_URL + "/user?username=" + email + "&password=" + password, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                System.out.println(response.toString());
                 try {
+                    // TODO: NO TOKEN PROVIDED, FIX THIS
                     if (response.has("success") && response.getBoolean("success") == true) { //Success variable is true.
+                        // extract the token
+                        /*
                         String token = response.getString("token"); //Extract the token
                         // Retrieve cookie store for this application context.
                         PersistentCookieStore myCookieStore = new PersistentCookieStore(context.getApplicationContext());
@@ -51,37 +51,19 @@ public class DoRegister {
                         newCookie.setDomain("huntercollabapi.herokuapp.com");
                         newCookie.setPath("/");
                         myCookieStore.addCookie(newCookie);
-                        System.out.println("Token successfully retrieved and saved to cookie store: " + token);
-                        registerCompleteListener.registerCompleted(true, token);
+                        Log.i ( "token", "Token successfully retrieved and saved to cookie store: " + token);
+                        registerCompleteListener.registerCompleted(true, token); */
+
+                        // temp fix
+                        registerCompleteListener.registerCompleted(true, "blahfix");
                     } else {
                         String error = response.getString("error"); //Extract the error
-                        System.out.println("Error: " + error);
                         registerCompleteListener.registerCompleted(false, error);
                     }
                 } catch (JSONException je) {
                     je.printStackTrace();
                 }
             }
-
-            /* temporarily removed, put back if above doesn't work
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.has("success") && response.getBoolean("success")) { //Success variable is true.
-                        System.out.println(response.toString());
-                    } else {
-                        String error = response.getString("error"); //Extract the error
-                        System.out.println("Error: " + error);
-                    }
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-            } */
         });
     }
 

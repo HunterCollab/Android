@@ -1,9 +1,11 @@
 package com.example.socialmediaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -58,11 +60,11 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
                 String email = UserEmail.getText().toString();
                 String password = Password.getText().toString();
                 String confirmPass = confirmPassword.getText().toString();
-                DoRegister loginTask = new DoRegister(getApplicationContext(), instance);
+                DoRegister registerTask = new DoRegister(getApplicationContext(), instance);
 
                 // passwords must match in order to send HTTP request
                 if (password.equals(confirmPass)) {
-                    loginTask.doRegister(email, password);
+                    registerTask.doRegister(email, password);
                 }
                 else {
                     String message = "Passwords must match.";
@@ -74,11 +76,19 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         });
     }
 
+    // send user to collab screen (main screen)
+    private void sendUserToProfileScreen() {
+        Intent profileIntent = new Intent( RegisterActivity.this, ProfilePage.class);
+        startActivity(profileIntent);
+    }
+
     // abstract function from DoRegister.java defined here
     @Override
     public void registerCompleted(Boolean success, String message) {
         if (success) {
-            // TODO: SEND TO USER DETAILS SCREEN
+            // TODO: SEND USER TO PROFILE PAGE
+            sendUserToProfileScreen();
+            finish();
         } else {
             // show server error message to user
             Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);

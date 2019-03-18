@@ -86,14 +86,8 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         Log.i("received", "Success " + message);
         Log.i("listener implementation", "Listener implementation of loginCompleted working.");
         if (success) {
-            /*
-            Intent userSkillsIntent = new Intent(LoginActivity.this, UserSkillsActivity.class);
-            startActivity(userSkillsIntent);
-            */
-
             sendUserToCollabActivity();
             finish();
-
         }
         else {
             // show user toast on fail
