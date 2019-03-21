@@ -119,6 +119,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        // build JSON and send HTTP request
         confirmAddCollab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
