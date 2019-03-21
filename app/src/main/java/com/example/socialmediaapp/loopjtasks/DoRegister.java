@@ -62,26 +62,6 @@ public class DoRegister {
                     je.printStackTrace();
                 }
             }
-
-            /* temporarily removed, put back if above doesn't work
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.has("success") && response.getBoolean("success")) { //Success variable is true.
-                        System.out.println(response.toString());
-                    } else {
-                        String error = response.getString("error"); //Extract the error
-                        System.out.println("Error: " + error);
-                    }
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-            } */
         });
     }
 

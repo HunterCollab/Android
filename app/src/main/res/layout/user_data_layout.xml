@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/recycler_parent"
+    android:background="@color/AutoSecondary">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBright"
+            android:layout_margin="2dp">
+                <TextView
+                    android:id="@+id/data_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
 
-        <TextView
-            android:id="@+id/data_name"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_centerInParent="true"
-            android:paddingTop="15dp"
-            android:text="Data Value"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:typeface="serif" />
-    </RelativeLayout>
+                    android:textSize="20dp"
 
-</LinearLayout>
+                    android:paddingTop="15dp"
+
+                    android:textAlignment="center"
+                    android:text="Data Value"
+                    />
+        </RelativeLayout>
+
+
+
+</RelativeLayout>

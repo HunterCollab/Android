@@ -1,15 +1,11 @@
 package com.example.socialmediaapp;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,87 +14,66 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.loopjtasks.DoClassSearch;
-import com.example.socialmediaapp.loopjtasks.DoSkillSearch;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.loopjtasks.SetUserData;
-import com.example.socialmediaapp.tools.GeneralTools;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
 
-public class UserSkillsActivity extends AppCompatActivity
-        implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete {
+public class UserClassesActivity extends AppCompatActivity
+        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete  {
 
     private RecyclerView recyclerView;
     private UserRecyclerView mAdapter;
-    private ArrayList<String> skillNames;
+    private ArrayList<String> classNames;
     private AutoCompleteTextView autoCompleteTextView;
-    private UserSkillsActivity instance = null;
+    private UserClassesActivity instance = null;
 
     //Variable of our costume adapter that will listen to changes as we search for skills
     private AutoCompleteAdapter adapter;
     private Handler handler;
     final int TRIGGER_AUTO_COMPLETE = 100;
     final long AUTO_COMPLETE_DELAY = 300;
-    private DoSkillSearch search;
+    private DoClassSearch search;
 
-    private SetUserData updateSkills = null;
-    private Button updateSkillsButton = null;
+    private SetUserData updateClass = null;;
+    private Button updateClassButton;
 
     private GetUserData userData = null;
 
     private ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_skills);
+        setContentView(R.layout.activity_user_classes);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         instance = this;
 
-///////////////////////////////////// Auto Complete ////////////////////////////////////////////////////////////////
+///////////////////////////////////// Auto Complete //////////////////////////////////////////////////////////
+
         //Will be used to make the API call
-        search = new DoSkillSearch(getApplicationContext(), instance);
+        search = new DoClassSearch(getApplicationContext(), instance);
 
         //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.skill_auto_complete);
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.classes_auto_complete);
 
-        Button addSkillButton = (Button) findViewById(R.id.add_skill_button);
+        Button addSkillButton = (Button) findViewById(R.id.add_class_button);
 
         //Creates an adapter using our custom class AutoComplete Adapter
         adapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
 
         //Sets the limit on the characters needed to be typed before the adapter displays data or makes an api call
-        autoCompleteTextView.setThreshold(1);
+        autoCompleteTextView.setThreshold(3);
 
         //Changes the list of data used for auto complete. This one uses our custom adapter
         autoCompleteTextView.setAdapter(adapter);
@@ -135,7 +110,7 @@ public class UserSkillsActivity extends AppCompatActivity
                 if(msg.what == TRIGGER_AUTO_COMPLETE){
                     if(!TextUtils.isEmpty(autoCompleteTextView.getText())){
                         //After the delay, we will make the api call
-                        search.doSkillSearch(autoCompleteTextView.getText().toString());
+                        search.doClassSearch(autoCompleteTextView.getText().toString());
                     }
                 }
                 return false;
@@ -148,7 +123,7 @@ public class UserSkillsActivity extends AppCompatActivity
                     public void onClick(View v) {
                         String skill = autoCompleteTextView.getText().toString();
                         if(skill.length() != 0){
-                            skillNames.add(autoCompleteTextView.getText().toString());
+                            classNames.add(autoCompleteTextView.getText().toString());
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mAdapter.notifyDataSetChanged();
@@ -156,14 +131,13 @@ public class UserSkillsActivity extends AppCompatActivity
                     }
                 }
         );
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////// Filling Recycler View //////////////////////////////////////////////////////////
 
 
         //skills
-        skillNames = new ArrayList<String>();
+        classNames = new ArrayList<String>();
         userData = new GetUserData(getApplicationContext(), instance);
         userData.getUserData();
 
@@ -171,28 +145,28 @@ public class UserSkillsActivity extends AppCompatActivity
         /////////////////////////Delete an Item from the Recycler View///////////////////////////////
         itemTouchHelperCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-                        return false;
-                    }
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
 
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                        //Row is swiped from recycler view
-                        //Remove it from adapter
-                        int pos = viewHolder.getAdapterPosition();
-                        skillNames.remove(pos);
-                        mAdapter.notifyItemRemoved(pos);
-                        System.out.println("Array: " + skillNames);
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                //Row is swiped from recycler view
+                //Remove it from adapter
+                int pos = viewHolder.getAdapterPosition();
+                classNames.remove(pos);
+                mAdapter.notifyItemRemoved(pos);
+                System.out.println("Array: " + classNames);
 
-                    }
+            }
 
-                    @Override
-                    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                        //Load the background view
-                    }
-                };
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                //Load the background view
+            }
+        };
 
 
 
@@ -201,15 +175,14 @@ public class UserSkillsActivity extends AppCompatActivity
 
 ////////////////////////////////////Update Skills/////////////////////////////////////////////////////////
 
-
-
-        updateSkills = new SetUserData(getApplicationContext(), instance);
-        updateSkillsButton = (Button) findViewById(R.id.update_skill);
-        updateSkillsButton.setOnClickListener(new View.OnClickListener() {
+        updateClass = new SetUserData(getApplicationContext(), instance);
+        updateClassButton = (Button) findViewById(R.id.update_class);
+        updateClassButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                updateSkills.setUserSkills(skillNames);
+
+                updateClass.setUserClasses(classNames);
                 CharSequence message = "Skills Updated";
                 Toast t = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                 t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -217,20 +190,12 @@ public class UserSkillsActivity extends AppCompatActivity
             }
         });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    }
-
-
-    @Override
-    public void dataUpdateComplete(Boolean success, String message) {
-        mAdapter.notifyDataSetChanged();
-        System.out.println(message);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @Override
-    public void searchSkillComplete(ArrayList<String> message) {
+    public void classSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
         adapter.setData(message);
         //Once the new data is set, notify the adapter and show the new data.
@@ -238,18 +203,20 @@ public class UserSkillsActivity extends AppCompatActivity
     }
 
     @Override
-    public void downloadComplete(Boolean success) {
+    public void dataUpdateComplete(Boolean success, String message) {
+        mAdapter.notifyDataSetChanged();
+        System.out.println(message);
 
-        skillNames = userData.getUserSkills();
-        recyclerView = (RecyclerView) findViewById(R.id.skill_recycler_view);
-        mAdapter = new UserRecyclerView(skillNames, this);
+    }
+
+    @Override
+    public void downloadComplete(Boolean success) {
+        classNames = userData.getUserClasses();
+        recyclerView = (RecyclerView) findViewById(R.id.classes_recycler_view);
+        mAdapter = new UserRecyclerView(classNames, this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.notifyDataSetChanged();
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
-
     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
 }

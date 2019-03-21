@@ -11,9 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".AddCollabActivity"
-            android:parentActivityName=".CollabListActivity"/>
+        <activity
+            android:name=".UserClassesActivity"
+            android:label="@string/title_activity_user_classes"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AddCollabActivity"
+            android:parentActivityName=".CollabListActivity" />
         <activity
             android:name=".CollabListActivity"
             android:label="@string/title_collab_list"
@@ -27,9 +31,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.socialmediaapp.CollabListActivity" />
         </activity>
-
-        <activity android:name=".UserSkillsActivity"></activity>
-
+        <activity android:name=".UserSkillsActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">

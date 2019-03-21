@@ -32,14 +32,15 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
     // notficatoin support
-    implementation ("com.android.support:support-compat:28.0.0"){
+    implementation("com.android.support:support-compat:28.0.0") {
         exclude group: 'com.android.support'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
     }
 
+
     //Swipe View
-    compile 'com.baoyz.swipemenulistview:library:1.3.0'
+    implementation 'com.baoyz.swipemenulistview:library:1.3.0'
 
 
 }
