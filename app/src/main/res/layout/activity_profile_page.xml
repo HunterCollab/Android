@@ -47,7 +47,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/user_name"
                 android:layout_toRightOf="@+id/user_name"
-
+                android:stateListAnimator="@null"
                 android:background="@drawable/profileeditbutton"
                 android:minWidth="50dp"
                 android:minHeight="20dp"
@@ -82,7 +82,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/github"
                 android:layout_toRightOf="@+id/github"
-
+                android:stateListAnimator="@null"
                 android:background="@drawable/profileeditbutton"
                 android:minWidth="50dp"
                 android:minHeight="20dp"
@@ -117,7 +117,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/linkedin"
                 android:layout_toRightOf="@+id/linkedin"
-
+                android:stateListAnimator="@null"
                 android:background="@drawable/profileeditbutton"
                 android:minWidth="50dp"
                 android:minHeight="20dp"
@@ -152,7 +152,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/skills"
                 android:layout_toRightOf="@+id/skills"
-
+                android:stateListAnimator="@null"
                 android:background="@drawable/profileeditbutton"
                 android:minWidth="50dp"
                 android:minHeight="20dp"
@@ -187,7 +187,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/classes"
                 android:layout_toRightOf="@+id/classes"
-
+                android:stateListAnimator="@null"
                 android:background="@drawable/profileeditbutton"
                 android:minWidth="50dp"
                 android:minHeight="20dp"

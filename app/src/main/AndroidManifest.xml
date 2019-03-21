@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
+        <activity
             android:name=".ProfilePage"
             android:label="Profile" />
         <activity
@@ -29,9 +33,9 @@
                 android:value="com.example.socialmediaapp.CollabListActivity" />
         </activity>
         <activity
-            android:name="com.example.socialmediaapp.UserSkillsActivity"
+            android:name=".UserSkillsActivity"
             android:label="Skills"
-            android:parentActivityName="com.example.socialmediaapp.ProfilePage" />
+            android:parentActivityName=".ProfilePage" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">
