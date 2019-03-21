@@ -39,7 +39,7 @@ public class DoRegister {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    // TODO: NO TOKEN PROVIDED, FIX THIS
+                    // TODO: NO TOKEN PROVIDED, REMIND RAM TO IMPLEMENT
                     if (response.has("success") && response.getBoolean("success") == true) { //Success variable is true.
                         // extract the token
                         /*

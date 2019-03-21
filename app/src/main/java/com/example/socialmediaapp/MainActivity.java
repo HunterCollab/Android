@@ -63,16 +63,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        //Keeps track of what item on the sidebar was selected
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                UserMenuSelector(menuItem);
-                return false;
-            }
-        });
-
     }
 
     //Will run automatically at the start of the app
@@ -100,32 +90,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void UserMenuSelector(MenuItem item) {
-        switch(item.getItemId())
-        {
-            case R.id.nav_profile:
-                Toast.makeText(this, "Profile", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.nav_home:
-                Toast.makeText(this, "Home", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.nav_friends:
-                Toast.makeText(this, "Friends", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.nav_messages:
-                Toast.makeText(this,"Message", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.nav_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.nav_logout:
-                Toast.makeText(this, "Logout", Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
 }

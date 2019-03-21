@@ -1,6 +1,7 @@
 package com.example.socialmediaapp.loopjtasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
@@ -19,8 +20,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class GetUserData {
 
-    private RequestParams requestParams;
     private final Context context;
+    //private RequestParams requestParams;
     private ArrayList<String> skillStringList;
     private ArrayList<String> classStringList;
     private String username;
@@ -30,7 +31,7 @@ public class GetUserData {
 
     public GetUserData(Context context){
         this.context = context;
-        requestParams = new RequestParams();
+        //requestParams = new RequestParams();
         skillStringList = new ArrayList<>();
         classStringList = new ArrayList<>();
         username = new String();
@@ -41,7 +42,7 @@ public class GetUserData {
     public void getUserData(){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
-        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/getUserDetails", requestParams, new JsonHttpResponseHandler(){
+        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -96,7 +97,7 @@ public class GetUserData {
             JSONArray terms = null;
             terms = response.getJSONArray("skills");
 
-            System.out.println("here");
+            System.out.println("skills here");
             for(int i=0; i < terms.length(); i++){
                 String term = terms.getString(i);
                 System.out.println("skill: " + term);
@@ -126,7 +127,7 @@ public class GetUserData {
 
     public String getUserName(){
 
-        System.out.println("username" + username);
+        System.out.println("username: " + username);
         return username;
     }
 
@@ -153,5 +154,4 @@ public class GetUserData {
         System.out.println("stringList" + skillStringList);
         return skillStringList;
     }
-
 }

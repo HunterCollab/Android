@@ -7,25 +7,21 @@
     android:fitsSystemWindows="true"
     tools:context=".CollabListActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#162A58"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="#FFFFFF"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/collab_list" />

@@ -1,7 +1,14 @@
 package com.example.socialmediaapp.tools;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
+import com.example.socialmediaapp.LoginActivity;
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -10,6 +17,9 @@ import com.loopj.android.http.PersistentCookieStore;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+
+import static android.content.ContentValues.TAG;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class GeneralTools {
 
@@ -31,18 +41,12 @@ public class GeneralTools {
         return client;
     }
 
-    //Test function to hit the /user/getUserDetails endpoint and print the response.
-    public static void printCurrentUserDetails(final Context context) {
-        createAsyncHttpClient(context).get(GlobalConfig.BASE_API_URL + "/user/getUserDetails", new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                System.out.println(response.toString());
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                System.out.println(statusCode + " ::: " + res);
-            }
-        });
+    // restart the app
+    public static void doRestart(Context context, Class myClass) {
+        Intent intent = new Intent(context, myClass);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+        Runtime.getRuntime().exit(0);
     }
 
 }
