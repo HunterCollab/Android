@@ -36,7 +36,9 @@ public class DoSkillSearch {
         final RequestParams requestParams = new RequestParams();
         requestParams.put("query", constraint);
 
-        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/search/skills", requestParams, new JsonHttpResponseHandler(){
+        asyncHttpClient.get
+                (GlobalConfig.BASE_API_URL + "/search/skills",
+                        requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

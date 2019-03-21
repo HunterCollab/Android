@@ -21,4 +21,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Autocomplete">
+        <item name="android:colorControlNormal"> @color/AutoPrimary </item>
+        <item name="android:colorControlActivated"> @color/AutoSecondary  </item>
+    </style>
+
 </resources>

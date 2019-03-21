@@ -26,10 +26,13 @@ public class GetUserData {
     private String username;
     private String github;
     private String linkedIn;
+    private DownloadComplete dataDownloadComplete;
 
 
-    public GetUserData(Context context){
+    public GetUserData(Context context, DownloadComplete listener){
         this.context = context;
+        this.dataDownloadComplete = listener;
+
         requestParams = new RequestParams();
         skillStringList = new ArrayList<>();
         classStringList = new ArrayList<>();
@@ -50,11 +53,14 @@ public class GetUserData {
                 setUserName(response);
                 setUserLinkedIn(response);
                 setUserGithub(response);
+                dataDownloadComplete.downloadComplete(true);
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                dataDownloadComplete.downloadComplete(false);
             }
         });
     }
@@ -132,7 +138,6 @@ public class GetUserData {
     }
 
     public ArrayList<String> getUserClasses(){
-
         return classStringList;
     }
 
@@ -141,6 +146,12 @@ public class GetUserData {
         System.out.println(skillStringList);
 
         return skillStringList;
+    }
+
+    public interface DownloadComplete {
+
+        public void downloadComplete(Boolean success);
+
     }
 
 }
