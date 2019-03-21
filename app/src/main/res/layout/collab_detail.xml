@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/collab_detail"
-    style="?android:attr/textAppearanceLarge"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context=".CollabDetailFragment" />
+    android:layout_height="wrap_content">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/collab_detail"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textIsSelectable="true"
+        tools:context=".CollabDetailFragment"
+        android:text="Collab Details"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="JOIN"
+        android:background="@drawable/button"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorBright"
+        android:layout_below="@id/collab_detail"
+        />
+
+
+</RelativeLayout>
+
