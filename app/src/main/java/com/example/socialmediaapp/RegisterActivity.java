@@ -77,17 +77,16 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
     }
 
     // send user to collab screen (main screen)
-    private void sendUserToProfileScreen() {
-        Intent profileIntent = new Intent( RegisterActivity.this, ProfilePage.class);
-        startActivity(profileIntent);
+    private void sendUserToCollabScreen() {
+        Intent collabIntent = new Intent( RegisterActivity.this, CollabListActivity.class);
+        startActivity(collabIntent);
     }
 
     // abstract function from DoRegister.java defined here
     @Override
     public void registerCompleted(Boolean success, String message) {
         if (success) {
-            // TODO: SEND USER TO PROFILE PAGE
-            sendUserToProfileScreen();
+            sendUserToCollabScreen();
             finish();
         } else {
             // show server error message to user

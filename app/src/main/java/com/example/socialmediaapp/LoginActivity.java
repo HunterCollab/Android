@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
             Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
-
         }
     }
 }

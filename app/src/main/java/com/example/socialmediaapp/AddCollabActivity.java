@@ -1,32 +1,47 @@
 package com.example.socialmediaapp;
 
+import android.content.Context;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.DoLogin;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Context context = AddCollabActivity.this;
     private EditText collabName;
     private EditText collabLocation;
     private EditText collabDescription;
     private EditText txtDate;
     private EditText txtTime;
+    private EditText skillInput;
+    private EditText classInput;
+    private TextView skillsView;
+    private TextView classesView;
     private Button btnDatePicker;
     private Button btnTimePicker;
     private Button confirmAddCollab;
+    private Button addSkillButton;
+    private Button addClassButton;
+    private ArrayList<String> skillsArray = new ArrayList<String>();
+    private ArrayList<String> classesArray = new ArrayList<String>();
     private long mLastClickTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -51,9 +66,58 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         collabName = (EditText) findViewById(R.id.collab_name);
         collabLocation = (EditText) findViewById(R.id.collab_location);
         collabDescription = (EditText) findViewById(R.id.collab_description);
+        skillInput = (EditText) findViewById(R.id.wantedSkills);
+        classInput = (EditText) findViewById(R.id.wantedClasses);
+        addSkillButton = (Button) findViewById(R.id.btn_skill);
+        addClassButton = (Button) findViewById(R.id.btn_class);
+        skillsView = (TextView) findViewById(R.id.skillView);
+        classesView = (TextView) findViewById(R.id.classView);
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
+        addSkillButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String getInput = skillInput.getText().toString();
+                if (skillsArray.contains(getInput)){
+                    Toast t = Toast.makeText(context, "Duplicate.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
+                else if (getInput == null || getInput.trim().equals("")){
+                    Toast t = Toast.makeText(context, "Empty field.  Try again.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
+                else {
+                    skillsArray.add(getInput);
+                    skillsView.append(getInput + "\n");
+                    skillInput.getText().clear();
+                    }
+            }
+        });
+
+        addClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String getInput = classInput.getText().toString();
+                if (classesArray.contains(getInput)){
+                    Toast t = Toast.makeText(context, "Duplicate.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
+                else if (getInput == null || getInput.trim().equals("")){
+                    Toast t = Toast.makeText(context, "Empty field.  Try again.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
+                else {
+                    classesArray.add(getInput);
+                    classesView.append(getInput + "\n");
+                    classInput.getText().clear();
+                }
+            }
+        });
 
         confirmAddCollab.setOnClickListener(new View.OnClickListener() {
             @Override

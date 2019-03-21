@@ -2,10 +2,12 @@ package com.example.socialmediaapp;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -30,7 +32,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class UserSkillsActivity extends AppCompatActivity {
+public class UserSkillsActivity extends AppCompatActivity{
     private static final String TAG = "RecyclerViewAdapter";
     final int TRIGGER_AUTO_COMPLETE = 100;
     final long AUTO_COMPLETE_DELAY = 300;
@@ -42,11 +44,19 @@ public class UserSkillsActivity extends AppCompatActivity {
     private ArrayList<String> skillNames;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_skills);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         //final TextView selectedText = findViewById(R.id.selected_item);
         skillNames = new ArrayList<String>();
 

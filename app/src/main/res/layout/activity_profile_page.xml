@@ -7,36 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".ProfilePage">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:background="#162A58"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/profile_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/usericon" />
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="#FFFFFF"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ScrollView
         android:id="@+id/scrollProfile"
-        android:layout_below="@+id/app_bar"
+        android:layout_below="@+id/my_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,12 +31,179 @@
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Name/Nickname"
-                android:textSize="30sp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp"/>
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/editName_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/user_name"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@+id/user_name"
+                android:layout_toRightOf="@+id/user_name"
+
+                android:background="@drawable/profileeditbutton"
+                android:minWidth="50dp"
+                android:minHeight="20dp"
+                android:text="Edit"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_name"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/github"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/userName"
+                android:text="Github"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:id="@+id/editGithub_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/github"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@+id/github"
+                android:layout_toRightOf="@+id/github"
+
+                android:background="@drawable/profileeditbutton"
+                android:minWidth="50dp"
+                android:minHeight="20dp"
+                android:text="Edit"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/githubLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/github"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/linkedin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/githubLink"
+                android:text="LinkedIn"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:id="@+id/editLI_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/linkedin"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@+id/linkedin"
+                android:layout_toRightOf="@+id/linkedin"
+
+                android:background="@drawable/profileeditbutton"
+                android:minWidth="50dp"
+                android:minHeight="20dp"
+                android:text="Edit"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/linkedinLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linkedin"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/skills"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linkedinLink"
+                android:text="Skills"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:id="@+id/editSkills_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/skills"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@+id/skills"
+                android:layout_toRightOf="@+id/skills"
+
+                android:background="@drawable/profileeditbutton"
+                android:minWidth="50dp"
+                android:minHeight="20dp"
+                android:text="Edit"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/skillsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/skills"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/classes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/skillsList"
+                android:text="Classes"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:id="@+id/editClasses_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/classes"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@+id/classes"
+                android:layout_toRightOf="@+id/classes"
+
+                android:background="@drawable/profileeditbutton"
+                android:minWidth="50dp"
+                android:minHeight="20dp"
+                android:text="Edit"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/classesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/classes"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+        </RelativeLayout>
 
     </ScrollView>
 

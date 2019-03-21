@@ -10,30 +10,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ProfilePage">
-            android:parentActivityName=".CollabListActivity"
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.socialmediaapp.CollabListActivity" />
-        </activity>
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".ProfilePage"
+            android:label="Profile" />
         <activity
             android:name=".AddCollabActivity"
             android:parentActivityName=".CollabListActivity" />
         <activity
             android:name=".CollabListActivity"
-            android:label="@string/title_collab_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_collab_list" />
         <activity
             android:name=".CollabDetailActivity"
             android:label="@string/title_collab_detail"
-            android:parentActivityName=".CollabListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".CollabListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.socialmediaapp.CollabListActivity" />
         </activity>
-        <activity android:name=".UserSkillsActivity" />
+        <activity
+            android:name="com.example.socialmediaapp.UserSkillsActivity"
+            android:label="Skills"
+            android:parentActivityName="com.example.socialmediaapp.ProfilePage" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">

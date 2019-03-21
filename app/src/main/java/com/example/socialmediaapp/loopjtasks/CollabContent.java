@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class CollabContent {
 
-    // TODO: SHOW USER COLLABS (HTTP)
+    // TODO: SHOW USER COLLABS, ALL/RECOMMENDED/MINE (GET REQUEST)
     /**
      * An array of items.
      */
