@@ -17,12 +17,6 @@
             app:showAsAction="never" />
 
         <item
-            android:id="@+id/nav_friends"
-            android:checkable="false"
-            android:title="Friends"
-            app:showAsAction="never" />
-
-        <item
             android:id="@+id/nav_messages"
             android:checkable="false"
             android:title="Messages"

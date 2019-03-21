@@ -93,8 +93,6 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
                 Intent collabIntent = new Intent(this, CollabListActivity.class);
                 this.startActivity(collabIntent);
                 return true;
-            case R.id.nav_friends:
-                return true;
             case R.id.nav_messages:
                 return true;
             case R.id.nav_logout:
