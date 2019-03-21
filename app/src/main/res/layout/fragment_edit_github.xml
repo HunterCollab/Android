@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/customborder"
+    tools:context=".EditGithubFragment">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Github"
+        android:textSize="25sp"
+        android:textColor="@color/colorPrimary"/>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_below="@id/text1"
+        android:layout_height="wrap_content"
+        android:hint="Enter your Github"/>
+
+    <Button
+        android:id="@+id/saveGithub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:text="SAVE"
+        android:stateListAnimator="@null"
+        android:layout_centerInParent="true"
+        android:textSize="25sp"/>
+
+</RelativeLayout>

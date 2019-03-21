@@ -3,6 +3,8 @@ package com.example.socialmediaapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
     private Button editSkill;
     private Button editClass;
     private long mLastClickTime = 0;
+    private UserAPIClient userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
         editSkill = (Button) findViewById(R.id.editSkills_button);
         editClass = (Button) findViewById(R.id.editClasses_button);
 
-        UserAPIClient userDetails = new UserAPIClient(getApplicationContext(), instance);
+        userDetails = new UserAPIClient(getApplicationContext(), instance);
         userDetails.getUserDetails();
 
         // editName Button
@@ -70,6 +73,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
                 // TODO: EDIT NAME
+                sendUserToEditName();
             }
         });
 
@@ -82,6 +86,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
                 // TODO: EDIT GITHUB
+                sendUserToEditGithub();
             }
         });
 
@@ -94,6 +99,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
                 // TODO: EDIT LINKEDIN
+                sendUserToEditLinkedIn();
             }
         });
 
@@ -160,6 +166,35 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
     private void sendUserToSkills() {
         Intent skillPage = new Intent (ProfilePage.this, UserSkillsActivity.class);
         startActivity(skillPage);
+    }
+
+    // send User to editName fragment
+    // bundle + key to pass parameter to EditProfileActivity.java
+    private void sendUserToEditName() {
+        Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",1);
+        editProfile.putExtras(x);
+        startActivity(editProfile);
+    }
+
+    // send User to editGithub fragment
+    private void sendUserToEditGithub() {
+        Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",2);
+        editProfile.putExtras(x);
+        startActivity(editProfile);
+    }
+
+
+    // send User to editLinkedIn fragment
+    private void sendUserToEditLinkedIn() {
+        Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",3);
+        editProfile.putExtras(x);
+        startActivity(editProfile);
     }
 
     // parse JSON object into the fields we want

@@ -42,7 +42,6 @@ public class DoRegister {
                     // TODO: NO TOKEN PROVIDED, REMIND RAM TO IMPLEMENT
                     if (response.has("success") && response.getBoolean("success") == true) { //Success variable is true.
                         // extract the token
-                        /*
                         String token = response.getString("token"); //Extract the token
                         // Retrieve cookie store for this application context.
                         PersistentCookieStore myCookieStore = new PersistentCookieStore(context.getApplicationContext());
@@ -52,10 +51,7 @@ public class DoRegister {
                         newCookie.setPath("/");
                         myCookieStore.addCookie(newCookie);
                         Log.i ( "token", "Token successfully retrieved and saved to cookie store: " + token);
-                        registerCompleteListener.registerCompleted(true, token); */
-
-                        // temp fix
-                        registerCompleteListener.registerCompleted(true, "blahfix");
+                        registerCompleteListener.registerCompleted(true, token);
                     } else {
                         String error = response.getString("error"); //Extract the error
                         registerCompleteListener.registerCompleted(false, error);
