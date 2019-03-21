@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -69,12 +70,18 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, CollabContent.ITEMS, mTwoPane));
     }
 
+
+//HERE'S WHERE WE PLACE THE COSTUME VIEW FOR OUR RECYCLER VIEW ADAPTER
+//SIMILAR TO OUR ADAPTER FOR SKILLS AND CLASSES
+//FRAGMENT IS CALLED FROM HERE
+
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final CollabListActivity mParentActivity;
         private final List<CollabContent.DummyItem> mValues;
         private final boolean mTwoPane;
+
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +95,7 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
                             .replace(R.id.collab_detail_container, fragment)
                             .commit();
                 } else {
+                    //This part will display the CollabDetailFragment
                     Context context = view.getContext();
                     Intent intent = new Intent(context, CollabDetailActivity.class);
                     intent.putExtra(CollabDetailFragment.ARG_ITEM_ID, item.id);
@@ -117,8 +125,10 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
             holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).content);
 
-            holder.itemView.setTag(mValues.get(position));
-            holder.itemView.setOnClickListener(mOnClickListener);
+            holder.detailsButton.setTag(mValues.get(position));
+            holder.detailsButton.setOnClickListener(mOnClickListener);
+
+
         }
 
         @Override
@@ -129,11 +139,13 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mIdView;
             final TextView mContentView;
+            final Button detailsButton;
 
             ViewHolder(View view) {
                 super(view);
-                mIdView = (TextView) view.findViewById(R.id.id_text);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mIdView = (TextView) view.findViewById(R.id.collab_title);
+                mContentView = (TextView) view.findViewById(R.id.collab_description);
+                detailsButton = (Button) view.findViewById(R.id.collab_details_button);
             }
         }
     }
