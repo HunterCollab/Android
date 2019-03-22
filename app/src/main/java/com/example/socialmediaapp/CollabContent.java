@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.loopjtasks;
+package com.example.socialmediaapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;

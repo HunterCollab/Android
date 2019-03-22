@@ -112,7 +112,6 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
                 sendUserToSkills();
-                // TODO: UPDATE CLASSES AFTER EDIT
             }
         });
 
@@ -124,7 +123,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
-                // TODO: EDIT CLASSES
+                sendUserToClasses();
             }
         });
 
@@ -146,7 +145,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                 Intent profIntent = new Intent(this, ProfilePage.class);
                 this.startActivity(profIntent);
                 return true;
-            case R.id.nav_Collabs:
+            case R.id.collab_Nav:
                 Intent collabIntent = new Intent(this, CollabListActivity.class);
                 this.startActivity(collabIntent);
                 return true;
@@ -164,6 +163,12 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
     private void sendUserToSkills() {
         Intent skillPage = new Intent (ProfilePage.this, UserSkillsActivity.class);
         startActivity(skillPage);
+    }
+
+    // send User to classes screen so they can edit
+    private void sendUserToClasses() {
+        Intent classPage = new Intent (ProfilePage.this, UserClassesActivity.class);
+        startActivity(classPage);
     }
 
     // send User to editName fragment

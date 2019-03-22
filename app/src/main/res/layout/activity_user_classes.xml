@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserClassesActivity">
+
+    <RelativeLayout
+        android:id="@+id/first_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
+        android:padding="3dp"
+        android:background="@color/AutoSecondary">
+
+        <Button
+            android:id="@+id/update_class"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="UPDATE"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:background="@drawable/button"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorBright"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/second_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_layout"
+        android:layout_marginBottom="40dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/classes_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="true"
+           ></android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/third_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/AutoSecondary"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/keyboard"
+
+            android:layout_centerHorizontal="true">
+
+            <AutoCompleteTextView
+                android:id="@+id/classes_auto_complete"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/inputs"
+                android:drawableLeft="@mipmap/ic_classes"
+                android:drawablePadding="3dp"
+                android:ems="10"
+                android:hint="Search Class...."
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/add_class_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/classes_auto_complete"
+                android:text="ADD"
+                android:background="@drawable/button"
+                android:textSize="21dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBright"
+                android:layout_toRightOf="@+id/classes_auto_complete"
+                />
+
+
+        </LinearLayout>
+
+        <android.inputmethodservice.KeyboardView
+            android:id="@+id/keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            />
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

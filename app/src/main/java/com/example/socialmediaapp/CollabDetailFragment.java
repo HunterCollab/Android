@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.socialmediaapp.loopjtasks.CollabContent;
-
 /**
  * A fragment representing a single Collab detail screen.
  * This fragment is either contained in a {@link CollabListActivity}
@@ -62,6 +60,7 @@ public class CollabDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.collab_detail)).setText(mItem.details);
+
         }
 
         return rootView;

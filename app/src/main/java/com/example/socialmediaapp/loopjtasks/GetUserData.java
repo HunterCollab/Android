@@ -1,7 +1,6 @@
 package com.example.socialmediaapp.loopjtasks;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
@@ -20,18 +19,21 @@ import cz.msebera.android.httpclient.Header;
 
 public class GetUserData {
 
-    private final Context context;
-    //private RequestParams requestParams;
+    private RequestParams requestParams;
+    private Context context;
     private ArrayList<String> skillStringList;
     private ArrayList<String> classStringList;
     private String username;
     private String github;
     private String linkedIn;
+    private DownloadComplete dataDownloadComplete;
 
 
-    public GetUserData(Context context){
+    public GetUserData(Context context, DownloadComplete listener){
         this.context = context;
-        //requestParams = new RequestParams();
+        this.dataDownloadComplete = listener;
+
+        requestParams = new RequestParams();
         skillStringList = new ArrayList<>();
         classStringList = new ArrayList<>();
         username = new String();
@@ -42,21 +44,23 @@ public class GetUserData {
     public void getUserData(){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
-        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user", new JsonHttpResponseHandler(){
+        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/", requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("response: " + response);
                 setUserSkills(response);
                 setUserClasses(response);
                 setUserName(response);
                 setUserLinkedIn(response);
                 setUserGithub(response);
+                dataDownloadComplete.downloadComplete(true);
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                dataDownloadComplete.downloadComplete(false);
             }
         });
     }
@@ -65,7 +69,6 @@ public class GetUserData {
 
         try {
             username = response.getString("username");
-            System.out.println("username: " + username);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -74,7 +77,6 @@ public class GetUserData {
     private void setUserGithub(JSONObject response){
         try {
             username = response.getString("github");
-            System.out.println("github: " + github);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -84,7 +86,6 @@ public class GetUserData {
     private void setUserLinkedIn(JSONObject response){
         try {
             username = response.getString("linkedin");
-            System.out.println("linkedin: " + linkedIn);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,10 +98,8 @@ public class GetUserData {
             JSONArray terms = null;
             terms = response.getJSONArray("skills");
 
-            System.out.println("skills here");
             for(int i=0; i < terms.length(); i++){
                 String term = terms.getString(i);
-                System.out.println("skill: " + term);
                 skillStringList.add(term);
             }
         } catch (JSONException e) {
@@ -114,10 +113,8 @@ public class GetUserData {
             JSONArray terms = null;
             terms = response.getJSONArray("classes");
 
-            System.out.println("here");
             for(int i=0; i < terms.length(); i++){
                 String term = terms.getString(i);
-                System.out.println("class: " + term);
                 classStringList.add(term);
             }
         } catch (JSONException e) {
@@ -127,31 +124,34 @@ public class GetUserData {
 
     public String getUserName(){
 
-        System.out.println("username: " + username);
         return username;
     }
 
     public String getUserGithub(){
 
-        System.out.println("github: " + github);
         return github;
     }
 
     public String getUserLinkedIn(){
 
-        System.out.println("linkedin: " + linkedIn);
         return linkedIn;
     }
 
     public ArrayList<String> getUserClasses(){
-
-        System.out.println("classList" + classStringList);
         return classStringList;
     }
 
     public ArrayList<String> getUserSkills(){
 
-        System.out.println("stringList" + skillStringList);
+        System.out.println(skillStringList);
+
         return skillStringList;
     }
+
+    public interface DownloadComplete {
+
+        public void downloadComplete(Boolean success);
+
+    }
+
 }
