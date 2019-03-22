@@ -56,6 +56,7 @@ public class CollabDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putString(CollabDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(CollabDetailFragment.ARG_ITEM_ID));
+
             CollabDetailFragment fragment = new CollabDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

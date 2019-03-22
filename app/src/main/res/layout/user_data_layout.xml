@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/recycler_parent"
+    android:background="@color/AutoSecondary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBright"
+            android:layout_margin="2dp">
+                <TextView
+                    android:id="@+id/data_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+
+                    android:textSize="20dp"
+
+                    android:paddingTop="15dp"
+
+                    android:textAlignment="center"
+                    android:text="Data Value"
+                    />
+        </RelativeLayout>
+
+
+
+</RelativeLayout>

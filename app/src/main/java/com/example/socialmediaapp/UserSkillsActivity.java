@@ -1,23 +1,39 @@
+
 package com.example.socialmediaapp;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.socialmediaapp.config.GlobalConfig;
+import com.example.socialmediaapp.loopjtasks.DoClassSearch;
+import com.example.socialmediaapp.loopjtasks.DoSkillSearch;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
+import com.example.socialmediaapp.loopjtasks.SetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -32,50 +48,48 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class UserSkillsActivity extends AppCompatActivity{
-    private static final String TAG = "RecyclerViewAdapter";
-    final int TRIGGER_AUTO_COMPLETE = 100;
-    final long AUTO_COMPLETE_DELAY = 300;
+public class UserSkillsActivity extends AppCompatActivity
+        implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete {
 
-    private Handler handler;
+    private RecyclerView recyclerView;
+    private UserRecyclerView mAdapter;
+    private ArrayList<String> skillNames;
+    private AutoCompleteTextView autoCompleteTextView;
+    private UserSkillsActivity instance = null;
+
     //Variable of our costume adapter that will listen to changes as we search for skills
     private AutoCompleteAdapter adapter;
-    //List of arrays that will store both the skills retrieved from the server and the new ones added.
-    private ArrayList<String> skillNames;
+    private Handler handler;
+    final int TRIGGER_AUTO_COMPLETE = 100;
+    final long AUTO_COMPLETE_DELAY = 300;
+    private DoSkillSearch search;
+
+    private SetUserData updateSkills = null;
+    private Button updateSkillsButton = null;
+
+    private GetUserData userData = null;
+
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_skills);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        instance = this;
 
-        //final TextView selectedText = findViewById(R.id.selected_item);
-        skillNames = new ArrayList<String>();
+///////////////////////////////////// Auto Complete ////////////////////////////////////////////////////////////////
+        //Will be used to make the API call
+        search = new DoSkillSearch(getApplicationContext(), instance);
 
-////////////////////////////////////Display Skills/////////////////////////////////////////////////////////
-
-        //skills
-
-        GetUserData userData = new GetUserData(getApplicationContext());
-        userData.getUserData();
-        skillNames = userData.getUserSkills();
-        Log.d(TAG, "onCreate: started");
-        initRecyclerView();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////// Auto Complete /////////////////////////////////////////////////
         //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
-       final AutoCompleteTextView autoCompleteTextView =
-               (AutoCompleteTextView) findViewById(R.id.skills_auto_complete);
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.skill_auto_complete);
+
+        Button addSkillButton = (Button) findViewById(R.id.add_skill_button);
 
         //Creates an adapter using our custom class AutoComplete Adapter
         adapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
@@ -85,19 +99,6 @@ public class UserSkillsActivity extends AppCompatActivity{
 
         //Changes the list of data used for auto complete. This one uses our custom adapter
         autoCompleteTextView.setAdapter(adapter);
-
-
-        //Once we find a skill that we want to add to our list, we can click on it. This section handles that.
-        //It also adds what we click on to our recycler view.
-        autoCompleteTextView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener(){
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        skillNames.add(adapter.getItem(position));
-                        //selectedText.setText(adapter.getItem(position));
-                    }
-                });
 
         //This section handles the api calls as we type characters in the autocompleteview section.
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
@@ -115,6 +116,7 @@ public class UserSkillsActivity extends AppCompatActivity{
                 handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
                         AUTO_COMPLETE_DELAY);
 
+
             }
 
             @Override
@@ -130,69 +132,121 @@ public class UserSkillsActivity extends AppCompatActivity{
                 if(msg.what == TRIGGER_AUTO_COMPLETE){
                     if(!TextUtils.isEmpty(autoCompleteTextView.getText())){
                         //After the delay, we will make the api call
-                        makeApiCall(autoCompleteTextView.getText().toString());
+                        search.doSkillSearch(autoCompleteTextView.getText().toString());
                     }
                 }
                 return false;
             }
         });
 
+        addSkillButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String skill = autoCompleteTextView.getText().toString();
+                        if(skill.length() != 0){
+                            skillNames.add(autoCompleteTextView.getText().toString());
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+        );
 
-    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void initSkillsBitmap(){
-        Log.d(TAG, "onCreate: preparing bit maps");
+///////////////////////////////////// Filling Recycler View //////////////////////////////////////////////////////////
 
-    }
 
-    private void initRecyclerView(){
-        Log.d(TAG, "onCreate: init recyclerview");
-        RecyclerView recyclerView = findViewById(R.id.all_skills);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(skillNames,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+        //skills
+        skillNames = new ArrayList<String>();
+        userData = new GetUserData(getApplicationContext(), instance);
+        userData.getUserData();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void makeApiCall(String constraint) {
-
-        AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(this);
-        final RequestParams requestParams = new RequestParams();
-        requestParams.put("query", constraint);
-
-        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/search/skills", requestParams, new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-
-                List<String> stringList = new ArrayList<>();
-
-                System.out.println("Response: " + response);
-
-                try {
-                    JSONArray terms = null;
-                    terms = response.getJSONArray("matches");
-
-                    System.out.println("here");
-                    for(int i=0; i < terms.length(); i++){
-                        String term = terms.getString(i);
-                        System.out.println("term: " + term);
-                        stringList.add(term);
+        /////////////////////////Delete an Item from the Recycler View///////////////////////////////
+        itemTouchHelperCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                        return false;
                     }
 
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                        //Row is swiped from recycler view
+                        //Remove it from adapter
+                        int pos = viewHolder.getAdapterPosition();
+                        skillNames.remove(pos);
+                        mAdapter.notifyItemRemoved(pos);
+                        System.out.println("Array: " + skillNames);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                //Sets the new data as we retrieve new suggestions from the
-                adapter.setData(stringList);
-                //Once the new data is set, notify the adapter and show the new data.
-                adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                        //Load the background view
+                    }
+                };
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////Update Skills/////////////////////////////////////////////////////////
+
+
+
+        updateSkills = new SetUserData(getApplicationContext(), instance);
+        updateSkillsButton = (Button) findViewById(R.id.update_skill);
+        updateSkillsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                updateSkills.setUserSkills(skillNames);
+                CharSequence message = "Skills Updated";
+                Toast t = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                t.show();
             }
         });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     }
+
+
+    @Override
+    public void dataUpdateComplete(Boolean success, String message) {
+        mAdapter.notifyDataSetChanged();
+        System.out.println(message);
+    }
+
+    @Override
+    public void searchSkillComplete(ArrayList<String> message) {
+        //Sets the new data as we retrieve new suggestions from the
+        adapter.setData(message);
+        //Once the new data is set, notify the adapter and show the new data.
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void downloadComplete(Boolean success) {
+
+        skillNames = userData.getUserSkills();
+        recyclerView = (RecyclerView) findViewById(R.id.skill_recycler_view);
+        mAdapter = new UserRecyclerView(skillNames, this);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter.notifyDataSetChanged();
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
