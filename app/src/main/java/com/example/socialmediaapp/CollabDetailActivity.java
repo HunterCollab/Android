@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.example.socialmediaapp.loopjtasks.CollabModel;
+
 /**
  * An activity representing a single Collab detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -22,6 +24,7 @@ public class CollabDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_collab_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
@@ -50,12 +53,18 @@ public class CollabDetailActivity extends AppCompatActivity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
+
         if (savedInstanceState == null) {
+
+            Intent intent = getIntent();
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
+            CollabModel collab = intent.getParcelableExtra("collab");
+
+            System.out.println("collab: " + collab.getDescription());
             Bundle arguments = new Bundle();
-            arguments.putString(CollabDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(CollabDetailFragment.ARG_ITEM_ID));
+            arguments.putString("description", collab.getDescription());
+            arguments.putString("title", collab.getTitle());
 
             CollabDetailFragment fragment = new CollabDetailFragment();
             fragment.setArguments(arguments);
