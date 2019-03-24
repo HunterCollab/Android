@@ -39,7 +39,7 @@ public class EditNameFragment extends Fragment implements SetUserData.UpdateComp
             public void onClick(View v) {
                 String newName = editName.getText().toString();
                 updateName = new SetUserData(getContext(), instance);
-                updateName.setUserName(newName);
+                updateName.setUserNickname(newName);
                 getActivity().finish();
             }
         });

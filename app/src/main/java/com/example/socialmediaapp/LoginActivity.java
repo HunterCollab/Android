@@ -19,7 +19,6 @@ import com.example.socialmediaapp.loopjtasks.GetUserData;
 
 public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLoginComplete {
 
-    // TODO: KEEP APP "OPEN" WHEN USER EXITS TO HOME SCREEN
     private Button loginButton;
     private EditText userEmail;
     private EditText userPassword;
