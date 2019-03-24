@@ -28,7 +28,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         else if (value == 2){
             FragmentTransaction editGithub = getSupportFragmentManager().beginTransaction();
-            editGithub.replace(R.id.fragmentContainer, new EditGithubFragment());
+            editGithub.replace(R.id.fragmentContainer, new EditGithubFrag());
             editGithub.commit();
         }
         else if (value == 3){
