@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRetrieveDetails{
 
+    // TODO: SKILLS + CLASSES OF 0 or 1 CANNOT BE ADDED
     private Context context = ProfilePage.this;
     private TextView userName;
     private TextView githubLink;
@@ -72,7 +74,6 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
-                // TODO: EDIT NAME
                 sendUserToEditName();
             }
         });
@@ -85,7 +86,6 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
-                // TODO: EDIT GITHUB
                 sendUserToEditGithub();
             }
         });
@@ -98,7 +98,6 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
                     return;
                 mLastClickTime = SystemClock.elapsedRealtime();
-                // TODO: EDIT LINKEDIN
                 sendUserToEditLinkedIn();
             }
         });
@@ -127,6 +126,13 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
             }
         });
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        userDetails = new UserAPIClient(getApplicationContext(), instance);
+        userDetails.getUserDetails();
     }
 
     // menu navigation
@@ -202,30 +208,36 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
 
     // parse JSON object into the fields we want
     private void getUserName (JSONObject response){
+        userName.setText(null);
         try {
-            userName.setText(response.getString("username"));
+            userName.setText(response.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void getUserGithub (JSONObject response){
+        githubLink.setText(null);
         try {
             githubLink.setText(response.getString("github"));
+            Linkify.addLinks(githubLink, Linkify.WEB_URLS);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void getUserLinkedIn (JSONObject response){
+        linkedinLink.setText(null);
         try {
             linkedinLink.setText(response.getString("linkedin"));
+            Linkify.addLinks(linkedinLink, Linkify.WEB_URLS);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void getUserSkills (JSONObject response){
+        skills.setText(null);
         try {
             JSONArray skillList = null;
             skillList = response.getJSONArray("skills");
@@ -240,6 +252,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
     }
 
     private void getUserClasses (JSONObject response){
+        classes.setText(null);
         try {
             JSONArray classList = null;
             classList = response.getJSONArray("classes");

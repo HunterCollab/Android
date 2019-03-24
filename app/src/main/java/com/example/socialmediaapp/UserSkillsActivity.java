@@ -51,6 +51,7 @@ import cz.msebera.android.httpclient.Header;
 public class UserSkillsActivity extends AppCompatActivity
         implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete {
 
+    private Context context = UserSkillsActivity.this;
     private RecyclerView recyclerView;
     private UserRecyclerView mAdapter;
     private ArrayList<String> skillNames;
@@ -144,8 +145,15 @@ public class UserSkillsActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         String skill = autoCompleteTextView.getText().toString();
-                        if(skill.length() != 0){
+                        if(skillNames.contains(skill)){
+                            Toast t = Toast.makeText(context, "Duplicate. Try again.", Toast.LENGTH_LONG);
+                            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                            t.show();
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        else if(skill.length() != 0){
                             skillNames.add(autoCompleteTextView.getText().toString());
+                            autoCompleteTextView.getText().clear();
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mAdapter.notifyDataSetChanged();

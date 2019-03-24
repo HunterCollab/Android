@@ -1,5 +1,6 @@
 package com.example.socialmediaapp;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 public class UserClassesActivity extends AppCompatActivity
         implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete  {
 
+    private Context context = UserClassesActivity.this;
     private RecyclerView recyclerView;
     private UserRecyclerView mAdapter;
     private ArrayList<String> classNames;
@@ -67,7 +69,7 @@ public class UserClassesActivity extends AppCompatActivity
         //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.classes_auto_complete);
 
-        Button addSkillButton = (Button) findViewById(R.id.add_class_button);
+        Button addClassButton = (Button) findViewById(R.id.add_class_button);
 
         //Creates an adapter using our custom class AutoComplete Adapter
         adapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
@@ -117,13 +119,20 @@ public class UserClassesActivity extends AppCompatActivity
             }
         });
 
-        addSkillButton.setOnClickListener(
+        addClassButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String skill = autoCompleteTextView.getText().toString();
-                        if(skill.length() != 0){
+                        String Class = autoCompleteTextView.getText().toString();
+                        if(classNames.contains(Class)){
+                            Toast t = Toast.makeText(context, "Duplicate. Try again.", Toast.LENGTH_LONG);
+                            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                            t.show();
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        else if(Class.length() != 0){
                             classNames.add(autoCompleteTextView.getText().toString());
+                            autoCompleteTextView.getText().clear();
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mAdapter.notifyDataSetChanged();
