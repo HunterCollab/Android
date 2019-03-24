@@ -3,11 +3,13 @@ package com.example.socialmediaapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,9 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.socialmediaapp.loopjtasks.CollabModel;
+import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import com.example.socialmediaapp.tools.GeneralTools;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,18 +35,27 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class CollabListActivity extends AppCompatActivity implements CollabContent.OnCollabContent{
+public class CollabListActivity extends AppCompatActivity implements GetCollabsData.GetCollabDataComplete {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+    private GetCollabsData collabsClass;
+    private CollabListActivity instance;
+    public ArrayList<CollabModel> listOfCollabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collab_list);
+
+        instance = this;
+        //////////////My Code////////
+        collabsClass = new GetCollabsData(getApplicationContext(), instance);
+        collabsClass.getCollabs("getAllCollabs");
+        ////////////////////////////
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -64,9 +80,7 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
             mTwoPane = true;
         }
 
-        View recyclerView = findViewById(R.id.collab_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+
     }
 
     // menu navigation
@@ -100,7 +114,21 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, CollabContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, listOfCollabs));
+    }
+
+    @Override
+    public void getAllCollabs(Boolean success) {
+
+        if(success){
+            listOfCollabs = collabsClass.returnCollabs();
+            View recyclerView = findViewById(R.id.collab_list);
+            assert recyclerView != null;
+            setupRecyclerView((RecyclerView) recyclerView);
+
+
+        }
+
     }
 
 
@@ -111,40 +139,36 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
+        private static final String TAG = "RecyclerViewAdapter";
+
         private final CollabListActivity mParentActivity;
-        private final List<CollabContent.DummyItem> mValues;
-        private final boolean mTwoPane;
+        private ArrayList<CollabModel> listOfCollabs;
+
+
+
+        SimpleItemRecyclerViewAdapter(CollabListActivity parent,
+                                      ArrayList<CollabModel> collabData) {
+            mParentActivity = parent;
+            listOfCollabs = collabData;
+        }
+
+
 
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CollabContent.DummyItem item = (CollabContent.DummyItem) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(CollabDetailFragment.ARG_ITEM_ID, item.id);
-                    CollabDetailFragment fragment = new CollabDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.collab_detail_container, fragment)
-                            .commit();
-                } else {
+                CollabModel item = (CollabModel) view.getTag();
+
                     //This part will display the CollabDetailFragment
                     Context context = view.getContext();
                     Intent intent = new Intent(context, CollabDetailActivity.class);
-                    intent.putExtra(CollabDetailFragment.ARG_ITEM_ID, item.id);
+                    System.out.println("ID: " + item.id);
+                    intent.putExtra("collab", listOfCollabs.get(item.id));
 
                     context.startActivity(intent);
-                }
+
             }
         };
-
-        SimpleItemRecyclerViewAdapter(CollabListActivity parent,
-                                      List<CollabContent.DummyItem> items,
-                                      boolean twoPane) {
-            mValues = items;
-            mParentActivity = parent;
-            mTwoPane = twoPane;
-        }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -155,10 +179,12 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            Log.d(TAG, "onBindViewHolder: called.");
 
-            holder.detailsButton.setTag(mValues.get(position));
+            holder.mIdView.setText(listOfCollabs.get(position).getTitle());
+            holder.mContentView.setText(listOfCollabs.get(position).getDescription());
+
+            holder.detailsButton.setTag(listOfCollabs.get(position));
             holder.detailsButton.setOnClickListener(mOnClickListener);
 
 
@@ -166,19 +192,21 @@ public class CollabListActivity extends AppCompatActivity implements CollabConte
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return listOfCollabs.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mIdView;
             final TextView mContentView;
             final Button detailsButton;
+            RelativeLayout parentLayout;
 
             ViewHolder(View view) {
                 super(view);
                 mIdView = (TextView) view.findViewById(R.id.collab_title);
                 mContentView = (TextView) view.findViewById(R.id.collab_description);
                 detailsButton = (Button) view.findViewById(R.id.collab_details_button);
+                parentLayout = itemView.findViewById(R.id.collab_main_layout);
             }
         }
     }
