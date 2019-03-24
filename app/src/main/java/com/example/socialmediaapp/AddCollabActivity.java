@@ -19,11 +19,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.DoLogin;
+import com.example.socialmediaapp.loopjtasks.SetUserData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 
-public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener {
+// TODO: CHANGE IMPLEMENTS TO API FILE FOR SETUSERDATA
+public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, SetUserData.UpdateComplete {
 
     private Context context = AddCollabActivity.this;
     private EditText collabName;
@@ -33,6 +36,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private EditText txtTime;
     private EditText skillInput;
     private EditText classInput;
+    private EditText collabSize;
     private TextView skillsView;
     private TextView classesView;
     private Button btnDatePicker;
@@ -45,10 +49,16 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private long mLastClickTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
+    // TODO: CHANGE + APPEND TO API FILE
+    private SetUserData addCollab = null;
+    private AddCollabActivity instance = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_collab);
+
+        instance = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +75,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         txtTime= (EditText) findViewById(R.id.in_time);
         collabName = (EditText) findViewById(R.id.collab_name);
         collabLocation = (EditText) findViewById(R.id.collab_location);
+        collabSize = (EditText) findViewById(R.id.collabSize);
         collabDescription = (EditText) findViewById(R.id.collab_description);
         skillInput = (EditText) findViewById(R.id.wantedSkills);
         classInput = (EditText) findViewById(R.id.wantedClasses);
@@ -133,8 +144,31 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                 String CollabDescription = collabDescription.getText().toString();
                 String CollabDate = txtDate.getText().toString();
                 String CollabTime = txtTime.getText().toString();
-                // TODO: ADD COLLAB (POST REQUEST)
-                finish();
+                String CollabSize = collabSize.getText().toString();
+
+                // converting String to int with catch exception
+                Integer collabSizeInt = 0;
+                try {
+                    collabSizeInt = Integer.parseInt(CollabSize);
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                }
+
+                // if any fields are empty, tell user, otherwise call API request
+                if (CollabName.isEmpty() || CollabLocation.isEmpty() || CollabDescription.isEmpty() || CollabSize.isEmpty() ||
+                        skillsArray.isEmpty() || classesArray.isEmpty()) {
+                    Toast t = Toast.makeText(context, "Fields cannot be empty.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
+                else {
+                    // TODO: CHANGE TO APIFILE CALL
+                    // TODO: LET USER SET DATE + TIME
+                    addCollab = new SetUserData(getApplicationContext(), instance);
+                    addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray);
+
+                    finish();
+                }
             }
         });
     }
@@ -184,5 +218,11 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
+    }
+
+    // TODO: CHANGE TO API FILE INTERFACE
+    @Override
+    public void dataUpdateComplete(Boolean success, String message) {
+        System.out.println(message);
     }
 }

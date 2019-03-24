@@ -3,8 +3,6 @@ package com.example.socialmediaapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,22 +16,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.socialmediaapp.loopjtasks.UserAPIClient;
+import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
-public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRetrieveDetails{
+public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete {
 
     // TODO: SKILLS + CLASSES OF 0 or 1 CANNOT BE ADDED
     private Context context = ProfilePage.this;
-    private TextView userName;
+    private TextView userNickname;
     private TextView githubLink;
     private TextView linkedinLink;
     private TextView skills;
     private TextView classes;
+
+    private ArrayList<String> skillsArray;
+    private ArrayList<String> classesArray;
+
     private ProfilePage instance = null;
     private Button editName;
     private Button editGit;
@@ -41,7 +41,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
     private Button editSkill;
     private Button editClass;
     private long mLastClickTime = 0;
-    private UserAPIClient userDetails;
+    private GetUserData userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
         setSupportActionBar(myToolbar);
 
         instance = this;
-        userName = (TextView) findViewById(R.id.userName);
+        userNickname = (TextView) findViewById(R.id.userName);
         githubLink = (TextView) findViewById(R.id.githubLink);
         linkedinLink = (TextView) findViewById(R.id.linkedinLink);
         skills = (TextView) findViewById(R.id.skillsList);
@@ -63,8 +63,8 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
         editSkill = (Button) findViewById(R.id.editSkills_button);
         editClass = (Button) findViewById(R.id.editClasses_button);
 
-        userDetails = new UserAPIClient(getApplicationContext(), instance);
-        userDetails.getUserDetails();
+        userDetails = new GetUserData(getApplicationContext(), instance);
+        userDetails.getUserData();
 
         // editName Button
         editName.setOnClickListener(new View.OnClickListener() {
@@ -131,8 +131,9 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
     @Override
     public void onResume(){
         super.onResume();
-        userDetails = new UserAPIClient(getApplicationContext(), instance);
-        userDetails.getUserDetails();
+        // API call again to refresh the page with updated data
+        userDetails = new GetUserData(getApplicationContext(), instance);
+        userDetails.getUserData();
     }
 
     // menu navigation
@@ -196,7 +197,6 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
         startActivity(editProfile);
     }
 
-
     // send User to editLinkedIn fragment
     private void sendUserToEditLinkedIn() {
         Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
@@ -206,75 +206,35 @@ public class ProfilePage extends AppCompatActivity implements UserAPIClient.OnRe
         startActivity(editProfile);
     }
 
-    // parse JSON object into the fields we want
-    private void getUserName (JSONObject response){
-        userName.setText(null);
-        try {
-            userName.setText(response.getString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getUserGithub (JSONObject response){
-        githubLink.setText(null);
-        try {
-            githubLink.setText(response.getString("github"));
-            Linkify.addLinks(githubLink, Linkify.WEB_URLS);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getUserLinkedIn (JSONObject response){
-        linkedinLink.setText(null);
-        try {
-            linkedinLink.setText(response.getString("linkedin"));
-            Linkify.addLinks(linkedinLink, Linkify.WEB_URLS);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getUserSkills (JSONObject response){
-        skills.setText(null);
-        try {
-            JSONArray skillList = null;
-            skillList = response.getJSONArray("skills");
-
-            for(int i=0; i < skillList.length(); i++){
-                String skillString = skillList.getString(i);
-                skills.append(skillString + "\n");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getUserClasses (JSONObject response){
-        classes.setText(null);
-        try {
-            JSONArray classList = null;
-            classList = response.getJSONArray("classes");
-
-            for(int i=0; i < classList.length(); i++){
-                String classString = classList.getString(i);
-                classes.append(classString + "\n");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // abstract function from UserAPIClient.java defined here
+    // abstract function from GetUserData.java defined here
+    // populate profile screen with data on successful API cal
     @Override
-    public void detailsRetrieved(Boolean success, JSONObject response) {
+    public void downloadComplete(Boolean success) {
         if (success) {
-            getUserName(response);
-            getUserGithub(response);
-            getUserLinkedIn(response);
-            getUserSkills(response);
-            getUserClasses(response);
+            // set text fields to user details
+            userNickname.setText(userDetails.getUserNickname());
+
+            // linkify = links lead to browser
+            githubLink.setText(userDetails.getUserGithub());
+            Linkify.addLinks(githubLink, Linkify.WEB_URLS);
+
+            linkedinLink.setText(userDetails.getUserLinkedIn());
+            Linkify.addLinks(linkedinLink, Linkify.WEB_URLS);
+
+            // clear skills + classes, and populate them
+            skills.setText(null);
+            classes.setText(null);
+            skillsArray = userDetails.getUserSkills();
+            classesArray = userDetails.getUserClasses();
+
+            for(int i=0; i < skillsArray.size(); i++) {
+                skills.append(skillsArray.get(i) + "\n");
+            }
+
+            for(int i=0; i < classesArray.size(); i++) {
+                classes.append(classesArray.get(i) + "\n");
+            }
+
         } else {
             // show error message to user
             Toast t = Toast.makeText(context, "ERROR", Toast.LENGTH_LONG);

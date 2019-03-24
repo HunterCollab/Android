@@ -99,10 +99,32 @@
                 android:padding="10dp" />
 
             <TextView
+                android:id="@+id/collabSizeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/collab_description"
+                android:text="Size Of Collab:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp" />
+
+            <EditText
+                android:id="@+id/collabSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/collabSizeTextView"
+                android:inputType="number"
+                android:hint="Enter # of people you want for this collab..."
+                android:background="@drawable/inputs"
+                android:layout_centerVertical="true"
+                android:padding="10dp" />
+
+            <TextView
                 android:id="@+id/dateTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/collab_description"
+                android:layout_below="@id/collabSize"
                 android:text="Date/Time:"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp"

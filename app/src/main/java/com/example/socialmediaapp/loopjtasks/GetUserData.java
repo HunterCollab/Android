@@ -1,6 +1,7 @@
 package com.example.socialmediaapp.loopjtasks;
 
 import android.content.Context;
+import android.text.util.Linkify;
 
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
@@ -26,6 +27,7 @@ public class GetUserData {
     private String username;
     private String github;
     private String linkedIn;
+    private String userNickname;
     private DownloadComplete dataDownloadComplete;
 
 
@@ -39,6 +41,7 @@ public class GetUserData {
         username = new String();
         github = new String();
         linkedIn = new String();
+        userNickname = new String();
     }
 
     public void getUserData(){
@@ -53,8 +56,8 @@ public class GetUserData {
                 setUserName(response);
                 setUserLinkedIn(response);
                 setUserGithub(response);
+                setUserNickname(response);
                 dataDownloadComplete.downloadComplete(true);
-
             }
 
             @Override
@@ -66,7 +69,6 @@ public class GetUserData {
     }
 
     private void setUserName(JSONObject response){
-
         try {
             username = response.getString("username");
         } catch (JSONException e) {
@@ -74,9 +76,17 @@ public class GetUserData {
         }
     }
 
+    private void setUserNickname(JSONObject response){
+        try {
+            userNickname = response.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setUserGithub(JSONObject response){
         try {
-            username = response.getString("github");
+            github = response.getString("github");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -85,7 +95,7 @@ public class GetUserData {
 
     private void setUserLinkedIn(JSONObject response){
         try {
-            username = response.getString("linkedin");
+            linkedIn = response.getString("linkedin");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -93,7 +103,6 @@ public class GetUserData {
     }
 
     private void setUserSkills(JSONObject response){
-
         try {
             JSONArray terms = null;
             terms = response.getJSONArray("skills");
@@ -108,7 +117,6 @@ public class GetUserData {
     }
 
     private void setUserClasses(JSONObject response){
-
         try {
             JSONArray terms = null;
             terms = response.getJSONArray("classes");
@@ -122,18 +130,19 @@ public class GetUserData {
         }
     }
 
-    public String getUserName(){
+    public String getUserNickname(){
+        return userNickname;
+    }
 
+    public String getUserName(){
         return username;
     }
 
     public String getUserGithub(){
-
         return github;
     }
 
     public String getUserLinkedIn(){
-
         return linkedIn;
     }
 
@@ -142,16 +151,12 @@ public class GetUserData {
     }
 
     public ArrayList<String> getUserSkills(){
-
         System.out.println(skillStringList);
-
         return skillStringList;
     }
 
     public interface DownloadComplete {
-
         public void downloadComplete(Boolean success);
-
     }
 
 }
