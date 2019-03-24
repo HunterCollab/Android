@@ -13,15 +13,15 @@ import android.widget.EditText;
 import com.example.socialmediaapp.loopjtasks.SetUserData;
 
 
-public class EditGithubFragment extends Fragment implements SetUserData.UpdateComplete {
+public class EditGithubFrag extends Fragment implements SetUserData.UpdateComplete {
 
-    public EditGithubFragment() {
+    public EditGithubFrag() {
         // Required empty public constructor
     }
 
     private EditText editGithub;
     private Button saveGithubButton;
-    private EditGithubFragment instance = null;
+    private EditGithubFrag instance = null;
     private SetUserData updateGithub;
 
     @Override
