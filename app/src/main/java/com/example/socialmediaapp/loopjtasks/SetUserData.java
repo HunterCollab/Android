@@ -32,8 +32,109 @@ public class SetUserData {
 
     }
 
-    public void setUserSkills(ArrayList<String> skillList){
+    public void setUserName(String newName){
 
+        client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/user";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("name", newName);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                }
+            });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        updateComplete.dataUpdateComplete(true, "Name Updated");
+
+    }
+
+    public void setUserGithub(String newGithub){
+
+        client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/user";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("github", newGithub);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                }
+            });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        updateComplete.dataUpdateComplete(true, "Github Updated");
+
+    }
+
+    public void setUserLinkedIn(String newLinkedIn){
+
+        client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/user";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("linkedin", newLinkedIn);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                }
+            });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        updateComplete.dataUpdateComplete(true, "LinkedIn Updated");
+
+    }
+
+    public void setUserSkills(ArrayList<String> skillList){
 
         System.out.println(skillList);
         client = GeneralTools.createAsyncHttpClient(context);
