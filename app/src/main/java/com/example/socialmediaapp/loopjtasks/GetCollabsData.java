@@ -33,7 +33,6 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class GetCollabsData {
 
     // TODO: IMPLEMENT DELETE COLLAB
-    // TODO: SHOW USER ALL COLLAB DETAILS (LOCATION, SIZE, ETC)
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
@@ -86,8 +85,8 @@ public class GetCollabsData {
                 String dateStr = tmp.getString("date");
 
                 // extract date and convert to string
-                //JSONObject dateObj = tmp.getJSONObject("$date");
                 /*
+                JSONObject dateObj = tmp.getJSONObject("$date");
                 Map<String,Integer> map = new HashMap<>();
                 Map.Entry<String,Integer> entry = map.entrySet().iterator().next();
                 String key = entry.getKey();
