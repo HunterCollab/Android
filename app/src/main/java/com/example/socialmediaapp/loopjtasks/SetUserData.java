@@ -9,6 +9,7 @@ import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -141,10 +142,19 @@ public class SetUserData {
         String restApiUrl = GlobalConfig.BASE_API_URL + "/user/skills";
 
         JSONObject jsonParams = new JSONObject();
+
+
+
         try {
-            for (String skill : skillList) {
-                jsonParams.accumulate("skills",skill);
-            }
+
+                ///////////This was the fix///////////////////////
+                JSONArray array = new JSONArray();
+                for (String skill : skillList) {
+                    array.put(skill);
+                }
+                jsonParams.accumulate("skills",array);
+                //////////////////////////////////////////////////
+
             System.out.println("skillList" + skillList);
             System.out.println("jsonParams: " + jsonParams);
             StringEntity entity = new StringEntity(jsonParams.toString());
@@ -184,9 +194,14 @@ public class SetUserData {
         JSONObject jsonParams = new JSONObject();
         try {
 
-            for (String skill : classList) {
-                jsonParams.accumulate("classes",skill);
+            ///////////This was the fix///////////////////////
+            JSONArray array = new JSONArray();
+            for (String oneClass : classList) {
+                array.put(oneClass);
             }
+            jsonParams.accumulate("classes",array);
+            //////////////////////////////////////////////////
+
             System.out.println("classList" + classList);
             System.out.println("jsonParams: " + jsonParams);
             StringEntity entity = new StringEntity(jsonParams.toString());
