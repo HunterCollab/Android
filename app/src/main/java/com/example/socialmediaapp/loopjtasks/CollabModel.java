@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.json.JSONArray;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,36 +14,35 @@ public class CollabModel implements Parcelable {
     public int id;
     String owner;
     Integer size;
-    JSONArray members;
     String date;
     String duration;
     String location;
     Boolean status;
     String title;
     String description;
-    JSONArray classes;
-    JSONArray skills;
-    JSONArray applicants;
+    private ArrayList<String> classes = new ArrayList<>();
+    private ArrayList<String> skills = new ArrayList<>();
+    private ArrayList<String> applicants = new ArrayList<>();
+    private ArrayList<String> members = new ArrayList<>();
 
     CollabModel(
             int id,
             String owner,
             int size,
-            JSONArray members,
             String duration,
             String date,
             String location,
             Boolean status,
             String title,
             String description,
-            JSONArray classes,
-            JSONArray skills,
-            JSONArray applicants){
+            ArrayList<String> classes,
+            ArrayList<String> skills,
+            ArrayList<String> applicants,
+            ArrayList<String> members){
 
         this.id = id;
         this.owner = owner;
         this.size = size;
-        this.members = members;
         this.duration = duration;
         this.date = date;
         this.location = location;
@@ -52,6 +52,7 @@ public class CollabModel implements Parcelable {
         this.classes = classes;
         this.skills = skills;
         this.applicants = applicants;
+        this.members = members;
     }
 
     public CollabModel(Parcel in) {
@@ -65,6 +66,9 @@ public class CollabModel implements Parcelable {
         status = tmpStatus == 0 ? null : tmpStatus == 1;
         title = in.readString();
         description = in.readString();
+        skills = in.createStringArrayList();
+        classes = in.createStringArrayList();
+        members = in.createStringArrayList();
     }
 
     public static final Creator<CollabModel> CREATOR = new Creator<CollabModel>() {
@@ -83,7 +87,7 @@ public class CollabModel implements Parcelable {
         return owner;
     }
     public int getSize(){ return size; }
-    public JSONArray getMembers(){
+    public ArrayList<String> getMembers(){
         return members;
     }
     public String getDate(){
@@ -104,13 +108,13 @@ public class CollabModel implements Parcelable {
     public String getDescription(){
         return description;
     }
-    public JSONArray getClasses(){
+    public ArrayList<String> getClasses(){
         return classes;
     }
-    public JSONArray getSkills(){
+    public ArrayList<String> getSkills(){
         return skills;
     }
-    public JSONArray getApplicants(){
+    public ArrayList<String> getApplicants(){
         return applicants;
     }
     public int getId() {return id;}
@@ -132,5 +136,8 @@ public class CollabModel implements Parcelable {
         dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
         dest.writeString(title);
         dest.writeString(description);
+        dest.writeStringList(skills);
+        dest.writeStringList(classes);
+        dest.writeStringList(members);
     }
 }

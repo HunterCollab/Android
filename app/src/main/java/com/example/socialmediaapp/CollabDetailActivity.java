@@ -67,6 +67,9 @@ public class CollabDetailActivity extends AppCompatActivity {
             arguments.putString("title", collab.getTitle());
             arguments.putString("location", collab.getLocation());
             arguments.putString("date", collab.getDate());
+            arguments.putStringArrayList("skills", collab.getSkills());
+            arguments.putStringArrayList("classes", collab.getClasses());
+            arguments.putStringArrayList("members", collab.getMembers());
 
             CollabDetailFragment fragment = new CollabDetailFragment();
             fragment.setArguments(arguments);
