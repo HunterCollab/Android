@@ -26,6 +26,8 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class GetCollabsData {
 
     // TODO: COLLABS WITH 1 SKILL OR 1 CLASS CANNOT BE DISPLAYED/CRASHES THE APP
+    // TODO: IMPLEMENT DELETE COLLAB
+    // TODO: SHOW USER ALL COLLAB DETAILS (LOCATION, SIZE, ETC)
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
@@ -35,7 +37,6 @@ public class GetCollabsData {
         this.context = context;
         this.listener = listener;
         collabs = new ArrayList<>();
-
     }
 
     public void getCollabs(String collabType){

@@ -142,7 +142,6 @@ public class SetUserData {
 
         JSONObject jsonParams = new JSONObject();
         try {
-
             for (String skill : skillList) {
                 jsonParams.accumulate("skills",skill);
             }
