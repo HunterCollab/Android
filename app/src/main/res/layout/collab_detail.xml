@@ -1,29 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".CollabDetailFragment" >
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <TextView
         android:id="@+id/collab_detail"
-        style="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="15dp"
+        style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="12dp"
         android:textIsSelectable="true"
-        tools:context=".CollabDetailFragment"
         android:text="Collab Details"/>
+
+    <TextView
+        android:id="@+id/collab_DateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_detail"
+        android:text="Date/Time:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_DateTime_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_DateTime"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/collab_Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_DateTime_Info"
+        android:text="Location:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_Location_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Location"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/collab_Skills_Request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Location_Info"
+        android:text="Skills Wanted:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_Skills_Request_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Skills_Request"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/collab_Classes_Request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Skills_Request_Info"
+        android:text="Classes Wanted:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_Classes_Request_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Classes_Request"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/collab_Members"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Classes_Request_Info"
+        android:text="Current Members:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_Members_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Members"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="JOIN"
         android:background="@drawable/button"
-        android:textSize="21dp"
-        android:textStyle="bold"
+        android:textSize="20dp"
         android:textColor="@color/colorBright"
-        android:layout_below="@id/collab_detail"
+        android:layout_below="@id/collab_Members_Info"
         />
 
 

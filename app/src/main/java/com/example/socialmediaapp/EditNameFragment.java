@@ -44,7 +44,6 @@ public class EditNameFragment extends Fragment implements SetUserData.UpdateComp
             }
         });
 
-
         return view;
     }
 
