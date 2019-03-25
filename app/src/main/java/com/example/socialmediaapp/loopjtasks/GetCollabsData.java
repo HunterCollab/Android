@@ -13,14 +13,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class GetCollabsData {
 
+    // TODO: COLLABS WITH 1 SKILL OR 1 CLASS CANNOT BE DISPLAYED/CRASHES THE APP
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
@@ -90,8 +95,47 @@ public class GetCollabsData {
 
         }
 
+    }
 
+    public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes){
 
+        AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/createCollab";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("title", title);
+            jsonParams.put("location", location);
+            jsonParams.put("description", description);
+            jsonParams.put("size", size);
+            for (String skill : skills) {
+                jsonParams.accumulate("skills", skill);
+            }
+            for (String Class : classes) {
+                jsonParams.accumulate("classes", Class);
+            }
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                }
+            });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
     }
 

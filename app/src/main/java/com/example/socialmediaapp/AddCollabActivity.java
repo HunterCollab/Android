@@ -19,14 +19,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.DoLogin;
+import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import com.example.socialmediaapp.loopjtasks.SetUserData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Set;
 
-// TODO: CHANGE IMPLEMENTS TO API FILE FOR SETUSERDATA
-public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, SetUserData.UpdateComplete {
+public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
 
     private Context context = AddCollabActivity.this;
     private EditText collabName;
@@ -49,8 +49,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private long mLastClickTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
-    // TODO: CHANGE + APPEND TO API FILE
-    private SetUserData addCollab = null;
+    private GetCollabsData addCollab = null;
     private AddCollabActivity instance = null;
 
     @Override
@@ -162,9 +161,8 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     t.show();
                 }
                 else {
-                    // TODO: CHANGE TO APIFILE CALL
                     // TODO: LET USER SET DATE + TIME
-                    addCollab = new SetUserData(getApplicationContext(), instance);
+                    addCollab = new GetCollabsData(getApplicationContext(), instance);
                     addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray);
 
                     finish();
@@ -220,9 +218,8 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    // TODO: CHANGE TO API FILE INTERFACE
     @Override
-    public void dataUpdateComplete(Boolean success, String message) {
-        System.out.println(message);
+    public void getAllCollabs(Boolean success) {
+
     }
 }

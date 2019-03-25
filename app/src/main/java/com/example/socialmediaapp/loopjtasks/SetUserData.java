@@ -31,51 +31,6 @@ public class SetUserData {
         this.updateComplete = listener;
     }
 
-    // TODO: CHANGE + APPEND TO API FILE
-    public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes){
-
-        client = GeneralTools.createAsyncHttpClient(context);
-
-        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/createCollab";
-
-        JSONObject jsonParams = new JSONObject();
-        try {
-            jsonParams.put("title", title);
-            jsonParams.put("location", location);
-            jsonParams.put("description", description);
-            jsonParams.put("size", size);
-            for (String skill : skills) {
-                jsonParams.accumulate("skills", skill);
-            }
-            for (String Class : classes) {
-                jsonParams.accumulate("classes", Class);
-            }
-
-            StringEntity entity = new StringEntity(jsonParams.toString());
-            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-
-            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    Log.i("response", String.valueOf(response));
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                    Log.i("response", String.valueOf(responseString));
-                }
-            });
-
-        } catch (JSONException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        updateComplete.dataUpdateComplete(true, "Collab Added");
-
-    }
-
     public void setUserNickname(String newName){
 
         client = GeneralTools.createAsyncHttpClient(context);
