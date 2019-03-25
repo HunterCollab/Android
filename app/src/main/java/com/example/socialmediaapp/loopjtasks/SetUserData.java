@@ -192,13 +192,13 @@ public class SetUserData {
 
         try {
 
-
+                ///////////This was the fix///////////////////////
                 JSONArray array = new JSONArray();
                 for (String skill : skillList) {
                     array.put(skill);
                 }
                 jsonParams.accumulate("skills",array);
-
+                //////////////////////////////////////////////////
 
 
             System.out.println("skillList" + skillList);
@@ -240,11 +240,13 @@ public class SetUserData {
         JSONObject jsonParams = new JSONObject();
         try {
 
+            ///////////This was the fix///////////////////////
             JSONArray array = new JSONArray();
             for (String oneClass : classList) {
                 array.put(oneClass);
             }
             jsonParams.accumulate("classes",array);
+            //////////////////////////////////////////////////
 
             System.out.println("classList" + classList);
             System.out.println("jsonParams: " + jsonParams);
