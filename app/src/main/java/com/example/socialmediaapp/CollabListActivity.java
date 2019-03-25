@@ -134,7 +134,6 @@ public class CollabListActivity extends AppCompatActivity implements GetCollabsD
             assert recyclerView != null;
             setupRecyclerView((RecyclerView) recyclerView);
 
-
         }
 
     }

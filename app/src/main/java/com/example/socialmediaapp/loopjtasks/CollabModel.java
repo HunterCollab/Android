@@ -6,15 +6,15 @@ import android.os.Parcelable;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 
 
 public class CollabModel implements Parcelable {
     public int id;
     String owner;
-    int size;
+    Integer size;
     JSONArray members;
-    int date;
+    String date;
     String duration;
     String location;
     Boolean status;
@@ -30,7 +30,7 @@ public class CollabModel implements Parcelable {
             int size,
             JSONArray members,
             String duration,
-            //int date,
+            String date,
             String location,
             Boolean status,
             String title,
@@ -44,6 +44,7 @@ public class CollabModel implements Parcelable {
         this.size = size;
         this.members = members;
         this.duration = duration;
+        this.date = date;
         this.location = location;
         this.status = status;
         this.title = title;
@@ -58,6 +59,7 @@ public class CollabModel implements Parcelable {
         owner = in.readString();
         size = in.readInt();
         duration = in.readString();
+        date = in.readString();
         location = in.readString();
         byte tmpStatus = in.readByte();
         status = tmpStatus == 0 ? null : tmpStatus == 1;
@@ -84,7 +86,7 @@ public class CollabModel implements Parcelable {
     public JSONArray getMembers(){
         return members;
     }
-    public int getDate(){
+    public String getDate(){
         return date;
     }
     public String getDuration(){
@@ -125,6 +127,7 @@ public class CollabModel implements Parcelable {
         dest.writeString(owner);
         dest.writeInt(size);
         dest.writeString(duration);
+        dest.writeString(date);
         dest.writeString(location);
         dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
         dest.writeString(title);

@@ -14,7 +14,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -72,7 +74,9 @@ public class GetCollabsData {
                 String owner = tmp.getString("owner");
                 int size = tmp.getInt("size");
                 JSONArray members = tmp.getJSONArray("members");
-                //int date = tmp.getInt("date");
+
+
+                String dateStr = tmp.getString("date");
                 String duration = tmp.getString("duration");
                 String location = tmp.getString("location");
                 Boolean status = tmp.getBoolean("status");
@@ -83,12 +87,10 @@ public class GetCollabsData {
                 JSONArray applicants = tmp.getJSONArray("applicants");
 
                 CollabModel tmpCollab =
-                        new CollabModel( i, owner, size, members, duration,
-                                                     location, status, title, description, classes, skills,applicants);
+                        new CollabModel( i, owner, size, members, duration, dateStr,
+                                location, status, title, description, classes, skills, applicants);
 
                 collabs.add(tmpCollab);
-
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -143,7 +145,6 @@ public class GetCollabsData {
     public ArrayList<CollabModel> returnCollabs(){
         return collabs;
     }
-
 
     public interface GetCollabDataComplete {
 
