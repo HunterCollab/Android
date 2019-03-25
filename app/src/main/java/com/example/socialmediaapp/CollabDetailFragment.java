@@ -15,6 +15,7 @@ import com.example.socialmediaapp.loopjtasks.CollabModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -80,20 +81,45 @@ public class CollabDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.collab_detail)).setText(getArguments().getString("description"));
             collabLocation = (TextView) rootView.findViewById(R.id.collab_Location_Info);
             collabLocation.setText(getArguments().getString("location"));
-            collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
 
-            // retrieve date from string
-            // TODO: FIX FORMAT OF DATE
-            Date collabTime = null;
-            String dateString;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            try {
-                collabTime = sdf.parse(getArguments().getString("date"));
-            } catch (Exception e) {
-                e.getStackTrace();
+            // populate skills
+            collabSkills = (TextView) rootView.findViewById(R.id.collab_Skills_Request_Info);
+            collabSkills.setText("");
+            ArrayList<String> skillsArray = getArguments().getStringArrayList("skills");
+            if (skillsArray != null){
+                int len = skillsArray.size();
+                for (int i = 0; i < len; i++){
+                    collabSkills.append(skillsArray.get(i) + "\n");
+                }
             }
-            dateString = sdf.format(collabTime);
-            collabDateTime.setText(dateString);
+
+            // populate classes
+            collabClasses = (TextView) rootView.findViewById(R.id.collab_Classes_Request_Info);
+            collabClasses.setText("");
+            ArrayList<String> classesArray = getArguments().getStringArrayList("classes");
+            if (classesArray != null){
+                int len = classesArray.size();
+                for (int i = 0; i < len; i++){
+                    collabClasses.append(classesArray.get(i) + "\n");
+                }
+            }
+
+            // populate members
+            collabMembers = (TextView) rootView.findViewById(R.id.collab_Members_Info);
+            collabMembers.setText("");
+            ArrayList<String> membersArray = getArguments().getStringArrayList("members");
+            if (membersArray != null){
+                int len = membersArray.size();
+                for (int i = 0; i < len; i++){
+                    collabMembers.append(membersArray.get(i) + "\n");
+                }
+            }
+
+            collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
+            collabDateTime.setText(getArguments().getString("date"));
+
+            // TODO: SHOW DATE
+            // TODO: SHOW USER NICKNAMES (NOT USER NAMES)
         }
 
         return rootView;

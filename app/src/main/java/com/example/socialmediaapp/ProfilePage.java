@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete {
 
-    // TODO: SKILLS + CLASSES OF 0 or 1 CANNOT BE ADDED
     private Context context = ProfilePage.this;
     private TextView userNickname;
     private TextView githubLink;

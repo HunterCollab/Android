@@ -143,8 +143,6 @@ public class SetUserData {
 
         JSONObject jsonParams = new JSONObject();
 
-
-
         try {
 
                 ///////////This was the fix///////////////////////

@@ -14,10 +14,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.security.Key;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
@@ -27,7 +32,6 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class GetCollabsData {
 
-    // TODO: COLLABS WITH 1 SKILL OR 1 CLASS CANNOT BE DISPLAYED/CRASHES THE APP
     // TODO: IMPLEMENT DELETE COLLAB
     // TODO: SHOW USER ALL COLLAB DETAILS (LOCATION, SIZE, ETC)
     //Listener variables
@@ -73,22 +77,66 @@ public class GetCollabsData {
 
                 String owner = tmp.getString("owner");
                 int size = tmp.getInt("size");
-                JSONArray members = tmp.getJSONArray("members");
 
-
-                String dateStr = tmp.getString("date");
                 String duration = tmp.getString("duration");
                 String location = tmp.getString("location");
                 Boolean status = tmp.getBoolean("status");
                 String title = tmp.getString("title");
                 String description = tmp.getString("description");
+                String dateStr = tmp.getString("date");
+
+                // extract date and convert to string
+                //JSONObject dateObj = tmp.getJSONObject("$date");
+                /*
+                Map<String,Integer> map = new HashMap<>();
+                Map.Entry<String,Integer> entry = map.entrySet().iterator().next();
+                String key = entry.getKey();
+                Integer dateInt = entry.getValue();
+                long dateMs = (long) dateInt;
+                DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss:SSS Z");
+                Date dateResult = new Date(dateMs);
+                dateStr = sdf.format(dateResult);
+                */
+
                 JSONArray classes = tmp.getJSONArray("classes");
+                ArrayList<String> classArray = new ArrayList<String>();
+                if (classes != null){
+                    int len = classes.length();
+                    for (int j = 0; j < len; j++){
+                        classArray.add(classes.get(j).toString());
+                    }
+                }
+
                 JSONArray skills = tmp.getJSONArray("skills");
+                ArrayList<String> skillArray = new ArrayList<String>();
+                if (skills != null){
+                    int len = skills.length();
+                    for (int j = 0; j < len; j++){
+                        skillArray.add(skills.get(j).toString());
+                    }
+                }
+
                 JSONArray applicants = tmp.getJSONArray("applicants");
+                ArrayList<String> applicantArray = new ArrayList<String>();
+                if (applicants != null){
+                    int len = applicants.length();
+                    for (int j = 0; j < len; j++){
+                        applicantArray.add(applicants.get(j).toString());
+                    }
+                }
+
+                JSONArray members = tmp.getJSONArray("members");
+                ArrayList<String> memberArray = new ArrayList<String>();
+                if (members != null){
+                    int len = members.length();
+                    for (int j = 0; j < len; j++){
+                        memberArray.add(members.get(j).toString());
+                    }
+                }
 
                 CollabModel tmpCollab =
-                        new CollabModel( i, owner, size, members, duration, dateStr,
-                                location, status, title, description, classes, skills, applicants);
+                        new CollabModel( i, owner, size, duration, dateStr,
+                                location, status, title, description, classArray, skillArray, applicantArray, memberArray);
 
                 collabs.add(tmpCollab);
 
@@ -112,11 +160,16 @@ public class GetCollabsData {
             jsonParams.put("location", location);
             jsonParams.put("description", description);
             jsonParams.put("size", size);
+
+            JSONArray skillArray = new JSONArray();
             for (String skill : skills) {
-                jsonParams.accumulate("skills", skill);
+                skillArray.put(skill);
+                jsonParams.accumulate("skills", skillArray);
             }
+            JSONArray classArray = new JSONArray();
             for (String Class : classes) {
-                jsonParams.accumulate("classes", Class);
+                classArray.put(Class);
+                jsonParams.accumulate("classes", classArray);
             }
 
             StringEntity entity = new StringEntity(jsonParams.toString());
