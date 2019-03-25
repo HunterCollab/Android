@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
+import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
@@ -80,7 +81,14 @@ public class CollabListActivity extends AppCompatActivity implements GetCollabsD
             mTwoPane = true;
         }
 
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // API call again to refresh the page with updated data
+        collabsClass = new GetCollabsData(getApplicationContext(), instance);
+        collabsClass.getCollabs("getAllCollabs");
     }
 
     // menu navigation
