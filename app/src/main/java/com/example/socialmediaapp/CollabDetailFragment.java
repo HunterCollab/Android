@@ -6,12 +6,16 @@ import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.CollabModel;
+import com.example.socialmediaapp.loopjtasks.JoinDropCollab;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +28,7 @@ import java.util.Date;
  * in two-pane mode (on tablets) or a {@link CollabDetailActivity}
  * on handsets.
  */
-public class CollabDetailFragment extends Fragment {
+public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinDropComplete {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -41,6 +45,9 @@ public class CollabDetailFragment extends Fragment {
     private TextView collabSkills;
     private TextView collabClasses;
     private TextView collabMembers;
+
+    private Button joinCollab;
+    private JoinDropCollab doJoinCollab;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -116,12 +123,43 @@ public class CollabDetailFragment extends Fragment {
             }
 
             collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
-            collabDateTime.setText(getArguments().getString("date"));
+
+            DateFormat convert = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+
+            long dateConverted = getArguments().getLong("date");
+            Date result = new Date(dateConverted);
+
+            collabDateTime.setText(convert.format(result));
 
             // TODO: SHOW DATE
             // TODO: SHOW USER NICKNAMES (NOT USER NAMES)
+
+            //Edwin Code from here
+            joinCollab = (Button) rootView.findViewById(R.id.join_collab_button);
+            joinCollab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //String newGithub = editGithub.getText().toString();
+                    //updateGithub = new SetUserData(getContext(), instance);
+                    //updateGithub.setUserGithub(newGithub);
+                    //getActivity().finish();
+                    doJoinCollab = new JoinDropCollab(getContext(), instance);
+                    //String collabId = getArguments().getString();
+                    //doJoinCollab.joinCollab();
+                    CharSequence text = "You have joined the collab!";
+
+                    Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            });
         }
 
         return rootView;
+    }
+
+    @Override
+    public void joinDropComplete(Boolean success) {
+
     }
 }

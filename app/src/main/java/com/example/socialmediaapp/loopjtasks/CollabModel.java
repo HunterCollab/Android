@@ -12,25 +12,26 @@ import java.util.Date;
 
 public class CollabModel implements Parcelable {
     public int id;
-    String owner;
-    Integer size;
-    String date;
-    String duration;
-    String location;
-    Boolean status;
-    String title;
-    String description;
+    private String owner;
+    private Integer size;
+    private long date;
+    private String duration;
+    private String location;
+    private Boolean status;
+    private String title;
+    private String description;
     private ArrayList<String> classes = new ArrayList<>();
     private ArrayList<String> skills = new ArrayList<>();
     private ArrayList<String> applicants = new ArrayList<>();
     private ArrayList<String> members = new ArrayList<>();
+    private String collabId;
 
     CollabModel(
             int id,
             String owner,
             int size,
             String duration,
-            String date,
+            long date,
             String location,
             Boolean status,
             String title,
@@ -38,7 +39,8 @@ public class CollabModel implements Parcelable {
             ArrayList<String> classes,
             ArrayList<String> skills,
             ArrayList<String> applicants,
-            ArrayList<String> members){
+            ArrayList<String> members,
+            String collabId){
 
         this.id = id;
         this.owner = owner;
@@ -53,6 +55,7 @@ public class CollabModel implements Parcelable {
         this.skills = skills;
         this.applicants = applicants;
         this.members = members;
+        this.collabId = collabId;
     }
 
     public CollabModel(Parcel in) {
@@ -60,7 +63,7 @@ public class CollabModel implements Parcelable {
         owner = in.readString();
         size = in.readInt();
         duration = in.readString();
-        date = in.readString();
+        date = in.readLong();
         location = in.readString();
         byte tmpStatus = in.readByte();
         status = tmpStatus == 0 ? null : tmpStatus == 1;
@@ -69,6 +72,7 @@ public class CollabModel implements Parcelable {
         skills = in.createStringArrayList();
         classes = in.createStringArrayList();
         members = in.createStringArrayList();
+        collabId = in.readString();
     }
 
     public static final Creator<CollabModel> CREATOR = new Creator<CollabModel>() {
@@ -90,7 +94,7 @@ public class CollabModel implements Parcelable {
     public ArrayList<String> getMembers(){
         return members;
     }
-    public String getDate(){
+    public long getDate(){
         return date;
     }
     public String getDuration(){
@@ -118,6 +122,7 @@ public class CollabModel implements Parcelable {
         return applicants;
     }
     public int getId() {return id;}
+    public String getCollabId(){return collabId;}
 
 
     @Override
@@ -131,7 +136,7 @@ public class CollabModel implements Parcelable {
         dest.writeString(owner);
         dest.writeInt(size);
         dest.writeString(duration);
-        dest.writeString(date);
+        dest.writeLong(date);
         dest.writeString(location);
         dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
         dest.writeString(title);
