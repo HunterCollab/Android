@@ -31,8 +31,7 @@ import java.util.Set;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
 
-    // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING
-    // TODO: APP CRASHES WHEN MORE THAN ONE SKILL/CLASS
+    // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB
     private Context context = AddCollabActivity.this;
     private EditText collabName;
     private EditText collabLocation;
