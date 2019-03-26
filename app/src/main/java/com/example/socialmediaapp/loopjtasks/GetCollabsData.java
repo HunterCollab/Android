@@ -53,7 +53,7 @@ public class GetCollabsData {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
-                //Log.i("response" , String.valueOf(response));
+                Log.i("response" , String.valueOf(response));
                 setCollabDetails(response);
                 listener.getAllCollabs(true);
 
@@ -74,6 +74,14 @@ public class GetCollabsData {
             try {
                 JSONObject tmp = collabData.getJSONObject(i);
 
+                JSONObject collabId = (JSONObject) tmp.getJSONObject("_id");
+                String id = collabId.getString("$oid");
+
+
+
+
+                System.out.println("id: " + id);
+
                 String owner = tmp.getString("owner");
                 int size = tmp.getInt("size");
 
@@ -82,7 +90,10 @@ public class GetCollabsData {
                 Boolean status = tmp.getBoolean("status");
                 String title = tmp.getString("title");
                 String description = tmp.getString("description");
-                String dateStr = tmp.getString("date");
+
+                JSONObject collabDate = (JSONObject) tmp.getJSONObject("date");
+                long dateStr = collabDate.getLong("$date");
+
 
                 // extract date and convert to string
                 /*
@@ -135,7 +146,7 @@ public class GetCollabsData {
 
                 CollabModel tmpCollab =
                         new CollabModel( i, owner, size, duration, dateStr,
-                                location, status, title, description, classArray, skillArray, applicantArray, memberArray);
+                                location, status, title, description, classArray, skillArray, applicantArray, memberArray, id);
 
                 collabs.add(tmpCollab);
 
