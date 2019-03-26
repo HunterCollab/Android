@@ -157,12 +157,12 @@ public class GetCollabsData {
             JSONArray skillArray = new JSONArray();
             for (String skill : skills) {
                 skillArray.put(skill);
-                jsonParams.accumulate("skills", skillArray);
+                jsonParams.put("skills", skillArray);
             }
             JSONArray classArray = new JSONArray();
             for (String Class : classes) {
                 classArray.put(Class);
-                jsonParams.accumulate("classes", classArray);
+                jsonParams.put("classes", classArray);
             }
 
             StringEntity entity = new StringEntity(jsonParams.toString());
