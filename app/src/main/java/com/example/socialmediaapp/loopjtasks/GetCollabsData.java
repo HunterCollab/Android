@@ -204,6 +204,8 @@ public class GetCollabsData {
 
     }
 
+    // TODO: IMPLEMENT DELETE AND EDIT COLLAB FOR OWNER
+
     public ArrayList<CollabModel> returnCollabs(){
         return collabs;
     }
