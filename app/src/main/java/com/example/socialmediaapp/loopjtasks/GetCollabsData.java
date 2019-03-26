@@ -91,8 +91,7 @@ public class GetCollabsData {
                 String title = tmp.getString("title");
                 String description = tmp.getString("description");
 
-                JSONObject collabDate = (JSONObject) tmp.getJSONObject("date");
-                long dateStr = collabDate.getLong("$date");
+                long dateStr = tmp.getInt("date");
 
 
                 // extract date and convert to string
