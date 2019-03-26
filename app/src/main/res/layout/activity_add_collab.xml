@@ -42,7 +42,6 @@
                 android:text="Collab Name:"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
-                android:layout_below="@id/app_bar"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp" />
 

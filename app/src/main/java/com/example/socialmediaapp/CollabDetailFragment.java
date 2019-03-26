@@ -21,6 +21,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * A fragment representing a single Collab detail screen.
@@ -124,14 +127,14 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
             collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
 
+            long dateInMilli = getArguments().getLong("date");
             DateFormat convert = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+            //convert.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-            long dateConverted = getArguments().getLong("date");
-            Date result = new Date(dateConverted);
+            Date result = new Date(dateInMilli);
 
             collabDateTime.setText(convert.format(result));
 
-            // TODO: SHOW DATE
             // TODO: SHOW USER NICKNAMES (NOT USER NAMES)
 
             //Edwin Code from here
