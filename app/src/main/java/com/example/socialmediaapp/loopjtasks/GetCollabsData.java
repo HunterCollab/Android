@@ -34,6 +34,9 @@ public class GetCollabsData {
 
     // TODO: IMPLEMENT DELETE COLLAB FOR OWNER
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER
+    // TODO: LET USER LEAVE COLLAB
+    // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED)
+    // TODO: IMPLEMENT MESSAGING
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
