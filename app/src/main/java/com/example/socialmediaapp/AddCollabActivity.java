@@ -1,6 +1,8 @@
 package com.example.socialmediaapp;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import com.example.socialmediaapp.loopjtasks.DoLogin;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import com.example.socialmediaapp.loopjtasks.SetUserData;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Set;
@@ -29,6 +32,7 @@ import java.util.Set;
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
 
     // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING
+    // TODO: APP CRASHES WHEN MORE THAN ONE SKILL/CLASS
     private Context context = AddCollabActivity.this;
     private EditText collabName;
     private EditText collabLocation;
@@ -49,6 +53,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private ArrayList<String> classesArray = new ArrayList<String>();
     private long mLastClickTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private long dateTimeInMS;
 
     private GetCollabsData addCollab = null;
     private AddCollabActivity instance = null;
@@ -95,7 +100,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
                 }
-                else if (getInput == null || getInput.trim().equals("")){
+                else if (getInput.trim().equals("")){
                     Toast t = Toast.makeText(context, "Empty field.  Try again.", Toast.LENGTH_LONG);
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
@@ -117,7 +122,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
                 }
-                else if (getInput == null || getInput.trim().equals("")){
+                else if (getInput.trim().equals("")){
                     Toast t = Toast.makeText(context, "Empty field.  Try again.", Toast.LENGTH_LONG);
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
@@ -156,16 +161,20 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
 
                 // if any fields are empty, tell user, otherwise call API request
                 if (CollabName.isEmpty() || CollabLocation.isEmpty() || CollabDescription.isEmpty() || CollabSize.isEmpty() ||
-                        skillsArray.isEmpty() || classesArray.isEmpty()) {
+                        skillsArray.isEmpty() || classesArray.isEmpty() || CollabDate.isEmpty() || CollabTime.isEmpty()) {
                     Toast t = Toast.makeText(context, "Fields cannot be empty.", Toast.LENGTH_LONG);
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
                 }
                 else {
-                    // TODO: LET USER SET DATE + TIME
-                    addCollab = new GetCollabsData(getApplicationContext(), instance);
-                    addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray);
+                    // get date/time ms from datepicker and timepicker
+                    Calendar collabDateTime = Calendar.getInstance();
+                    collabDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
+                    dateTimeInMS = collabDateTime.getTimeInMillis();
 
+                    long dateTime = dateTimeInMS;
+                    addCollab = new GetCollabsData(getApplicationContext(), instance);
+                    addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray, dateTime);
                     finish();
                 }
             }
@@ -173,6 +182,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     }
 
     // letting user select date and time
+
     @Override
     public void onClick(View v) {
 
@@ -184,15 +194,17 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
+                            mYear = view.getYear();
+                            mMonth = view.getMonth();
+                            mDay = view.getDayOfMonth();
 
                             txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
@@ -209,8 +221,10 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     new TimePickerDialog.OnTimeSetListener() {
 
                         @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay,
-                                              int minute) {
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                            mHour = view.getCurrentHour();
+                            mMinute = view.getCurrentMinute();
 
                             txtTime.setText(hourOfDay + ":" + minute);
                         }
@@ -218,6 +232,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             timePickerDialog.show();
         }
     }
+
 
     @Override
     public void getAllCollabs(Boolean success) {

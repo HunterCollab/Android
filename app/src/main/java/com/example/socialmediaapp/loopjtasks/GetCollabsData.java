@@ -32,7 +32,8 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class GetCollabsData {
 
-    // TODO: IMPLEMENT DELETE COLLAB
+    // TODO: IMPLEMENT DELETE COLLAB FOR OWNER
+    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
@@ -56,7 +57,6 @@ public class GetCollabsData {
                 Log.i("response" , String.valueOf(response));
                 setCollabDetails(response);
                 listener.getAllCollabs(true);
-
             }
 
             @Override
@@ -77,9 +77,6 @@ public class GetCollabsData {
                 JSONObject collabId = (JSONObject) tmp.getJSONObject("_id");
                 String id = collabId.getString("$oid");
 
-
-
-
                 System.out.println("id: " + id);
 
                 String owner = tmp.getString("owner");
@@ -91,21 +88,7 @@ public class GetCollabsData {
                 String title = tmp.getString("title");
                 String description = tmp.getString("description");
 
-                long dateStr = tmp.getInt("date");
-
-
-                // extract date and convert to string
-                /*
-                JSONObject dateObj = tmp.getJSONObject("$date");
-                Map<String,Integer> map = new HashMap<>();
-                Map.Entry<String,Integer> entry = map.entrySet().iterator().next();
-                String key = entry.getKey();
-                Integer dateInt = entry.getValue();
-                long dateMs = (long) dateInt;
-                DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss:SSS Z");
-                Date dateResult = new Date(dateMs);
-                dateStr = sdf.format(dateResult);
-                */
+                long dateStr = tmp.getLong("date");
 
                 JSONArray classes = tmp.getJSONArray("classes");
                 ArrayList<String> classArray = new ArrayList<String>();
@@ -157,7 +140,7 @@ public class GetCollabsData {
 
     }
 
-    public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes){
+    public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes, long time){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -169,6 +152,7 @@ public class GetCollabsData {
             jsonParams.put("location", location);
             jsonParams.put("description", description);
             jsonParams.put("size", size);
+            jsonParams.put("date", time);
 
             JSONArray skillArray = new JSONArray();
             for (String skill : skills) {
@@ -203,8 +187,6 @@ public class GetCollabsData {
         }
 
     }
-
-    // TODO: IMPLEMENT DELETE AND EDIT COLLAB FOR OWNER
 
     public ArrayList<CollabModel> returnCollabs(){
         return collabs;
