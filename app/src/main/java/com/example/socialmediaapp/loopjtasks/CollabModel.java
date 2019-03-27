@@ -122,7 +122,10 @@ public class CollabModel implements Parcelable {
         return applicants;
     }
     public int getId() {return id;}
-    public String getCollabId(){return collabId;}
+
+    public String getCollabId(){
+        return collabId;
+    }
 
 
     @Override
@@ -144,5 +147,6 @@ public class CollabModel implements Parcelable {
         dest.writeStringList(skills);
         dest.writeStringList(classes);
         dest.writeStringList(members);
+        dest.writeString(collabId);
     }
 }
