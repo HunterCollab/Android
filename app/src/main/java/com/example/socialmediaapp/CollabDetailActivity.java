@@ -61,7 +61,6 @@ public class CollabDetailActivity extends AppCompatActivity {
             // using a fragment transaction.
             CollabModel collab = intent.getParcelableExtra("collab");
 
-            System.out.println("collab: " + collab.getDescription());
             Bundle arguments = new Bundle();
             arguments.putString("description", collab.getDescription());
             arguments.putString("title", collab.getTitle());
@@ -70,6 +69,8 @@ public class CollabDetailActivity extends AppCompatActivity {
             arguments.putStringArrayList("skills", collab.getSkills());
             arguments.putStringArrayList("classes", collab.getClasses());
             arguments.putStringArrayList("members", collab.getMembers());
+            System.out.println("collabId: " + collab.getCollabId());
+            arguments.putString("collabId", collab.getCollabId());
 
             CollabDetailFragment fragment = new CollabDetailFragment();
             fragment.setArguments(arguments);

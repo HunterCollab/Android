@@ -144,13 +144,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                     //updateGithub.setUserGithub(newGithub);
                     //getActivity().finish();
                     doJoinCollab = new JoinDropCollab(getContext(), instance);
-                    //String collabId = getArguments().getString();
-                    //doJoinCollab.joinCollab();
-                    CharSequence text = "You have joined the collab!";
+                    String collabId = getArguments().getString("collabId");
+                    doJoinCollab.joinCollab(collabId);
 
-                    Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
-                    toast.show();
                 }
             });
         }
@@ -159,7 +155,24 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     }
 
     @Override
-    public void joinDropComplete(Boolean success) {
+    public void joinDropComplete(String success) {
+        if(success == "true"){
+            CharSequence text = "You have joined the collab!";
+            System.out.println("text: " + text);
+
+            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+            toast.show();
+        } else {
+
+            CharSequence text = "Cannot join!";
+            System.out.println("text: " + text);
+
+            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+            toast.show();
+
+        }
 
     }
 }
