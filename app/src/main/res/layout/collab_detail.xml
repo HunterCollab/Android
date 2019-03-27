@@ -118,6 +118,18 @@
         android:layout_below="@id/collab_Members_Info"
         />
 
+    <Button
+        android:id="@+id/leave_collab_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="LEAVE"
+        android:background="@drawable/button"
+        android:textSize="20dp"
+        android:textColor="@color/colorBright"
+        android:layout_below="@id/join_collab_button"
+        />
+
 
 </RelativeLayout>
 

@@ -1,6 +1,7 @@
 package com.example.socialmediaapp;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -31,7 +32,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
  * in two-pane mode (on tablets) or a {@link CollabDetailActivity}
  * on handsets.
  */
-public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinDropComplete {
+public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinComplete, JoinDropCollab.LeaveComplete {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -51,6 +52,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     private Button joinCollab;
     private JoinDropCollab doJoinCollab;
+
+    private Button leaveCollab;
+    private JoinDropCollab doLeaveCollab;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -137,7 +141,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
             // TODO: SHOW USER NICKNAMES (NOT USER NAMES)
 
-            //Edwin Code from here
             joinCollab = (Button) rootView.findViewById(R.id.join_collab_button);
             joinCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,20 +149,31 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                     //updateGithub = new SetUserData(getContext(), instance);
                     //updateGithub.setUserGithub(newGithub);
                     //getActivity().finish();
-                    doJoinCollab = new JoinDropCollab(getContext(), instance);
+                    doJoinCollab = new JoinDropCollab(getContext(), instance, instance);
                     String collabId = getArguments().getString("collabId");
                     doJoinCollab.joinCollab(collabId);
-
                 }
             });
+
+            leaveCollab = (Button) rootView.findViewById(R.id.leave_collab_button);
+            leaveCollab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doLeaveCollab = new JoinDropCollab(getContext(), instance, instance);
+                    String collabId = getArguments().getString("collabId");
+                    doLeaveCollab.leaveCollab(collabId);
+                }
+            });
+
+
         }
 
         return rootView;
     }
 
     @Override
-    public void joinDropComplete(String success) {
-        if(success == "true"){
+    public void joinComplete(Boolean success) {
+        if(success){
             CharSequence text = "You have joined the collab!";
             System.out.println("text: " + text);
 
@@ -167,14 +181,32 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
         } else {
-
             CharSequence text = "Cannot join!";
             System.out.println("text: " + text);
 
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+        }
 
+    }
+
+    @Override
+    public void leaveComplete(Boolean success) {
+        if(success){
+            CharSequence text = "You have left the collab!";
+            System.out.println("text: " + text);
+
+            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+            toast.show();
+        } else {
+            CharSequence text = "Cannot leave!";
+            System.out.println("text: " + text);
+
+            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+            toast.show();
         }
 
     }
