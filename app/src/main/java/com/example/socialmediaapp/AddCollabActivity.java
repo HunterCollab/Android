@@ -1,6 +1,5 @@
 package com.example.socialmediaapp;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.SystemClock;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,14 +18,10 @@ import android.app.TimePickerDialog;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.socialmediaapp.loopjtasks.DoLogin;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
-import com.example.socialmediaapp.loopjtasks.SetUserData;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Set;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
 
@@ -183,6 +177,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     // letting user select date and time
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onClick(View v) {
 
         if (v == btnDatePicker) {
@@ -222,8 +217,14 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                            mHour = view.getCurrentHour();
-                            mMinute = view.getCurrentMinute();
+                            if (Build.VERSION.SDK_INT >= 23){
+                                mHour = view.getHour();
+                                mMinute = view.getMinute();
+                            }
+                            else {
+                                mHour = view.getCurrentHour();
+                                mMinute = view.getCurrentMinute();
+                            }
 
                             txtTime.setText(hourOfDay + ":" + minute);
                         }
