@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +16,17 @@
         app:titleTextColor="#FFFFFF"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <Spinner
+            android:id="@+id/my_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#fff"
+            app:titleTextColor="#FFFFFF"
+            />
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/frameLayout"

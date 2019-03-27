@@ -16,8 +16,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.socialmediaapp.loopjtasks.CollabModel;
@@ -36,7 +39,8 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class CollabListActivity extends AppCompatActivity implements GetCollabsData.GetCollabDataComplete {
+public class CollabListActivity extends AppCompatActivity
+        implements GetCollabsData.GetCollabDataComplete, AdapterView.OnItemSelectedListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -46,6 +50,10 @@ public class CollabListActivity extends AppCompatActivity implements GetCollabsD
     private GetCollabsData collabsClass;
     private CollabListActivity instance;
     public ArrayList<CollabModel> listOfCollabs;
+
+    //spinner for dropdown
+    private Spinner spinner;
+    private static final String[] paths = {"collabs", "active collabs"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,16 @@ public class CollabListActivity extends AppCompatActivity implements GetCollabsD
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
+        //This will set up the spinner
+        spinner = (Spinner) findViewById(R.id.my_spinner);
+        ArrayAdapter<String> spinnerAdapter =
+                new ArrayAdapter<String>(CollabListActivity.this, android.R.layout.simple_spinner_item, paths);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(this);
+
 
     }
 
@@ -135,6 +153,17 @@ public class CollabListActivity extends AppCompatActivity implements GetCollabsD
             setupRecyclerView((RecyclerView) recyclerView);
 
         }
+
+    }
+
+//Sinner functions
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
