@@ -32,9 +32,6 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class GetCollabsData {
 
-    // TODO: IMPLEMENT DELETE COLLAB FOR OWNER
-    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER
-    // TODO: LET USER LEAVE COLLAB
     // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED)
     // TODO: IMPLEMENT MESSAGING
     //Listener variables
