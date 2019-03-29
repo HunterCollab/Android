@@ -23,6 +23,10 @@ import java.util.ArrayList;
 
 public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete {
 
+    // TODO: DONT LET USER KEEP CLICKING MENU WHEN ON SAME PAGE, CAUSES CRASH
+    // TODO: IMPLEMENT MESSAGING
+    // TODO: IMPLEMENT NOTIFICATIONS
+
     private Context context = ProfilePage.this;
     private TextView userNickname;
     private TextView githubLink;

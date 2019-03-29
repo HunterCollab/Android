@@ -25,7 +25,9 @@ import java.util.Calendar;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
 
-    // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB
+    // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB (EDWIN)
+    // TODO: LET USER SET DURATION, NOT DEFAULT (WAITING FOR ARIEL)
+
     private Context context = AddCollabActivity.this;
     private EditText collabName;
     private EditText collabLocation;
@@ -35,6 +37,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private EditText skillInput;
     private EditText classInput;
     private EditText collabSize;
+    private EditText collabDuration;
     private TextView skillsView;
     private TextView classesView;
     private Button btnDatePicker;
@@ -75,6 +78,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         collabLocation = (EditText) findViewById(R.id.collab_location);
         collabSize = (EditText) findViewById(R.id.collabSize);
         collabDescription = (EditText) findViewById(R.id.collab_description);
+        collabDuration = (EditText) findViewById(R.id.collab_duration);
         skillInput = (EditText) findViewById(R.id.wantedSkills);
         classInput = (EditText) findViewById(R.id.wantedClasses);
         addSkillButton = (Button) findViewById(R.id.btn_skill);
@@ -143,6 +147,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                 String CollabDate = txtDate.getText().toString();
                 String CollabTime = txtTime.getText().toString();
                 String CollabSize = collabSize.getText().toString();
+                String CollabDuration = collabDuration.getText().toString();
 
                 // converting String to int with catch exception
                 Integer collabSizeInt = 0;
@@ -152,22 +157,37 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     nfe.printStackTrace();
                 }
 
-                // if any fields are empty, tell user, otherwise call API request
+                // get duration int, and convert to ms
+                long collabDurationLong = 0;
+                try {
+                    collabDurationLong = Long.parseLong(CollabDuration);
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                }
+                collabDurationLong *= 86400000;
+
+                // if any fields are empty or collab size is 0, tell user, otherwise call API request
                 if (CollabName.isEmpty() || CollabLocation.isEmpty() || CollabDescription.isEmpty() || CollabSize.isEmpty() ||
                         skillsArray.isEmpty() || classesArray.isEmpty() || CollabDate.isEmpty() || CollabTime.isEmpty()) {
                     Toast t = Toast.makeText(context, "Fields cannot be empty.", Toast.LENGTH_LONG);
                     t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
                     t.show();
                 }
+                else if (CollabSize.equals("0")) {
+                    Toast t = Toast.makeText(context, "Collab size cannot be 0.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                }
                 else {
-                    // get date/time ms from datepicker and timepicker
+                    // get date/time as milliseconds from datepicker and timepicker
                     Calendar collabDateTime = Calendar.getInstance();
                     collabDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
                     dateTimeInMS = collabDateTime.getTimeInMillis();
-
                     long dateTime = dateTimeInMS;
+
+                    // call the API
                     addCollab = new GetCollabsData(getApplicationContext(), instance);
-                    addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray, dateTime);
+                    addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray, dateTime, collabDurationLong);
                     finish();
                 }
             }

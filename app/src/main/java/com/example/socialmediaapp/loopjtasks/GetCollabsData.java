@@ -32,8 +32,9 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class GetCollabsData {
 
-    // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED)
-    // TODO: IMPLEMENT MESSAGING
+    // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED) (EDWIN)
+    // TODO: REFRESH PAGE CORRECTLY SO DATA SHOWS INSTANT (EDWIN)
+
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
@@ -140,7 +141,7 @@ public class GetCollabsData {
 
     }
 
-    public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes, long time){
+    public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes, long time, long duration){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -153,6 +154,7 @@ public class GetCollabsData {
             jsonParams.put("description", description);
             jsonParams.put("size", size);
             jsonParams.put("date", time);
+            jsonParams.put("duration", duration);
 
             JSONArray skillArray = new JSONArray();
             for (String skill : skills) {

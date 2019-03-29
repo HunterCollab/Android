@@ -132,6 +132,32 @@
         android:layout_below="@id/join_collab_button"
         />
 
+    <Button
+        android:id="@+id/edit_collab_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:text="EDIT"
+        android:background="@drawable/button"
+        android:textSize="20dp"
+        android:textColor="@color/colorBright"
+        android:layout_below="@id/leave_collab_button"
+        />
+
+    <Button
+        android:id="@+id/delete_collab_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:text="DELETE"
+        android:background="@drawable/button"
+        android:textSize="20dp"
+        android:textColor="@color/colorBright"
+        android:layout_below="@id/edit_collab_button"
+        />
+
 
 </RelativeLayout>
 
