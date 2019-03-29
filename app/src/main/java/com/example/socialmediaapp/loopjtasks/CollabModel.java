@@ -13,7 +13,7 @@ import java.util.Date;
 public class CollabModel implements Parcelable {
     public int id;
     private String owner;
-    private Integer size;
+    private int size;
     private long date;
     private String duration;
     private String location;

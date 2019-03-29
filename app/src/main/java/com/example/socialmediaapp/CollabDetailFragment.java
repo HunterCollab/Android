@@ -1,6 +1,8 @@
 package com.example.socialmediaapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -34,15 +36,16 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
  * in two-pane mode (on tablets) or a {@link CollabDetailActivity}
  * on handsets.
  */
-public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinComplete, JoinDropCollab.LeaveComplete, GetUserData.DownloadComplete {
+public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinComplete, JoinDropCollab.LeaveComplete,
+        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, GetUserData.DownloadComplete {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
 
-    // TODO: IMPLEMENT DELETE COLLAB FOR OWNER
+    // TODO: IMPLEMENT DELETE COLLAB FOR OWNER (WAITING FOR ARIEL)
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER
-    // TODO: JOIN + LEAVE DEPENDING ON IF USER IS IN THE COLLAB
+    // TODO: SHOW USER START TIME AND END TIME
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -61,9 +64,16 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     private Button leaveCollab;
     private JoinDropCollab doLeaveCollab;
 
+    private Button editCollab;
+    private JoinDropCollab doEditCollab;
+
+    private Button deleteCollab;
+    private JoinDropCollab doDeleteCollab;
+
     private GetUserData userDetails;
     private ArrayList<String> membersArray;
     private ArrayList<String> classesArray;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -141,34 +151,76 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             }
 
-            collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
 
+            // populate time
+            collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
             long dateInMilli = getArguments().getLong("date");
             DateFormat convert = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
             //convert.setTimeZone(TimeZone.getTimeZone("UTC"));
-
             Date result = new Date(dateInMilli);
-
             collabDateTime.setText(convert.format(result));
 
-
+            // join button
             joinCollab = (Button) rootView.findViewById(R.id.join_collab_button);
             joinCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    doJoinCollab = new JoinDropCollab(getContext(), instance, instance);
-                    String collabId = getArguments().getString("collabId");
-                    doJoinCollab.joinCollab(collabId);
+                    // if collab is full, don't let user join
+                    Integer sizeOfCollab = getArguments().getInt("size");
+                    System.out.println(sizeOfCollab);
+                    if (sizeOfCollab.equals(membersArray.size())){
+                        CharSequence text = "Collab is full!";
+                        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                    else {
+                        doJoinCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
+                        String collabId = getArguments().getString("collabId");
+                        doJoinCollab.joinCollab(collabId);
+                    }
                 }
             });
 
+            // leave button
             leaveCollab = (Button) rootView.findViewById(R.id.leave_collab_button);
             leaveCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    doLeaveCollab = new JoinDropCollab(getContext(), instance, instance);
+                    doLeaveCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                     String collabId = getArguments().getString("collabId");
                     doLeaveCollab.leaveCollab(collabId);
+                }
+            });
+
+            // delete button
+            deleteCollab = (Button) rootView.findViewById(R.id.delete_collab_button);
+            deleteCollab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // dialog box asking user to confirm deletion
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure?");
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // delete the collab on yes click
+                            doDeleteCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
+                            String collabId = getArguments().getString("collabId");
+                            doDeleteCollab.deleteCollab(collabId);
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing on no click
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             });
 
@@ -181,15 +233,11 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     public void joinComplete(Boolean success) {
         if(success){
             CharSequence text = "You have joined the collab!";
-            System.out.println("text: " + text);
-
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
         } else {
             CharSequence text = "Cannot join!";
-            System.out.println("text: " + text);
-
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
@@ -214,7 +262,35 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
         }
+    }
 
+    @Override
+    public void editComplete(Boolean success) {
+        if(success){
+
+        } else {
+
+        }
+
+    }
+
+    @Override
+    public void deleteComplete(Boolean success) {
+        if(success){
+            CharSequence text = "Deleted!";
+            System.out.println("text: " + text);
+
+            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+            toast.show();
+        } else {
+            CharSequence text = "Try again!";
+            System.out.println("text: " + text);
+
+            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
     // abstract function from GetUserData.java defined here
@@ -230,6 +306,10 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             }
             else {
                 joinCollab.setVisibility(View.VISIBLE);
+            }
+
+            if (getArguments().getString("owner").equals(userDetails.getUserName())){
+                deleteCollab.setVisibility(View.VISIBLE);
             }
         } else {
             // show error message to user

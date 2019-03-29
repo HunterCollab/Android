@@ -24,11 +24,16 @@ public class JoinDropCollab {
     private Context context;
     private JoinComplete joinListener;
     private LeaveComplete leaveListener;
+    private EditComplete editListener;
+    private DeleteComplete deleteListener;
 
-    public JoinDropCollab(Context context, JoinComplete joinListener, LeaveComplete leaveListener){
+
+    public JoinDropCollab(Context context, JoinComplete joinListener, LeaveComplete leaveListener, EditComplete editListener, DeleteComplete deleteListener){
         this.context = context;
         this.joinListener = joinListener;
         this.leaveListener = leaveListener;
+        this.editListener = editListener;
+        this.deleteListener = deleteListener;
     }
 
     public void joinCollab(String collabId){
@@ -101,6 +106,41 @@ public class JoinDropCollab {
         }
     }
 
+    public void deleteCollab(String collabId){
+
+        AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/deleteCollabForReal";
+
+        JSONObject jsonParams = new JSONObject();
+
+        try {
+
+            jsonParams.accumulate("id",collabId);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                    deleteListener.deleteComplete(true);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                    deleteListener.deleteComplete(false);
+                }
+            });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public interface JoinComplete {
 
         public void joinComplete(Boolean success);
@@ -109,5 +149,15 @@ public class JoinDropCollab {
     public interface LeaveComplete {
 
         public void leaveComplete(Boolean success);
+    }
+
+    public interface EditComplete {
+
+        public void editComplete(Boolean success);
+    }
+
+    public interface DeleteComplete {
+
+        public void deleteComplete(Boolean success);
     }
 }

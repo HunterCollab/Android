@@ -171,10 +171,31 @@
                 android:layout_alignStart="@+id/btn_date" />
 
             <TextView
-                android:id="@+id/skillsRequested"
+                android:id="@+id/duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/in_time"
+                android:text="Duration:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/collab_duration"
+                android:layout_below="@+id/duration"
+                android:hint="Days after collab start time group will be closed..."
+                android:background="@drawable/inputs"
+                android:layout_centerVertical="true"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/skillsRequested"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/collab_duration"
                 android:text="Skills Requested:"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp"
