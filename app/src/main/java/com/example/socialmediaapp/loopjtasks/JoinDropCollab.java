@@ -115,12 +115,11 @@ public class JoinDropCollab {
         JSONObject jsonParams = new JSONObject();
 
         try {
-
             jsonParams.accumulate("id",collabId);
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+            client.delete(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);

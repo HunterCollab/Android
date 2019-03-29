@@ -43,8 +43,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
      * represents.
      */
 
-    // TODO: IMPLEMENT DELETE COLLAB FOR OWNER (WAITING FOR ARIEL)
-    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER
+    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (WAITIN FOR ARIEL)
     // TODO: SHOW USER START TIME AND END TIME
 
     public static final String ARG_ITEM_ID = "item_id";
@@ -208,6 +207,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                             doDeleteCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                             String collabId = getArguments().getString("collabId");
                             doDeleteCollab.deleteCollab(collabId);
+                            getActivity().finish();
                             dialog.dismiss();
                         }
                     });
