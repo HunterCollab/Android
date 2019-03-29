@@ -23,9 +23,8 @@ import java.util.ArrayList;
 
 public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete {
 
-    // TODO: DONT LET USER KEEP CLICKING MENU WHEN ON SAME PAGE, CAUSES CRASH
-    // TODO: IMPLEMENT MESSAGING
-    // TODO: IMPLEMENT NOTIFICATIONS
+    // TODO: IMPLEMENT MESSAGING (TBD)
+    // TODO: IMPLEMENT NOTIFICATIONS (TBD)
 
     private Context context = ProfilePage.this;
     private TextView userNickname;
@@ -154,6 +153,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
             case R.id.nav_profile:
                 Intent profIntent = new Intent(this, ProfilePage.class);
                 this.startActivity(profIntent);
+                this.finish();
                 return true;
             case R.id.collab_Nav:
                 Intent collabIntent = new Intent(this, CollabListActivity.class);
