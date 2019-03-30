@@ -40,7 +40,11 @@ public class EditGithubFrag extends Fragment implements SetUserData.UpdateComple
                 String newGithub = editGithub.getText().toString();
                 updateGithub = new SetUserData(getContext(), instance);
                 updateGithub.setUserGithub(newGithub);
+<<<<<<< HEAD
                 saveGithubButton.setEnabled(false);
+=======
+
+>>>>>>> 0348ac1bceb35f0a9912b818782d8e343ef6051d
             }
         });
 
