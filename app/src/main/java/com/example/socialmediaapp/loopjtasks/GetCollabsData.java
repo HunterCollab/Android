@@ -3,6 +3,7 @@ package com.example.socialmediaapp.loopjtasks;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.socialmediaapp.AddCollabActivity;
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
@@ -33,16 +34,18 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class GetCollabsData {
 
     // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED) (EDWIN)
-    // TODO: REFRESH PAGE CORRECTLY SO DATA SHOWS INSTANT (EDWIN)
+    // TODO: REFRESH PAGE CORRECTLY SO DATA SHOWS ON RESUME (EDWIN)
 
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;
+    private AddCollabComplete addCollabListener;
     private ArrayList<CollabModel> collabs;
 
-    public GetCollabsData(Context context, GetCollabDataComplete listener){
+    public GetCollabsData(Context context, GetCollabDataComplete listener, AddCollabComplete addCollabListener){
         this.context = context;
         this.listener = listener;
+        this.addCollabListener = addCollabListener;
         collabs = new ArrayList<>();
     }
 
@@ -175,12 +178,14 @@ public class GetCollabsData {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Log.i("response", String.valueOf(response));
+                    addCollabListener.addCollabComplete(true);
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     super.onFailure(statusCode, headers, responseString, throwable);
                     Log.i("response", String.valueOf(responseString));
+                    addCollabListener.addCollabComplete(false);
                 }
             });
 
@@ -197,6 +202,11 @@ public class GetCollabsData {
     public interface GetCollabDataComplete {
 
         public void getAllCollabs(Boolean success);
+    }
+
+    public interface AddCollabComplete {
+
+        public void addCollabComplete (Boolean success);
     }
 
 }

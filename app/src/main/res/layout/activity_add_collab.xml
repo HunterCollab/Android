@@ -186,6 +186,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/collab_duration"
                 android:layout_below="@+id/duration"
+                android:inputType="number"
                 android:hint="Days after collab start time group will be closed..."
                 android:background="@drawable/inputs"
                 android:layout_centerVertical="true"

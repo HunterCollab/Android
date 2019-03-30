@@ -40,15 +40,23 @@ public class EditNameFragment extends Fragment implements SetUserData.UpdateComp
                 String newName = editName.getText().toString();
                 updateName = new SetUserData(getContext(), instance);
                 updateName.setUserNickname(newName);
-                getActivity().finish();
+                saveNameButton.setEnabled(false);
             }
         });
-
         return view;
     }
 
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
-        System.out.println(message);
+        if (success) {
+            getActivity().finish();
+        }
+        else {
+            // show error message to user
+            Toast t = Toast.makeText(getContext(), "ERROR. TRY AGAIN.", Toast.LENGTH_LONG);
+            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+            t.show();
+            saveNameButton.setEnabled(true);
+        }
     }
 }

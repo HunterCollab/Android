@@ -53,10 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // prevents user from clicking button multiple times in less than 3 seconds
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
-                    return;
-                mLastClickTime = SystemClock.elapsedRealtime();
+                registerButton.setEnabled(false);
                 String email = UserEmail.getText().toString();
                 String password = Password.getText().toString();
                 String confirmPass = confirmPassword.getText().toString();
@@ -93,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
             Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
+            registerButton.setEnabled(true);
         }
     }
 

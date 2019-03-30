@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.SetUserData;
 
@@ -38,7 +40,7 @@ public class EditLinkedInFragment extends Fragment implements SetUserData.Update
                 String newLinkedIn = editLinkedIn.getText().toString();
                 updateLinkedIn = new SetUserData(getContext(), instance);
                 updateLinkedIn.setUserLinkedIn(newLinkedIn);
-                getActivity().finish();
+                saveLinkedInButton.setEnabled(false);
             }
         });
 
@@ -48,6 +50,15 @@ public class EditLinkedInFragment extends Fragment implements SetUserData.Update
 
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
-        System.out.println(message);
+        if (success) {
+            getActivity().finish();
+        }
+        else {
+            // show error message to user
+            Toast t = Toast.makeText(getContext(), "ERROR. TRY AGAIN.", Toast.LENGTH_LONG);
+            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+            t.show();
+            saveLinkedInButton.setEnabled(true);
+        }
     }
 }

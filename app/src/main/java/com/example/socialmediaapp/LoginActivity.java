@@ -55,10 +55,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
             public void onClick(View v) {
 
                 //Variables from xml
-                // if user clicks button again in less than 3 seconds, it will not work
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
-                    return;
-                mLastClickTime = SystemClock.elapsedRealtime();
+                loginButton.setEnabled(false);
                 String email = userEmail.getText().toString();
                 String password = userPassword.getText().toString();
                 DoLogin loginTask = new DoLogin(getApplicationContext(), instance);
@@ -94,6 +91,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
             Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
+            loginButton.setEnabled(true);
         }
     }
 }
