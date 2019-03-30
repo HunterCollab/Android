@@ -19,5 +19,12 @@
     <string name="recycler_name">Recycler Swipe</string>
     <string name="delete">DELETE</string>
 
+    <string-array name="collabs">
+        <item>All Collabs</item>
+        <item>My Collabs</item>
+        <item>Recommended Collabs</item>
+        <item>Active Collabs</item>
+    </string-array>
+
 
 </resources>

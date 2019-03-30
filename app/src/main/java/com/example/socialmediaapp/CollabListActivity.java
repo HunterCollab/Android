@@ -63,7 +63,7 @@ public class CollabListActivity extends AppCompatActivity
         instance = this;
         //////////////My Code////////
         collabsClass = new GetCollabsData(getApplicationContext(), instance);
-        collabsClass.getCollabs("getAllCollabs");
+        collabsClass.getCollabs("getActiveCollabs");
         ////////////////////////////
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -92,11 +92,41 @@ public class CollabListActivity extends AppCompatActivity
         //This will set up the spinner
         spinner = (Spinner) findViewById(R.id.my_spinner);
         ArrayAdapter<String> spinnerAdapter =
-                new ArrayAdapter<String>(CollabListActivity.this, android.R.layout.simple_spinner_item, paths);
+                new ArrayAdapter<String>(CollabListActivity.this,
+                        R.layout.custom_spinner, getResources().getStringArray(R.array.collabs));
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position){
+                    case 0:
+                        collabsClass.getCollabs("getAllCollabs");
+                        break;
+
+                    case 1:
+                        collabsClass.getCollabs("getCollabs");
+                        break;
+
+                    case 2:
+                        collabsClass.getCollabs("getRecCollabs");
+                        break;
+
+                    case 3:
+                        collabsClass.getCollabs("getActiveCollabs");
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
     }
