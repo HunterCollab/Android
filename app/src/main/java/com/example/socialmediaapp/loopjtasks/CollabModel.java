@@ -87,6 +87,22 @@ public class CollabModel implements Parcelable {
         }
     };
 
+    public CollabModel() {
+
+        id = 0;
+        owner = "None";
+        size = 1;
+        duration = "None";
+        date = 1;
+        location = "None";
+        byte tmpStatus = 8;
+        status = tmpStatus == 0;
+        title = "Error, Could not retrieve data";
+        description = "None";
+        collabId = "1";
+
+    }
+
     public String getOwner(){
         return owner;
     }
