@@ -20,6 +20,7 @@ import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete {
 
@@ -134,7 +135,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
     @Override
     public void onResume(){
         super.onResume();
-        // API call again to refresh the page with updated data
+        // API call to populate the page with updated data
         userDetails = new GetUserData(getApplicationContext(), instance);
         userDetails.getUserData();
     }
@@ -189,7 +190,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
         Bundle x = new Bundle();
         x.putInt("key",1);
         editProfile.putExtras(x);
-        startActivity(editProfile);
+        startActivityForResult(editProfile, 1);
     }
 
     // send User to editGithub fragment
@@ -209,6 +210,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
         editProfile.putExtras(x);
         startActivity(editProfile);
     }
+
 
     // abstract function from GetUserData.java defined here
     // populate profile screen with data on successful API call

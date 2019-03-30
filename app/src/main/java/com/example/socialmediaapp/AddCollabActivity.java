@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete, GetCollabsData.AddCollabComplete {
 
     // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB (EDWIN)
-    // TODO: LET USER SET DURATION, NOT DEFAULT (WAITING FOR ARIEL)
+    // TODO: LET USER SET DURATION, NOT DEFAULT (ME - WAITING FOR ARIEL)
 
     private Context context = AddCollabActivity.this;
     private EditText collabName;
