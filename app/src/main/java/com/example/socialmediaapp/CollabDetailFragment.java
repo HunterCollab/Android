@@ -43,8 +43,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
      * represents.
      */
 
-    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (WAITIN FOR ARIEL)
+    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (WAITING FOR ARIEL)
     // TODO: SHOW USER START TIME AND END TIME
+    // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING OR EVERONE LEFT? (BACKEND)
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -164,6 +165,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             joinCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    System.out.println(userDetails.getUserName());
                     // if collab is full, don't let user join
                     Integer sizeOfCollab = getArguments().getInt("size");
                     System.out.println(sizeOfCollab);
@@ -173,11 +175,29 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                         toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
                         toast.show();
                     }
+                    else if (membersArray.contains(userDetails.getUserName())) {
+                        CharSequence text = "Already joined!";
+                        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
                     else {
                         doJoinCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                         String collabId = getArguments().getString("collabId");
                         doJoinCollab.joinCollab(collabId);
+                        collabMembers.append(userDetails.getUserName() + "\n");
+                        joinCollab.setVisibility(View.INVISIBLE);
+                        leaveCollab.setVisibility(View.VISIBLE);
                     }
+                }
+            });
+
+            // edit button
+            editCollab = (Button) rootView.findViewById(R.id.edit_collab_button);
+            editCollab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // send to edit collab screen
                 }
             });
 
@@ -189,6 +209,19 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                     doLeaveCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                     String collabId = getArguments().getString("collabId");
                     doLeaveCollab.leaveCollab(collabId);
+
+                    // repopulate members field
+                    membersArray.remove(userDetails.getUserName());
+                    collabMembers.setText("");
+                    if (membersArray != null){
+                        int len = membersArray.size();
+                        for (int i = 0; i < len; i++){
+                            collabMembers.append(membersArray.get(i) + "\n");
+                        }
+                    }
+
+                    leaveCollab.setVisibility(View.INVISIBLE);
+                    joinCollab.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -254,6 +287,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+
         } else {
             CharSequence text = "Cannot leave!";
             System.out.println("text: " + text);
@@ -308,7 +342,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 joinCollab.setVisibility(View.VISIBLE);
             }
 
+            // if user is the owner, show edit/delete collab button
             if (getArguments().getString("owner").equals(userDetails.getUserName())){
+                editCollab.setVisibility(View.VISIBLE);
                 deleteCollab.setVisibility(View.VISIBLE);
             }
         } else {
