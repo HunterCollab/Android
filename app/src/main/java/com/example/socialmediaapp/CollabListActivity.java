@@ -50,6 +50,7 @@ public class CollabListActivity extends AppCompatActivity
     private GetCollabsData collabsClass;
     private CollabListActivity instance;
     public ArrayList<CollabModel> listOfCollabs;
+    public CollabModel errorHandler;
 
     //spinner for dropdown
     private Spinner spinner;
@@ -60,10 +61,13 @@ public class CollabListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collab_list);
 
+         errorHandler = new CollabModel();
+
         instance = this;
+
         //////////////My Code////////
         collabsClass = new GetCollabsData(getApplicationContext(), instance);
-        collabsClass.getCollabs("getActiveCollabs");
+        //collabsClass.getCollabs("getAllCollabs");
         ////////////////////////////
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -90,31 +94,50 @@ public class CollabListActivity extends AppCompatActivity
         }
 
         //This will set up the spinner
+        //Depending on tne item selected, a different function is called
         spinner = (Spinner) findViewById(R.id.my_spinner);
+        //Makes a spinnerAdapter with our costume field and list of array located in strings
         ArrayAdapter<String> spinnerAdapter =
                 new ArrayAdapter<String>(CollabListActivity.this,
                         R.layout.custom_spinner, getResources().getStringArray(R.array.collabs));
 
+        //Creates a dropdown using a default template
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        //Attaches adapter to the spinner
         spinner.setAdapter(spinnerAdapter);
+        //Creates a listener to see when the spinner is changed
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 switch (position){
                     case 0:
+
+                        if(listOfCollabs !=null){
+                            listOfCollabs.clear();
+                        }
+                        //This one gets called at start up by default
                         collabsClass.getCollabs("getAllCollabs");
                         break;
 
                     case 1:
+                        if(listOfCollabs !=null){
+                            listOfCollabs.clear();
+                        }
                         collabsClass.getCollabs("getCollabs");
                         break;
 
                     case 2:
+                        if(listOfCollabs !=null){
+                            listOfCollabs.clear();
+                        }
                         collabsClass.getCollabs("getRecCollabs");
                         break;
 
                     case 3:
+                        if(listOfCollabs !=null){
+                            listOfCollabs.clear();
+                        }
                         collabsClass.getCollabs("getActiveCollabs");
                         break;
 
@@ -135,8 +158,8 @@ public class CollabListActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         // API call again to refresh the page with updated data
-        collabsClass = new GetCollabsData(getApplicationContext(), instance);
-        collabsClass.getCollabs("getAllCollabs");
+        //collabsClass = new GetCollabsData(getApplicationContext(), instance);
+        //collabsClass.getCollabs("getAllCollabs");
     }
 
     // menu navigation
@@ -178,11 +201,19 @@ public class CollabListActivity extends AppCompatActivity
     public void getAllCollabs(Boolean success) {
 
         if(success){
+
+
             listOfCollabs = collabsClass.returnCollabs();
             View recyclerView = findViewById(R.id.collab_list);
             assert recyclerView != null;
             setupRecyclerView((RecyclerView) recyclerView);
 
+        } else {
+            listOfCollabs.clear();
+            listOfCollabs.add(errorHandler);
+            View recyclerView = findViewById(R.id.collab_list);
+            assert recyclerView != null;
+            setupRecyclerView((RecyclerView) recyclerView);
         }
 
     }
