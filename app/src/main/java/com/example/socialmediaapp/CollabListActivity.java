@@ -158,7 +158,6 @@ public class CollabListActivity extends AppCompatActivity
         super.onResume();
         // API call again to refresh the page with updated data
         //collabsClass = new GetCollabsData(getApplicationContext(), instance, instance);
-        //collabsClass = new GetCollabsData(getApplicationContext(), instance);
         //collabsClass.getCollabs("getAllCollabs");
     }
 
