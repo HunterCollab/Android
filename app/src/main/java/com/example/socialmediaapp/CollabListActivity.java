@@ -62,7 +62,6 @@ public class CollabListActivity extends AppCompatActivity
         setContentView(R.layout.activity_collab_list);
 
         errorHandler = new CollabModel();
-
         instance = this;
 
         //////////////My Code////////
@@ -159,6 +158,7 @@ public class CollabListActivity extends AppCompatActivity
         super.onResume();
         // API call again to refresh the page with updated data
         //collabsClass = new GetCollabsData(getApplicationContext(), instance, instance);
+        //collabsClass = new GetCollabsData(getApplicationContext(), instance);
         //collabsClass.getCollabs("getAllCollabs");
     }
 
@@ -201,7 +201,6 @@ public class CollabListActivity extends AppCompatActivity
     public void getAllCollabs(Boolean success) {
 
         if(success){
-
             listOfCollabs = collabsClass.returnCollabs();
             View recyclerView = findViewById(R.id.collab_list);
             assert recyclerView != null;
