@@ -17,10 +17,28 @@
         android:text="Collab Details"/>
 
     <TextView
-        android:id="@+id/collab_DateTime"
+        android:id="@+id/collab_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/collab_detail"
+        android:text="Owner:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_Owner_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_owner"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/collab_DateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_Owner_Info"
         android:text="Date/Time:"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"

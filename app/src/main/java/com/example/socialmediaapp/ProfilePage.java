@@ -25,6 +25,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
 
     // TODO: IMPLEMENT MESSAGING (TBD)
     // TODO: IMPLEMENT NOTIFICATIONS (TBD)
+    // TODO: REFRESH PAGE CORRECTLY ON RESUME (EDWIN)
 
     private Context context = ProfilePage.this;
     private TextView userNickname;
@@ -65,8 +66,8 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
         editSkill = (Button) findViewById(R.id.editSkills_button);
         editClass = (Button) findViewById(R.id.editClasses_button);
 
-        userDetails = new GetUserData(getApplicationContext(), instance);
-        userDetails.getUserData();
+        //userDetails = new GetUserData(getApplicationContext(), instance);
+        //userDetails.getUserData();
 
         // editName Button
         editName.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +211,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
     }
 
     // abstract function from GetUserData.java defined here
-    // populate profile screen with data on successful API cal
+    // populate profile screen with data on successful API call
     @Override
     public void downloadComplete(Boolean success) {
         if (success) {

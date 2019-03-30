@@ -22,6 +22,8 @@ import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.loopjtasks.JoinDropCollab;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,13 +47,16 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (WAITING FOR ARIEL)
     // TODO: SHOW USER START TIME AND END TIME
-    // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING OR EVERONE LEFT? (BACKEND)
+    // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING? (BACKEND)
+    // TODO: SHOW NICKNAMES, NOT EMAILS
+    // TODO: VIEW MEMBER LIST --> MEMBER PROFILE PAGES
 
     public static final String ARG_ITEM_ID = "item_id";
 
     private String currentUsername;
     private CollabModel mItem;
     private CollabDetailFragment instance = null;
+    private TextView collabOwner;
     private TextView collabDateTime;
     private TextView collabLocation;
     private TextView collabSkills;
@@ -117,6 +122,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             ((TextView) rootView.findViewById(R.id.collab_detail)).setText(getArguments().getString("description"));
             collabLocation = (TextView) rootView.findViewById(R.id.collab_Location_Info);
             collabLocation.setText(getArguments().getString("location"));
+            collabOwner = (TextView) rootView.findViewById(R.id.collab_Owner_Info);
+            collabOwner.setText(getArguments().getString("owner"));
 
             // populate skills
             collabSkills = (TextView) rootView.findViewById(R.id.collab_Skills_Request_Info);
@@ -165,7 +172,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             joinCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println(userDetails.getUserName());
                     // if collab is full, don't let user join
                     Integer sizeOfCollab = getArguments().getInt("size");
                     System.out.println(sizeOfCollab);
@@ -206,12 +212,40 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             leaveCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    doLeaveCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
-                    String collabId = getArguments().getString("collabId");
-                    doLeaveCollab.leaveCollab(collabId);
+                    if (membersArray.size() == 1) {
+                        // dialog box asking user to confirm leave/deletion
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Confirm");
+                        builder.setMessage("You are the last member, this collab will be deleted, are you sure?");
+                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // delete the collab on yes click
+                                doDeleteCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
+                                String collabId = getArguments().getString("collabId");
+                                doDeleteCollab.deleteCollab(collabId);
+                                getActivity().finish();
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do nothing on no click
+                                dialog.dismiss();
+                            }
+                        });
 
-                    leaveCollab.setVisibility(View.INVISIBLE);
-                    joinCollab.setVisibility(View.VISIBLE);
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                    else {
+                        doLeaveCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
+                        String collabId = getArguments().getString("collabId");
+                        doLeaveCollab.leaveCollab(collabId);
+
+                        leaveCollab.setVisibility(View.INVISIBLE);
+                        joinCollab.setVisibility(View.VISIBLE);
+                    }
                 }
             });
 
@@ -260,7 +294,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
 
-            // add member to text field
+            // add member locally
+            membersArray.add(userDetails.getUserName());
             collabMembers.append(userDetails.getUserName() + "\n");
         } else {
             CharSequence text = "Cannot join!";
@@ -281,7 +316,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
 
-            // repopulate members field
+            // repopulate members field locally
             membersArray.remove(userDetails.getUserName());
             collabMembers.setText("");
             if (membersArray != null){
@@ -321,7 +356,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
         } else {
-            CharSequence text = "Try again!";
+            CharSequence text = "ERROR. TRY AGAIN.";
             System.out.println("text: " + text);
 
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);

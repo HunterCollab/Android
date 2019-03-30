@@ -23,7 +23,7 @@ import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
+public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete, GetCollabsData.AddCollabComplete {
 
     // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB (EDWIN)
     // TODO: LET USER SET DURATION, NOT DEFAULT (WAITING FOR ARIEL)
@@ -184,11 +184,11 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     collabDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
                     dateTimeInMS = collabDateTime.getTimeInMillis();
                     long dateTime = dateTimeInMS;
+                    confirmAddCollab.setEnabled(false);
 
                     // call the API
-                    addCollab = new GetCollabsData(getApplicationContext(), instance);
+                    addCollab = new GetCollabsData(getApplicationContext(), instance, instance);
                     addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray, dateTime, collabDurationLong);
-                    finish();
                 }
             }
         });
@@ -257,5 +257,19 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void getAllCollabs(Boolean success) {
 
+    }
+
+    @Override
+    public void addCollabComplete (Boolean success) {
+        if (success) {
+            finish();
+        }
+        else {
+            // show error message to user
+            Toast t = Toast.makeText(getApplicationContext(), "ERROR. TRY AGAIN.", Toast.LENGTH_LONG);
+            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+            t.show();
+            confirmAddCollab.setEnabled(true);
+        }
     }
 }
