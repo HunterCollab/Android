@@ -23,7 +23,7 @@ import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
+public class       AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete {
 
     // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB (EDWIN)
     // TODO: LET USER SET DURATION, NOT DEFAULT (WAITING FOR ARIEL)

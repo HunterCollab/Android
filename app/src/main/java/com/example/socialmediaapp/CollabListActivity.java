@@ -160,6 +160,42 @@ public class CollabListActivity extends AppCompatActivity
         // API call again to refresh the page with updated data
         //collabsClass = new GetCollabsData(getApplicationContext(), instance);
         //collabsClass.getCollabs("getAllCollabs");
+
+        //Will start activity from within itself
+        int position = spinner.getSelectedItemPosition();
+
+        switch (position){
+            case 0:
+
+                if(listOfCollabs !=null){
+                    listOfCollabs.clear();
+                }
+                //This one gets called at start up by default
+                collabsClass.getCollabs("getAllCollabs");
+                break;
+
+            case 1:
+                if(listOfCollabs !=null){
+                    listOfCollabs.clear();
+                }
+                collabsClass.getCollabs("getCollabs");
+                break;
+
+            case 2:
+                if(listOfCollabs !=null){
+                    listOfCollabs.clear();
+                }
+                collabsClass.getCollabs("getRecCollabs");
+                break;
+
+            case 3:
+                if(listOfCollabs !=null){
+                    listOfCollabs.clear();
+                }
+                collabsClass.getCollabs("getActiveCollabs");
+                break;
+
+        }
     }
 
     // menu navigation
