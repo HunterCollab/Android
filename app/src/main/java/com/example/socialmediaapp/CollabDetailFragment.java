@@ -175,6 +175,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                         toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
                         toast.show();
                     }
+                    // bug catch, should not show
                     else if (membersArray.contains(userDetails.getUserName())) {
                         CharSequence text = "Already joined!";
                         Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
@@ -185,7 +186,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                         doJoinCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                         String collabId = getArguments().getString("collabId");
                         doJoinCollab.joinCollab(collabId);
-                        collabMembers.append(userDetails.getUserName() + "\n");
                         joinCollab.setVisibility(View.INVISIBLE);
                         leaveCollab.setVisibility(View.VISIBLE);
                     }
@@ -209,16 +209,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                     doLeaveCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                     String collabId = getArguments().getString("collabId");
                     doLeaveCollab.leaveCollab(collabId);
-
-                    // repopulate members field
-                    membersArray.remove(userDetails.getUserName());
-                    collabMembers.setText("");
-                    if (membersArray != null){
-                        int len = membersArray.size();
-                        for (int i = 0; i < len; i++){
-                            collabMembers.append(membersArray.get(i) + "\n");
-                        }
-                    }
 
                     leaveCollab.setVisibility(View.INVISIBLE);
                     joinCollab.setVisibility(View.VISIBLE);
@@ -269,6 +259,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+
+            // add member to text field
+            collabMembers.append(userDetails.getUserName() + "\n");
         } else {
             CharSequence text = "Cannot join!";
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
@@ -287,6 +280,16 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+
+            // repopulate members field
+            membersArray.remove(userDetails.getUserName());
+            collabMembers.setText("");
+            if (membersArray != null){
+                int len = membersArray.size();
+                for (int i = 0; i < len; i++){
+                    collabMembers.append(membersArray.get(i) + "\n");
+                }
+            }
 
         } else {
             CharSequence text = "Cannot leave!";
