@@ -201,7 +201,6 @@ public class CollabListActivity extends AppCompatActivity
     public void getAllCollabs(Boolean success) {
 
         if(success){
-
             listOfCollabs = collabsClass.returnCollabs();
             View recyclerView = findViewById(R.id.collab_list);
             assert recyclerView != null;
