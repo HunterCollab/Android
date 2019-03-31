@@ -1,6 +1,7 @@
 package com.example.socialmediaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
@@ -188,7 +189,10 @@ public class       AddCollabActivity extends AppCompatActivity implements View.O
                     // call the API
                     addCollab = new GetCollabsData(getApplicationContext(), instance);
                     addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray, dateTime, collabDurationLong);
-                    finish();
+                    Intent collabIntent = new Intent(getApplicationContext(), CollabListActivity.class);
+                    collabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(collabIntent);
+
                 }
             }
         });

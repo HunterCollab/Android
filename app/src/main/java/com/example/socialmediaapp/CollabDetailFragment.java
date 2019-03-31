@@ -3,6 +3,7 @@ package com.example.socialmediaapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -230,8 +231,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                             doDeleteCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                             String collabId = getArguments().getString("collabId");
                             doDeleteCollab.deleteCollab(collabId);
-                            getActivity().finish();
-                            dialog.dismiss();
+                            Intent collabIntent = new Intent(getContext(), CollabListActivity.class);
+                            collabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(collabIntent);
                         }
                     });
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
