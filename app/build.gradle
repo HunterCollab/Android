@@ -46,7 +46,6 @@ dependencies {
         exclude module: 'support-v4'
     }
 
-
     //Swipe View
     implementation 'com.baoyz.swipemenulistview:library:1.3.0'
 

@@ -29,11 +29,12 @@ public class GetUserData {
     private String linkedIn;
     private String userNickname;
     private DownloadComplete dataDownloadComplete;
+    private DownloadProfleComplete downloadProfleComplete;
 
-
-    public GetUserData(Context context, DownloadComplete listener){
+    public GetUserData(Context context, DownloadComplete listener, DownloadProfleComplete listener1){
         this.context = context;
         this.dataDownloadComplete = listener;
+        this.downloadProfleComplete = listener1;
 
         requestParams = new RequestParams();
         skillStringList = new ArrayList<>();
@@ -64,6 +65,30 @@ public class GetUserData {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 dataDownloadComplete.downloadComplete(false);
+            }
+        });
+    }
+
+    public void getOtherUserData(String userEmail){
+        AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
+
+        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/" + userEmail, requestParams, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                setUserSkills(response);
+                setUserClasses(response);
+                setUserName(response);
+                setUserLinkedIn(response);
+                setUserGithub(response);
+                setUserNickname(response);
+                downloadProfleComplete.downloadProfileComplete(true);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                downloadProfleComplete.downloadProfileComplete(false);
             }
         });
     }
@@ -157,6 +182,10 @@ public class GetUserData {
 
     public interface DownloadComplete {
         public void downloadComplete(Boolean success);
+    }
+
+    public interface DownloadProfleComplete {
+        public void downloadProfileComplete(Boolean success);
     }
 
 }

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 public class UserClassesActivity extends AppCompatActivity
-        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete  {
+        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete  {
 
     private Context context = UserClassesActivity.this;
     private RecyclerView recyclerView;
@@ -147,7 +147,7 @@ public class UserClassesActivity extends AppCompatActivity
 
         //skills
         classNames = new ArrayList<String>();
-        userData = new GetUserData(getApplicationContext(), instance);
+        userData = new GetUserData(getApplicationContext(), instance, instance);
         userData.getUserData();
 
 
@@ -227,5 +227,10 @@ public class UserClassesActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.notifyDataSetChanged();
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void downloadProfileComplete(Boolean success) {
+
     }
 }
