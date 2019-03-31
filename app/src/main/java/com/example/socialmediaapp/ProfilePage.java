@@ -26,6 +26,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
 
     // TODO: IMPLEMENT MESSAGING (TBD)
     // TODO: IMPLEMENT NOTIFICATIONS (TBD)
+    // TODO: SHOULD NOT BE ABLE TO ADD FAKE/MISSPELLED CLASSES (BACKEND AND FRONTEND)
 
     private Context context = ProfilePage.this;
     private TextView userNickname;
