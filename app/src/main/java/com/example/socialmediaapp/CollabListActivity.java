@@ -31,6 +31,8 @@ import com.example.socialmediaapp.tools.GeneralTools;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED) (EDWIN)
+
 /**
  * An activity representing a list of Collabs. This activity
  * has different presentations for handset and tablet-size devices. On

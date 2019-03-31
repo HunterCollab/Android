@@ -26,7 +26,6 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
 
     // TODO: IMPLEMENT MESSAGING (TBD)
     // TODO: IMPLEMENT NOTIFICATIONS (TBD)
-    // TODO: REFRESH PAGE CORRECTLY ON RESUME (EDWIN)
 
     private Context context = ProfilePage.this;
     private TextView userNickname;
@@ -138,6 +137,13 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
         // API call to populate the page with updated data
         userDetails = new GetUserData(getApplicationContext(), instance);
         userDetails.getUserData();
+
+        userNickname.invalidate();
+        userNickname.requestLayout();
+        githubLink.invalidate();
+        githubLink.requestLayout();
+        linkedinLink.invalidate();
+        linkedinLink.requestLayout();
     }
 
     // menu navigation

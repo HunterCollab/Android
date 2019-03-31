@@ -33,8 +33,6 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class GetCollabsData {
 
-    // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED) (EDWIN)
-
     //Listener variables
     private Context context;
     private GetCollabDataComplete listener;

@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
@@ -21,8 +23,10 @@ import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete, GetCollabsData.AddCollabComplete {
 
@@ -51,6 +55,8 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private long mLastClickTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long dateTimeInMS;
+
+    private ListView skillsListView;
 
     private GetCollabsData addCollab = null;
     private AddCollabActivity instance = null;
@@ -86,6 +92,10 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         addClassButton = (Button) findViewById(R.id.btn_class);
         skillsView = (TextView) findViewById(R.id.skillView);
         classesView = (TextView) findViewById(R.id.classView);
+
+        // listView for skills and classes
+        skillsListView = (ListView) findViewById(R.id.skillsListView);
+
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
@@ -199,7 +209,6 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     }
 
     // letting user select date and time
-
     @Override
     @SuppressWarnings("deprecation")
     public void onClick(View v) {
