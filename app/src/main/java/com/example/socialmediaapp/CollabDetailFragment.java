@@ -2,9 +2,11 @@ package com.example.socialmediaapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcel;
+import android.os.health.SystemHealthManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,7 +34,7 @@ import java.util.Date;
  * on handsets.
  */
 public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinComplete, JoinDropCollab.LeaveComplete,
-        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, GetUserData.DownloadComplete {
+        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -40,11 +42,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME - WAITING FOR ARIEL)
     // TODO: SHOW USER START TIME AND END TIME (ME)
-    // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING? (BACKEND)
-    // TODO: HOW TO HANDLE USER LEAVING AS LAST MEMBER (BACKEND, currently handled on frontend, will not be accurate if 2 users on same screen)
-    // TODO: SHOW NICKNAMES, NOT EMAILS (ME)
-    // TODO: VIEW MEMBER LIST --> MEMBER PROFILE PAGES (ME)
     // TODO: MULTIPLE USERS ON SAME DETAIL SCREEN JOINING/LEAVING WILL NOT BE ACCURATE, ERROR CHECKS (BACKEND)
+    // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING? (BACKEND)
+    // TODO: HOW TO HANDLE USER LEAVING AS LAST MEMBER (BACKEND - CURRENTLY HANDLED ON FRONTEND, WILL NOT BE ACCURATE IF MULTIPLE USERES ON SAME SCREEN)
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -57,6 +57,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     private TextView collabSkills;
     private TextView collabClasses;
     private TextView collabMembers;
+
+    private Button viewMembers;
 
     private Button joinCollab;
     private JoinDropCollab doJoinCollab;
@@ -71,8 +73,11 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     private JoinDropCollab doDeleteCollab;
 
     private GetUserData userDetails;
+    private GetUserData memberDetails;
     private ArrayList<String> membersArray;
     private ArrayList<String> classesArray;
+    private ArrayList<String> membersArrayForRecyclerView = new ArrayList<>();
+    private ArrayList<String> membersArrayNicknames = new ArrayList<>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -109,7 +114,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
         instance = this;
 
-        userDetails = new GetUserData(getContext(), instance);
+        userDetails = new GetUserData(getContext(), instance, instance);
+        memberDetails = new GetUserData(getContext(), instance, instance);
         userDetails.getUserData();
 
         // Show the content as text in a TextView.
@@ -147,12 +153,12 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             collabMembers.setText("");
             membersArray = getArguments().getStringArrayList("members");
             if (membersArray != null){
+                membersArrayNicknames.clear();
                 int len = membersArray.size();
                 for (int i = 0; i < len; i++){
-                    collabMembers.append(membersArray.get(i) + "\n");
+                    memberDetails.getOtherUserData(membersArray.get(i));
                 }
             }
-
 
             // populate time
             collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
@@ -161,6 +167,19 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             //convert.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date result = new Date(dateInMilli);
             collabDateTime.setText(convert.format(result));
+
+            // view members button
+            viewMembers = (Button) rootView.findViewById(R.id.viewMembers_button);
+            viewMembers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent viewMembersIntent = new Intent(getContext(), ViewMembersOfCollabActivity.class);
+                    viewMembersIntent.putExtra("membersList", membersArrayForRecyclerView);
+                    viewMembersIntent.putExtra("membersListNicknames", membersArrayNicknames);
+                    viewMembersIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(viewMembersIntent);
+                }
+            } );
 
             // join button
             joinCollab = (Button) rootView.findViewById(R.id.join_collab_button);
@@ -350,7 +369,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     }
 
     // abstract function from GetUserData.java defined here
-    // populate profile screen with data on successful API call
     @Override
     public void downloadComplete(Boolean success) {
         if (success) {
@@ -374,6 +392,15 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast t = Toast.makeText(getContext(), "ERROR", Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
+        }
+    }
+
+    @Override
+    public void downloadProfileComplete(Boolean success) {
+        if (success) {
+            membersArrayForRecyclerView.add(memberDetails.getUserName());
+            membersArrayNicknames.add(memberDetails.getUserNickname());
+            collabMembers.append(memberDetails.getUserNickname() + "\n");
         }
     }
 }

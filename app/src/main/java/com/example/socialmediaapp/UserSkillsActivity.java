@@ -49,7 +49,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class UserSkillsActivity extends AppCompatActivity
-        implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete {
+        implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete, GetUserData.DownloadProfleComplete {
 
     private Context context = UserSkillsActivity.this;
     private RecyclerView recyclerView;
@@ -169,7 +169,7 @@ public class UserSkillsActivity extends AppCompatActivity
 
         //skills
         skillNames = new ArrayList<String>();
-        userData = new GetUserData(getApplicationContext(), instance);
+        userData = new GetUserData(getApplicationContext(), instance, instance);
         userData.getUserData();
 
 
@@ -255,6 +255,8 @@ public class UserSkillsActivity extends AppCompatActivity
 
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void downloadProfileComplete(Boolean success) {
+    }
 
 }

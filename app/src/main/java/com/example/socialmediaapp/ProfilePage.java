@@ -22,7 +22,7 @@ import com.example.socialmediaapp.tools.GeneralTools;
 import java.util.ArrayList;
 import java.util.Observer;
 
-public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete {
+public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete {
 
     // TODO: IMPLEMENT MESSAGING (TBD)
     // TODO: IMPLEMENT NOTIFICATIONS (TBD)
@@ -136,7 +136,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
     public void onResume(){
         super.onResume();
         // API call to populate the page with updated data
-        userDetails = new GetUserData(getApplicationContext(), instance);
+        userDetails = new GetUserData(getApplicationContext(), instance, instance);
         userDetails.getUserData();
 
         userNickname.invalidate();
@@ -253,6 +253,13 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
             Toast t = Toast.makeText(context, "ERROR", Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
+        }
+    }
+
+    @Override
+    public void downloadProfileComplete(Boolean success) {
+        if (success) {
+
         }
     }
 

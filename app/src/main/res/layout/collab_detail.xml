@@ -116,6 +116,23 @@
         android:textSize="20dp"
         android:layout_marginLeft="5dp" />
 
+    <Button
+        android:id="@+id/viewMembers_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/collab_Members"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/collab_Members"
+        android:layout_toRightOf="@+id/collab_Members"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="50dp"
+        android:minHeight="20dp"
+        android:text="View"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
     <TextView
         android:id="@+id/collab_Members_Info"
         android:layout_width="match_parent"

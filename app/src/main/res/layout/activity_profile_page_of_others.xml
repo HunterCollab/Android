@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfilePageOfOthers">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="#FFFFFF"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <ScrollView
+        android:id="@+id/scrollProfile"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Name/Nickname"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_name"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/github"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/userName"
+                android:text="Github"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/githubLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/github"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/linkedin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/githubLink"
+                android:text="LinkedIn"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/linkedinLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linkedin"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/skills"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linkedinLink"
+                android:text="Skills"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/skillsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/skills"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/classes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/skillsList"
+                android:text="Classes"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/classesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/classes"
+                android:textSize="25sp"
+                android:layout_marginLeft="5dp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

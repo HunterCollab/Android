@@ -12,21 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
+            android:name=".ViewMembersOfCollabActivity"
+            android:label="@string/title_activity_view_members_of_collab"
+            android:parentActivityName=".CollabDetailActivity" />
+        <activity
+            android:name=".ProfilePageOfOthers"
+            android:parentActivityName=".ViewMembersOfCollabActivity"
+            android:label="Member Profile"
+            />
+        <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
             android:name=".ProfilePage"
             android:label="Profile" />
         <activity
             android:name=".UserClassesActivity"
             android:label="@string/title_activity_user_classes"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddCollabActivity"
             android:parentActivityName=".CollabListActivity" />
-        <activity
-            android:name=".CollabListActivity" />
+        <activity android:name=".CollabListActivity" />
         <activity
             android:name=".CollabDetailActivity"
             android:label="@string/title_collab_detail"
