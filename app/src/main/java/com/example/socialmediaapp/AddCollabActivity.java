@@ -1,5 +1,6 @@
 package com.example.socialmediaapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -8,10 +9,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,14 +29,11 @@ import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete, GetCollabsData.AddCollabComplete {
-
-    // TODO: LET USER REMOVE SKILLS/CLASSES WHILE ADDING COLLAB (EDWIN)
+    
     // TODO: LET USER SET DURATION, NOT DEFAULT (ME - WAITING FOR ARIEL)
 
     private Context context = AddCollabActivity.this;
@@ -43,8 +46,6 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private EditText classInput;
     private EditText collabSize;
     private EditText collabDuration;
-    private TextView skillsView;
-    private TextView classesView;
     private Button btnDatePicker;
     private Button btnTimePicker;
     private Button confirmAddCollab;
@@ -56,7 +57,11 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long dateTimeInMS;
 
+    // skill listview
+    private ArrayAdapter<String> skillAdapter;
     private ListView skillsListView;
+    private ArrayAdapter<String> classAdapter;
+    private ListView classesListView;
 
     private GetCollabsData addCollab = null;
     private AddCollabActivity instance = null;
@@ -90,12 +95,15 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         classInput = (EditText) findViewById(R.id.wantedClasses);
         addSkillButton = (Button) findViewById(R.id.btn_skill);
         addClassButton = (Button) findViewById(R.id.btn_class);
-        skillsView = (TextView) findViewById(R.id.skillView);
-        classesView = (TextView) findViewById(R.id.classView);
 
         // listView for skills and classes
         skillsListView = (ListView) findViewById(R.id.skillsListView);
+        skillAdapter = new ArrayAdapter<String>(this, R.layout.addcollab_skilllistview, R.id.skillView, skillsArray);
+        skillsListView.setAdapter(skillAdapter);
 
+        classesListView = (ListView) findViewById(R.id.classesListView);
+        classAdapter = new ArrayAdapter<String>(this, R.layout.addcollab_classlistview, R.id.classView, classesArray);
+        classesListView.setAdapter(classAdapter);
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
@@ -115,8 +123,9 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                 }
                 else {
                     skillsArray.add(getInput);
-                    skillsView.append(getInput + "\n");
                     skillInput.getText().clear();
+                    skillAdapter.notifyDataSetChanged();
+                    setListViewHeightBasedOnChildren(skillsListView);
                     }
             }
         });
@@ -137,8 +146,9 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                 }
                 else {
                     classesArray.add(getInput);
-                    classesView.append(getInput + "\n");
                     classInput.getText().clear();
+                    classAdapter.notifyDataSetChanged();
+                    setListViewHeightBasedOnChildren(classesListView);
                 }
             }
         });
@@ -207,6 +217,48 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             }
         });
     }
+
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView
+     **** https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+    //////////////////////////////////////////////////////// remove skill/class handler
+    public void removeSkillHandler(View view) {
+        int positionForView = skillsListView.getPositionForView(view);
+        skillsArray.remove(positionForView);
+        skillAdapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(skillsListView);
+    }
+
+    public void removeClassHandler(View view) {
+        int positionForView = classesListView.getPositionForView(view);
+        classesArray.remove(positionForView);
+        classAdapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(classesListView);
+    }
+    //////////////////////////////////////////////////////////////////////////////////
 
     // letting user select date and time
     @Override

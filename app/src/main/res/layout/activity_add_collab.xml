@@ -203,78 +203,82 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/wantedSkills"
-                android:layout_below="@+id/skillsRequested"
-                android:hint="Add skills..."
-                android:background="@drawable/inputs"
-                android:layout_centerVertical="true"
-                android:padding="10dp" />
-
-            <Button
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ADD SKILL"
-                android:id="@+id/btn_skill"
-                android:layout_alignBottom="@+id/wantedSkills"
-                android:layout_toRightOf="@+id/wantedSkills"
-                android:layout_toEndOf="@+id/in_date" />
+                android:layout_below="@id/skillsRequested"
+                android:id="@+id/addskills">
+
+                <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wantedSkills"
+                    android:hint="Add skills..."
+                    android:background="@drawable/inputs"
+                    android:padding="10dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD SKILL"
+                    android:id="@+id/btn_skill"
+                    android:layout_toRightOf="@+id/wantedSkills" />
+            </RelativeLayout>
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/skillsListView"
-                android:layout_below="@id/wantedSkills">
+                android:layout_below="@id/addskills">
 
             </ListView>
-
-
 
             <TextView
                 android:id="@+id/classesRequested"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/skillView"
+                android:layout_below="@+id/skillsListView"
                 android:text="Classes Requested:"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/wantedClasses"
-                android:layout_below="@+id/classesRequested"
-                android:hint="Add classes..."
-                android:background="@drawable/inputs"
-                android:layout_centerVertical="true"
-                android:padding="10dp" />
-
-            <Button
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ADD CLASS"
-                android:id="@+id/btn_class"
-                android:layout_alignBottom="@+id/wantedClasses"
-                android:layout_toRightOf="@+id/wantedClasses"
-                android:layout_toEndOf="@+id/in_date" />
+                android:id="@+id/addclasses"
+                android:layout_below="@id/classesRequested">
 
-            <TextView
-                android:layout_width="match_parent"
+                <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wantedClasses"
+                    android:hint="Add classes..."
+                    android:background="@drawable/inputs"
+                    android:padding="10dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD CLASS"
+                    android:id="@+id/btn_class"
+                    android:layout_toRightOf="@+id/wantedClasses" />
+            </RelativeLayout>
+
+            <ListView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/classView"
-                android:layout_marginLeft="5dp"
-                android:textSize="20sp"
-                android:layout_below="@id/wantedClasses"/>
+                android:id="@+id/classesListView"
+                android:layout_below="@id/addclasses">
+
+            </ListView>
 
             <Button
                 android:id="@+id/addCollab_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/classView"
+                android:layout_below="@+id/classesListView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button"
