@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
 
                 //Variables from xml
                 loginButton.setEnabled(false);
+                needNewAccountLink.setEnabled(false);
                 String email = userEmail.getText().toString();
                 String password = userPassword.getText().toString();
                 DoLogin loginTask = new DoLogin(getApplicationContext(), instance);
@@ -92,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
             loginButton.setEnabled(true);
+            needNewAccountLink.setEnabled(true);
         }
     }
 }

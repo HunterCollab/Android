@@ -217,9 +217,7 @@ public class CollabListActivity extends AppCompatActivity
 
     @Override
     public void addCollabComplete(Boolean success) {
-        if(success){
-            //
-        }
+
     }
 
     //Sinner functions
@@ -286,10 +284,13 @@ public class CollabListActivity extends AppCompatActivity
             holder.mIdView.setText(listOfCollabs.get(position).getTitle());
             holder.mContentView.setText(listOfCollabs.get(position).getDescription());
 
+            ArrayList<String> membersArray = listOfCollabs.get(position).getMembers();
+            Integer sizeOfCollab = listOfCollabs.get(position).getSize();
+            Integer slotsOpen = sizeOfCollab-membersArray.size();
+            holder.mSlotsOpen.setText(slotsOpen + "/" + sizeOfCollab + " slots open");
+
             holder.detailsButton.setTag(listOfCollabs.get(position));
             holder.detailsButton.setOnClickListener(mOnClickListener);
-
-
         }
 
         @Override
@@ -300,6 +301,7 @@ public class CollabListActivity extends AppCompatActivity
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mIdView;
             final TextView mContentView;
+            final TextView mSlotsOpen;
             final Button detailsButton;
             RelativeLayout parentLayout;
 
@@ -307,6 +309,7 @@ public class CollabListActivity extends AppCompatActivity
                 super(view);
                 mIdView = (TextView) view.findViewById(R.id.collab_title);
                 mContentView = (TextView) view.findViewById(R.id.collab_description);
+                mSlotsOpen = (TextView) view.findViewById(R.id.slots_open);
                 detailsButton = (Button) view.findViewById(R.id.collab_details_button);
                 parentLayout = itemView.findViewById(R.id.collab_main_layout);
             }

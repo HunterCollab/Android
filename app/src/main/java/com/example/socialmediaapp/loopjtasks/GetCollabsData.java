@@ -34,7 +34,6 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class GetCollabsData {
 
     // TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED) (EDWIN)
-    // TODO: REFRESH PAGE CORRECTLY SO DATA SHOWS ON RESUME (EDWIN)
 
     //Listener variables
     private Context context;
