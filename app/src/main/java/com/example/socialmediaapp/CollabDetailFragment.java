@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +20,10 @@ import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.loopjtasks.JoinDropCollab;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * A fragment representing a single Collab detail screen.
@@ -49,6 +41,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME - WAITING FOR ARIEL)
     // TODO: SHOW USER START TIME AND END TIME (ME)
     // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING? (BACKEND)
+    // TODO: HOW TO HANDLE USER LEAVING AS LAST MEMBER (BACKEND, currently handled on frontend, will not be accurate if 2 users on same screen)
     // TODO: SHOW NICKNAMES, NOT EMAILS (ME)
     // TODO: VIEW MEMBER LIST --> MEMBER PROFILE PAGES (ME)
     // TODO: MULTIPLE USERS ON SAME DETAIL SCREEN JOINING/LEAVING WILL NOT BE ACCURATE, ERROR CHECKS (BACKEND)
@@ -194,8 +187,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                         doJoinCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                         String collabId = getArguments().getString("collabId");
                         doJoinCollab.joinCollab(collabId);
-                        joinCollab.setVisibility(View.INVISIBLE);
-                        leaveCollab.setVisibility(View.VISIBLE);
+                        joinCollab.setEnabled(false);
                     }
                 }
             });
@@ -214,19 +206,20 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             leaveCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (membersArray.size() == 1) {
-                        // dialog box asking user to confirm leave/deletion
+                    // dialog box asking user to confirm leave if they're the last member
+                    if (membersArray.size() == 1){
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Confirm");
-                        builder.setMessage("You are the last member, this collab will be deleted, are you sure?");
+                        builder.setMessage("You are the last member, this collaboration will be deleted, are you sure?");
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // delete the collab on yes click
                                 doDeleteCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                                 String collabId = getArguments().getString("collabId");
                                 doDeleteCollab.deleteCollab(collabId);
-                                getActivity().finish();
-                                dialog.dismiss();
+                                Intent collabIntent = new Intent(getContext(), CollabListActivity.class);
+                                collabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(collabIntent);
                             }
                         });
                         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -239,14 +232,11 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
                         AlertDialog alert = builder.create();
                         alert.show();
-                    }
-                    else {
+                    } else {
                         doLeaveCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                         String collabId = getArguments().getString("collabId");
                         doLeaveCollab.leaveCollab(collabId);
-
-                        leaveCollab.setVisibility(View.INVISIBLE);
-                        joinCollab.setVisibility(View.VISIBLE);
+                        leaveCollab.setEnabled(false);
                     }
                 }
             });
@@ -289,6 +279,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         return rootView;
     }
 
+    // interfaces for API success/fail
     @Override
     public void joinComplete(Boolean success) {
         if(success){
@@ -296,6 +287,10 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+
+            joinCollab.setVisibility(View.INVISIBLE);
+            leaveCollab.setVisibility(View.VISIBLE);
+            joinCollab.setEnabled(true);
 
             // add member locally
             membersArray.add(userDetails.getUserName());
@@ -305,6 +300,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+            joinCollab.setEnabled(true);
         }
 
     }
@@ -319,6 +315,10 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
 
+            leaveCollab.setVisibility(View.INVISIBLE);
+            joinCollab.setVisibility(View.VISIBLE);
+            leaveCollab.setEnabled(true);
+
             // repopulate members field locally
             membersArray.remove(userDetails.getUserName());
             collabMembers.setText("");
@@ -328,7 +328,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                     collabMembers.append(membersArray.get(i) + "\n");
                 }
             }
-
         } else {
             CharSequence text = "Cannot leave!";
             System.out.println("text: " + text);
@@ -336,40 +335,22 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
+            leaveCollab.setEnabled(true);
         }
     }
 
     @Override
     public void editComplete(Boolean success) {
-        if(success){
-
-        } else {
-
-        }
 
     }
 
     @Override
     public void deleteComplete(Boolean success) {
-        if(success){
-            CharSequence text = "Deleted!";
-            System.out.println("text: " + text);
 
-            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
-            toast.show();
-        } else {
-            CharSequence text = "ERROR. TRY AGAIN.";
-            System.out.println("text: " + text);
-
-            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
-            toast.show();
-        }
     }
 
     // abstract function from GetUserData.java defined here
-    // populate profile screen with data on successful API cal
+    // populate profile screen with data on successful API call
     @Override
     public void downloadComplete(Boolean success) {
         if (success) {
