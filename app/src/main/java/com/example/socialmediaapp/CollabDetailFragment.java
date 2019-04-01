@@ -2,11 +2,9 @@ package com.example.socialmediaapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcel;
-import android.os.health.SystemHealthManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +32,8 @@ import java.util.Date;
  * on handsets.
  */
 public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinComplete, JoinDropCollab.LeaveComplete,
-        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete {
+        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
+        GetUserData.OwnerDownloadComplete {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -74,6 +73,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     private GetUserData userDetails;
     private GetUserData memberDetails;
+    private GetUserData ownerDetails;
     private ArrayList<String> membersArray;
     private ArrayList<String> classesArray;
     private ArrayList<String> membersArrayForRecyclerView = new ArrayList<>();
@@ -114,8 +114,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
         instance = this;
 
-        userDetails = new GetUserData(getContext(), instance, instance);
-        memberDetails = new GetUserData(getContext(), instance, instance);
+        userDetails = new GetUserData(getContext(), instance, instance, instance);
+        memberDetails = new GetUserData(getContext(), instance, instance, instance);
+        ownerDetails = new GetUserData(getContext(), instance, instance, instance);
         userDetails.getUserData();
 
         // Show the content as text in a TextView.
@@ -124,7 +125,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             collabLocation = (TextView) rootView.findViewById(R.id.collab_Location_Info);
             collabLocation.setText(getArguments().getString("location"));
             collabOwner = (TextView) rootView.findViewById(R.id.collab_Owner_Info);
-            collabOwner.setText(getArguments().getString("owner"));
+            //collabOwner.setText(null);
+            //collabOwner.setText(getArguments().getString("owner"));
+            ownerDetails.getOwnerUserData(getArguments().getString("owner"));
 
             // populate skills
             collabSkills = (TextView) rootView.findViewById(R.id.collab_Skills_Request_Info);
@@ -313,7 +316,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
             // add member locally
             membersArray.add(userDetails.getUserName());
-            collabMembers.append(userDetails.getUserName() + "\n");
+            membersArrayForRecyclerView.add(userDetails.getUserName());
+            membersArrayNicknames.add(userDetails.getUserNickname());
+            collabMembers.append(userDetails.getUserNickname() + "\n");
         } else {
             CharSequence text = "Cannot join!";
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
@@ -340,11 +345,13 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
             // repopulate members field locally
             membersArray.remove(userDetails.getUserName());
+            membersArrayForRecyclerView.remove(userDetails.getUserName());
+            membersArrayNicknames.remove(userDetails.getUserNickname());
             collabMembers.setText("");
-            if (membersArray != null){
-                int len = membersArray.size();
+            if (membersArrayNicknames != null){
+                int len = membersArrayNicknames.size();
                 for (int i = 0; i < len; i++){
-                    collabMembers.append(membersArray.get(i) + "\n");
+                    collabMembers.append(membersArrayNicknames.get(i) + "\n");
                 }
             }
         } else {
@@ -403,4 +410,12 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             collabMembers.append(memberDetails.getUserNickname() + "\n");
         }
     }
+
+    @Override
+    public void ownerDownloadComplete(Boolean success) {
+        if (success) {
+            collabOwner.setText(ownerDetails.getUserNickname());
+        }
+    }
+
 }

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.example.socialmediaapp.LoginActivity;
+import com.example.socialmediaapp.MainActivity;
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,11 +43,11 @@ public class GeneralTools {
     }
 
     // restart the app
-    public static void doRestart(Context context, Class myClass) {
-        Intent intent = new Intent(context, myClass);
+    public static void doRestart(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
-        Runtime.getRuntime().exit(0);
+        //Runtime.getRuntime().exit(0);
     }
 
 }

@@ -29,7 +29,8 @@ import java.util.ArrayList;
 
 
 public class UserClassesActivity extends AppCompatActivity
-        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete  {
+        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
+        GetUserData.OwnerDownloadComplete{
 
     private Context context = UserClassesActivity.this;
     private RecyclerView recyclerView;
@@ -147,7 +148,7 @@ public class UserClassesActivity extends AppCompatActivity
 
         //skills
         classNames = new ArrayList<String>();
-        userData = new GetUserData(getApplicationContext(), instance, instance);
+        userData = new GetUserData(getApplicationContext(), instance, instance, instance);
         userData.getUserData();
 
 
@@ -231,6 +232,9 @@ public class UserClassesActivity extends AppCompatActivity
 
     @Override
     public void downloadProfileComplete(Boolean success) {
+    }
 
+    @Override
+    public void ownerDownloadComplete(Boolean success) {
     }
 }

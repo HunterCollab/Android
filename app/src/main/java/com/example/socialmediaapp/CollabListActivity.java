@@ -187,7 +187,7 @@ public class CollabListActivity extends AppCompatActivity
             case R.id.nav_messages:
                 return true;
             case R.id.nav_logout:
-                GeneralTools.doRestart(this, LoginActivity.class);
+                GeneralTools.doRestart(this);
                 finish();
             default:
                 return super.onOptionsItemSelected(item);

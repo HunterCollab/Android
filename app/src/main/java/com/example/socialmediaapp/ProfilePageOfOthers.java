@@ -14,7 +14,8 @@ import com.example.socialmediaapp.loopjtasks.GetUserData;
 
 import java.util.ArrayList;
 
-public class ProfilePageOfOthers extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete {
+public class ProfilePageOfOthers extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
+        GetUserData.OwnerDownloadComplete {
 
     private Context context = ProfilePageOfOthers.this;
     private TextView userNickname;
@@ -50,7 +51,7 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
         skills = (TextView) findViewById(R.id.skillsList);
         classes = (TextView) findViewById(R.id.classesList);
 
-        userDetails = new GetUserData(getApplicationContext(), instance, instance);
+        userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
         userDetails.getOtherUserData(memberUsername);
     }
 
@@ -124,6 +125,11 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
         }
+    }
+
+    @Override
+    public void ownerDownloadComplete(Boolean success) {
+
     }
 
 }
