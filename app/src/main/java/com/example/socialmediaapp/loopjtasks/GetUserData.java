@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class GetUserData {
     private String userNickname;
     private DownloadComplete dataDownloadComplete;
     private DownloadProfleComplete downloadProfleComplete;
+    private OwnerDownloadComplete ownerDownloadComplete;
 
-    public GetUserData(Context context, DownloadComplete listener, DownloadProfleComplete listener1){
+    public GetUserData(Context context, DownloadComplete listener, DownloadProfleComplete listener1, OwnerDownloadComplete listener2){
         this.context = context;
         this.dataDownloadComplete = listener;
         this.downloadProfleComplete = listener1;
+        this.ownerDownloadComplete = listener2;
 
         requestParams = new RequestParams();
         skillStringList = new ArrayList<>();
@@ -89,6 +92,30 @@ public class GetUserData {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 downloadProfleComplete.downloadProfileComplete(false);
+            }
+        });
+    }
+
+    public void getOwnerUserData(String userEmail){
+        AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
+
+        asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/user/" + userEmail, requestParams, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                setUserSkills(response);
+                setUserClasses(response);
+                setUserName(response);
+                setUserLinkedIn(response);
+                setUserGithub(response);
+                setUserNickname(response);
+                ownerDownloadComplete.ownerDownloadComplete(true);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ownerDownloadComplete.ownerDownloadComplete(false);
             }
         });
     }
@@ -188,4 +215,7 @@ public class GetUserData {
         public void downloadProfileComplete(Boolean success);
     }
 
+    public interface OwnerDownloadComplete {
+        public void ownerDownloadComplete(Boolean success);
+    }
 }
