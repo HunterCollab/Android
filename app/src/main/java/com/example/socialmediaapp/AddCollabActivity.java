@@ -33,8 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddCollabActivity extends AppCompatActivity implements View.OnClickListener, GetCollabsData.GetCollabDataComplete, GetCollabsData.AddCollabComplete {
-    
-    // TODO: LET USER SET DURATION, NOT DEFAULT (ME - WAITING FOR ARIEL)
 
     private Context context = AddCollabActivity.this;
     private EditText collabName;
@@ -205,6 +203,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     collabDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
                     dateTimeInMS = collabDateTime.getTimeInMillis();
                     long dateTime = dateTimeInMS;
+                    collabDurationLong += dateTime;
                     confirmAddCollab.setEnabled(false);
 
                     // call the API

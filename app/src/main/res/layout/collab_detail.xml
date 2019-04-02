@@ -35,20 +35,38 @@
         android:layout_marginLeft="5dp"/>
 
     <TextView
-        android:id="@+id/collab_DateTime"
+        android:id="@+id/collab_StartDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/collab_Owner_Info"
-        android:text="Date/Time:"
+        android:text="Date/Time (Start):"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
         android:layout_marginLeft="5dp" />
 
     <TextView
-        android:id="@+id/collab_DateTime_Info"
+        android:id="@+id/collab_StartDateTime_Info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/collab_DateTime"
+        android:layout_below="@id/collab_StartDateTime"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/collab_EndDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_StartDateTime_Info"
+        android:text="Date/Time (End):"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/collab_EndDateTime_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collab_EndDateTime"
         android:textSize="18sp"
         android:layout_marginLeft="5dp"/>
 
@@ -56,7 +74,7 @@
         android:id="@+id/collab_Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/collab_DateTime_Info"
+        android:layout_below="@id/collab_EndDateTime_Info"
         android:text="Location:"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"

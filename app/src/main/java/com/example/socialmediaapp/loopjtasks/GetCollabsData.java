@@ -83,7 +83,7 @@ public class GetCollabsData {
                 String owner = tmp.getString("owner");
                 int size = tmp.getInt("size");
 
-                String duration = tmp.getString("duration");
+                long duration = tmp.getLong("duration");
                 String location = tmp.getString("location");
                 Boolean status = tmp.getBoolean("status");
                 String title = tmp.getString("title");
