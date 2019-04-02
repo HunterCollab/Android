@@ -40,8 +40,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
      */
 
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME)
-    // TODO: MULTIPLE USERS ON SAME DETAIL SCREEN JOINING/LEAVING WILL NOT BE ACCURATE, ERROR CHECKS (BACKEND)
-    // TODO: HOW TO HANDLE USER LEAVING AS LAST MEMBER (BACKEND - CURRENTLY HANDLED ON FRONTEND, WILL NOT BE ACCURATE IF MULTIPLE USERES ON SAME SCREEN)
+    // TODO: CHECK JOIN -- JOIN IS GETTING SUCCESS ON FAILURE
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -196,15 +195,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             joinCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // if collab is full, don't let user join
-                    /*Integer sizeOfCollab = getArguments().getInt("size");
-                    System.out.println(sizeOfCollab);
-                    if (sizeOfCollab.equals(membersArray.size())){
-                        CharSequence text = "Collab is full!";
-                        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
-                        toast.show();
-                    } else { */
                         doJoinCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                         String collabId = getArguments().getString("collabId");
                         doJoinCollab.joinCollab(collabId);
@@ -226,7 +216,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             leaveCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // dialog box asking user to confirm leave if they're the last member
+                    // dialog box asking user to confirm leave/delete if they're the last member
                     if (membersArray.size() == 1){
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Confirm");
