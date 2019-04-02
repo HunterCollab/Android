@@ -15,7 +15,7 @@ public class CollabModel implements Parcelable {
     private String owner;
     private int size;
     private long date;
-    private String duration;
+    private long duration;
     private String location;
     private Boolean status;
     private String title;
@@ -30,7 +30,7 @@ public class CollabModel implements Parcelable {
             int id,
             String owner,
             int size,
-            String duration,
+            long duration,
             long date,
             String location,
             Boolean status,
@@ -62,7 +62,7 @@ public class CollabModel implements Parcelable {
         id = in.readInt();
         owner = in.readString();
         size = in.readInt();
-        duration = in.readString();
+        duration = in.readLong();
         date = in.readLong();
         location = in.readString();
         byte tmpStatus = in.readByte();
@@ -92,7 +92,7 @@ public class CollabModel implements Parcelable {
         id = 0;
         owner = "None";
         size = 1;
-        duration = "None";
+        duration = 1;
         date = 1;
         location = "None";
         byte tmpStatus = 8;
@@ -113,7 +113,7 @@ public class CollabModel implements Parcelable {
     public long getDate(){
         return date;
     }
-    public String getDuration(){
+    public long getDuration(){
         return duration;
     }
     public String getLocation(){
@@ -154,7 +154,7 @@ public class CollabModel implements Parcelable {
         dest.writeInt(id);
         dest.writeString(owner);
         dest.writeInt(size);
-        dest.writeString(duration);
+        dest.writeLong(duration);
         dest.writeLong(date);
         dest.writeString(location);
         dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));

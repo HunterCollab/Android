@@ -39,10 +39,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
      * represents.
      */
 
-    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME - WAITING FOR ARIEL)
-    // TODO: SHOW USER START TIME AND END TIME (ME)
+    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME)
     // TODO: MULTIPLE USERS ON SAME DETAIL SCREEN JOINING/LEAVING WILL NOT BE ACCURATE, ERROR CHECKS (BACKEND)
-    // TODO: HOW TO HANDLE OWNERSHIP UPON CREATOR LEAVING? (BACKEND)
     // TODO: HOW TO HANDLE USER LEAVING AS LAST MEMBER (BACKEND - CURRENTLY HANDLED ON FRONTEND, WILL NOT BE ACCURATE IF MULTIPLE USERES ON SAME SCREEN)
 
     public static final String ARG_ITEM_ID = "item_id";
@@ -51,7 +49,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     private CollabModel mItem;
     private CollabDetailFragment instance = null;
     private TextView collabOwner;
-    private TextView collabDateTime;
+    private TextView collabStartDateTime;
+    private TextView collabEndDateTime;
     private TextView collabLocation;
     private TextView collabSkills;
     private TextView collabClasses;
@@ -163,13 +162,21 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             }
 
-            // populate time
-            collabDateTime = (TextView) rootView.findViewById(R.id.collab_DateTime_Info);
+            // populate start time
+            collabStartDateTime = (TextView) rootView.findViewById(R.id.collab_StartDateTime_Info);
             long dateInMilli = getArguments().getLong("date");
             DateFormat convert = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
             //convert.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date result = new Date(dateInMilli);
-            collabDateTime.setText(convert.format(result));
+            collabStartDateTime.setText(convert.format(result));
+
+            // populate end time (duration)
+            collabEndDateTime = (TextView) rootView.findViewById(R.id.collab_EndDateTime_Info);
+            long endDateInMilli = getArguments().getLong("duration");
+            DateFormat convert1 = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+            //convert1.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date result1 = new Date(endDateInMilli);
+            collabEndDateTime.setText(convert1.format(result1));
 
             // view members button
             viewMembers = (Button) rootView.findViewById(R.id.viewMembers_button);
@@ -190,27 +197,18 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 @Override
                 public void onClick(View v) {
                     // if collab is full, don't let user join
-                    Integer sizeOfCollab = getArguments().getInt("size");
+                    /*Integer sizeOfCollab = getArguments().getInt("size");
                     System.out.println(sizeOfCollab);
                     if (sizeOfCollab.equals(membersArray.size())){
                         CharSequence text = "Collab is full!";
                         Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
                         toast.show();
-                    }
-                    // bug catch, should not show
-                    else if (membersArray.contains(userDetails.getUserName())) {
-                        CharSequence text = "Already joined!";
-                        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                    else {
+                    } else { */
                         doJoinCollab = new JoinDropCollab(getContext(), instance, instance, instance, instance);
                         String collabId = getArguments().getString("collabId");
                         doJoinCollab.joinCollab(collabId);
                         joinCollab.setEnabled(false);
-                    }
                 }
             });
 
@@ -303,7 +301,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     // interfaces for API success/fail
     @Override
-    public void joinComplete(Boolean success) {
+    public void joinComplete(Boolean success, String message) {
         if(success){
             CharSequence text = "You have joined the collab!";
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
@@ -320,8 +318,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             membersArrayNicknames.add(userDetails.getUserNickname());
             collabMembers.append(userDetails.getUserNickname() + "\n");
         } else {
-            CharSequence text = "Cannot join!";
-            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
             joinCollab.setEnabled(true);
@@ -341,6 +338,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
             leaveCollab.setVisibility(View.INVISIBLE);
             joinCollab.setVisibility(View.VISIBLE);
+            editCollab.setVisibility(View.INVISIBLE);
+            deleteCollab.setVisibility(View.INVISIBLE);
             leaveCollab.setEnabled(true);
 
             // repopulate members field locally

@@ -55,14 +55,15 @@ public class JoinDropCollab {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Log.i("response", String.valueOf(response));
-                    joinListener.joinComplete(true);
+                    joinListener.joinComplete(true, "success");
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     super.onFailure(statusCode, headers, responseString, throwable);
                     Log.i("response", String.valueOf(responseString));
-                    joinListener.joinComplete(false);
+                    String error = responseString;
+                    joinListener.joinComplete(false, error);
                 }
             });
 
@@ -142,7 +143,7 @@ public class JoinDropCollab {
 
     public interface JoinComplete {
 
-        public void joinComplete(Boolean success);
+        public void joinComplete(Boolean success, String message);
     }
 
     public interface LeaveComplete {
