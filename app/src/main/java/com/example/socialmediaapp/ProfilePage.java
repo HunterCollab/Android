@@ -71,6 +71,8 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
         //userDetails = new GetUserData(getApplicationContext(), instance);
         //userDetails.getUserData();
 
+        System.out.println("testing rebase");
+
         // editName Button
         editName.setOnClickListener(new View.OnClickListener() {
             @Override
