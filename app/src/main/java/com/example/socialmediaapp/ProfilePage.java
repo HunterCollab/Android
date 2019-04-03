@@ -68,7 +68,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
         editSkill = (Button) findViewById(R.id.editSkills_button);
         editClass = (Button) findViewById(R.id.editClasses_button);
 
-        System.out.println("testing rebase");
+        System.out.println("CHANGES ON PROFILEPAGE ON LOCAL BRANCH");
 
         //userDetails = new GetUserData(getApplicationContext(), instance);
         //userDetails.getUserData();
