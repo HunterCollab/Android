@@ -55,8 +55,12 @@ public class JoinDropCollab {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Log.i("response", String.valueOf(response));
-                    System.out.println("I AM HERE SUCCESS RECEIVED");
-                    joinListener.joinComplete(true, "success");
+                    if (response.has("success")){
+                        joinListener.joinComplete(true, "You have joined the collab!");
+                    }
+                    else {
+                        joinListener.joinComplete(false, "Cannot join.");
+                    }
                 }
 
                 @Override
@@ -64,7 +68,6 @@ public class JoinDropCollab {
                     super.onFailure(statusCode, headers, responseString, throwable);
                     Log.i("response", String.valueOf(responseString));
                     String error = responseString;
-                    System.out.println("I AM HERE FAILURE RECEIVED");
                     joinListener.joinComplete(false, error);
                 }
             });

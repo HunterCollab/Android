@@ -40,7 +40,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
      */
 
     // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME)
-    // TODO: CHECK JOIN -- JOIN IS GETTING SUCCESS ON FAILURE
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -293,8 +292,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     @Override
     public void joinComplete(Boolean success, String message) {
         if(success){
-            CharSequence text = "You have joined the collab!";
-            Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
 
@@ -344,7 +342,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             }
         } else {
-            CharSequence text = "Cannot leave!";
+            CharSequence text = "Cannot leave!  Try again.";
             System.out.println("text: " + text);
 
             Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
