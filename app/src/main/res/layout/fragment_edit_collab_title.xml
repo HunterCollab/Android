@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/customborder"
-    tools:context=".EditGithubFrag">
+    tools:context=".EditCollabTitleFragment">
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Github"
+        android:text="Edit Title"
         android:textSize="25sp"
         android:textColor="@color/colorPrimary"/>
 
@@ -21,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_below="@id/text1"
         android:layout_height="wrap_content"
-        android:hint="Enter your Github"/>
+        android:hint="What would you like the collab to be named?"/>
 
     <Button
-        android:id="@+id/saveGithub"
+        android:id="@+id/saveTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText"

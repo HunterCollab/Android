@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcel;
+import android.os.SystemClock;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.view.View.VISIBLE;
+
 /**
  * A fragment representing a single Collab detail screen.
  * This fragment is either contained in a {@link CollabListActivity}
@@ -39,8 +42,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
      * represents.
      */
 
-    // TODO: IMPLEMENT EDIT COLLAB FOR OWNER (ME)
-
     public static final String ARG_ITEM_ID = "item_id";
 
     private String currentUsername;
@@ -54,6 +55,14 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
     private TextView collabClasses;
     private TextView collabMembers;
 
+    private long mLastClickTime = 0;
+    private Button editCollabTitle;
+    private Button editCollabDescrip;
+    private Button editCollabStart;
+    private Button editCollabEnd;
+    private Button editCollabLocation;
+    private Button editCollabSkills;
+    private Button editCollabClasses;
     private Button viewMembers;
 
     private Button joinCollab;
@@ -61,9 +70,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     private Button leaveCollab;
     private JoinDropCollab doLeaveCollab;
-
-    private Button editCollab;
-    private JoinDropCollab doEditCollab;
 
     private Button deleteCollab;
     private JoinDropCollab doDeleteCollab;
@@ -171,6 +177,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             // populate end time (duration)
             collabEndDateTime = (TextView) rootView.findViewById(R.id.collab_EndDateTime_Info);
             long endDateInMilli = getArguments().getLong("duration");
+            endDateInMilli += dateInMilli;
             DateFormat convert1 = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
             //convert1.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date result1 = new Date(endDateInMilli);
@@ -198,15 +205,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                         String collabId = getArguments().getString("collabId");
                         doJoinCollab.joinCollab(collabId);
                         joinCollab.setEnabled(false);
-                }
-            });
-
-            // edit button
-            editCollab = (Button) rootView.findViewById(R.id.edit_collab_button);
-            editCollab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // send to edit collab screen
                 }
             });
 
@@ -250,7 +248,79 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             });
 
-            // delete button
+            // edit buttons (only for owner)
+            // TODO: NEED TO TEST HTTP POST REQUESTS
+            editCollabTitle = (Button) rootView.findViewById(R.id.editCollabTitle_button);
+            editCollabDescrip = (Button) rootView.findViewById(R.id.editCollabDescription_button);
+            editCollabLocation = (Button) rootView.findViewById(R.id.editCollabLocation_button);
+            editCollabStart = (Button) rootView.findViewById(R.id.editCollabStartTime_button);
+            editCollabEnd = (Button) rootView.findViewById(R.id.editCollabEndTime_button);
+
+            // TODO: IMPLEMENT "EDIT COLLAB SKILLS/CLASSES"
+            editCollabSkills = (Button) rootView.findViewById(R.id.editCollabSkills_button);
+            editCollabClasses = (Button) rootView.findViewById(R.id.editCollabClasses_button);
+
+            // edit title button
+            editCollabTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // prevents user from clicking button multiple times in less than 3 seconds
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
+                        return;
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    sendUserToEditTitle();
+                }
+            });
+
+            // edit description button
+            editCollabDescrip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // prevents user from clicking button multiple times in less than 3 seconds
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
+                        return;
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    sendUserToEditDescription();
+                }
+            });
+
+            // edit location button
+            editCollabLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // prevents user from clicking button multiple times in less than 3 seconds
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
+                        return;
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    sendUserToEditLocation();
+                }
+            });
+
+            // edit start date button
+            editCollabStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // prevents user from clicking button multiple times in less than 3 seconds
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
+                        return;
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    sendUserToEditStartDate();
+                }
+            });
+
+            // edit end date button
+            editCollabEnd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // prevents user from clicking button multiple times in less than 3 seconds
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 3000)
+                        return;
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    sendUserToEditEndDate();
+                }
+            });
+
+            // delete button (only for owner)
             deleteCollab = (Button) rootView.findViewById(R.id.delete_collab_button);
             deleteCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -288,6 +358,52 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         return rootView;
     }
 
+    // bundle + key to pass parameter to EditCollabActivity.java
+    // send User to edit title fragment
+    private void sendUserToEditTitle() {
+        Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",1);
+        editCollab.putExtras(x);
+        startActivityForResult(editCollab, 1);
+    }
+
+    // send User to edit description fragment
+    private void sendUserToEditDescription() {
+        Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",2);
+        editCollab.putExtras(x);
+        startActivityForResult(editCollab, 2);
+    }
+
+    // send User to edit location fragment
+    private void sendUserToEditLocation() {
+        Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",3);
+        editCollab.putExtras(x);
+        startActivityForResult(editCollab, 3);
+    }
+
+    // send User to edit end date fragment
+    private void sendUserToEditStartDate() {
+        Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",4);
+        editCollab.putExtras(x);
+        startActivityForResult(editCollab, 4);
+    }
+
+    // send User to edit end date fragment
+    private void sendUserToEditEndDate() {
+        Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
+        Bundle x = new Bundle();
+        x.putInt("key",5);
+        editCollab.putExtras(x);
+        startActivityForResult(editCollab, 5);
+    }
+
     // interfaces for API success/fail
     @Override
     public void joinComplete(Boolean success, String message) {
@@ -297,7 +413,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.show();
 
             joinCollab.setVisibility(View.INVISIBLE);
-            leaveCollab.setVisibility(View.VISIBLE);
+            leaveCollab.setVisibility(VISIBLE);
             joinCollab.setEnabled(true);
 
             // add member locally
@@ -325,9 +441,17 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.show();
 
             leaveCollab.setVisibility(View.INVISIBLE);
-            joinCollab.setVisibility(View.VISIBLE);
-            editCollab.setVisibility(View.INVISIBLE);
+            joinCollab.setVisibility(VISIBLE);
+
+            editCollabTitle.setVisibility(View.INVISIBLE);
+            editCollabDescrip.setVisibility(View.INVISIBLE);
+            editCollabStart.setVisibility(View.INVISIBLE);
+            editCollabEnd.setVisibility(View.INVISIBLE);
+            editCollabLocation.setVisibility(View.INVISIBLE);
+            editCollabSkills.setVisibility(View.INVISIBLE);
+            editCollabClasses.setVisibility(View.INVISIBLE);
             deleteCollab.setVisibility(View.INVISIBLE);
+
             leaveCollab.setEnabled(true);
 
             // repopulate members field locally
@@ -370,15 +494,21 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
             // if user is IN collab, show leave, else show join
             if (membersArray.contains(currentUsername)){
-                leaveCollab.setVisibility(View.VISIBLE);
+                leaveCollab.setVisibility(VISIBLE);
             }
             else {
-                joinCollab.setVisibility(View.VISIBLE);
+                joinCollab.setVisibility(VISIBLE);
             }
 
             // if user is the owner, show edit/delete collab button
             if (getArguments().getString("owner").equals(userDetails.getUserName())){
-                editCollab.setVisibility(View.VISIBLE);
+                editCollabTitle.setVisibility(View.VISIBLE);
+                editCollabDescrip.setVisibility(View.VISIBLE);
+                editCollabStart.setVisibility(View.VISIBLE);
+                editCollabEnd.setVisibility(View.VISIBLE);
+                editCollabLocation.setVisibility(View.VISIBLE);
+                editCollabSkills.setVisibility(View.VISIBLE);
+                editCollabClasses.setVisibility(View.VISIBLE);
                 deleteCollab.setVisibility(View.VISIBLE);
             }
         } else {

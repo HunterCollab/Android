@@ -6,24 +6,60 @@
     android:layout_height="wrap_content"
     tools:context=".CollabDetailFragment" >
 
+    <Button
+        android:id="@+id/editCollabTitle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit title"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
     <TextView
         android:id="@+id/collab_detail"
         android:layout_marginTop="15dp"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/editCollabTitle_button"
         android:padding="12dp"
         android:textIsSelectable="true"
         android:text="Collab Details"/>
+
+    <Button
+        android:id="@+id/editCollabDescription_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@id/collab_detail"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="50dp"
+        android:minHeight="20dp"
+        android:padding="5dp"
+        android:text="Edit description"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/collab_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/collab_detail"
+        android:layout_below="@id/editCollabDescription_button"
         android:text="Owner:"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp" />
 
     <TextView
@@ -41,8 +77,27 @@
         android:layout_below="@id/collab_Owner_Info"
         android:text="Date/Time (Start):"
         android:textColor="@color/colorPrimary"
+        android:layout_marginTop="10dp"
         android:textSize="20dp"
         android:layout_marginLeft="5dp" />
+
+    <Button
+        android:id="@+id/editCollabStartTime_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/collab_StartDateTime"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/collab_StartDateTime"
+        android:layout_toRightOf="@+id/collab_StartDateTime"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/collab_StartDateTime_Info"
@@ -60,7 +115,26 @@
         android:text="Date/Time (End):"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp" />
+
+    <Button
+        android:id="@+id/editCollabEndTime_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/collab_EndDateTime"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/collab_EndDateTime"
+        android:layout_toRightOf="@+id/collab_EndDateTime"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/collab_EndDateTime_Info"
@@ -78,7 +152,26 @@
         android:text="Location:"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp" />
+
+    <Button
+        android:id="@+id/editCollabLocation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/collab_Location"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/collab_Location"
+        android:layout_toRightOf="@+id/collab_Location"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/collab_Location_Info"
@@ -96,7 +189,26 @@
         android:text="Skills Wanted:"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp" />
+
+    <Button
+        android:id="@+id/editCollabSkills_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/collab_Skills_Request"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/collab_Skills_Request"
+        android:layout_toRightOf="@+id/collab_Skills_Request"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/collab_Skills_Request_Info"
@@ -115,6 +227,24 @@
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
         android:layout_marginLeft="5dp" />
+
+    <Button
+        android:id="@+id/editCollabClasses_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/collab_Classes_Request"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/collab_Classes_Request"
+        android:layout_toRightOf="@+id/collab_Classes_Request"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/collab_Classes_Request_Info"
