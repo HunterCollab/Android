@@ -64,12 +64,6 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
         for (int i = 0; i < membersOfCollabNicknames.size(); i++){
             System.out.println(membersOfCollabNicknames.get(i));
         }
-        /*
-        System.out.println("MEMBERS OF COLLAB SIZE " + membersOfCollab.size());
-        System.out.println("MEMBERS OF NICKNAME SIZE " + membersOfCollabNicknames.size());
-        System.out.println(mAdapter.getItem(position) + "POSITION OF NICKNAME" + position);
-        System.out.println(membersOfCollab.get(position) + "POSITION OF COLLAB" + position);
-        */
         viewMemberProfile.putExtra("memberUsername", membersOfCollab.get(position));
         viewMemberProfile.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(viewMemberProfile);

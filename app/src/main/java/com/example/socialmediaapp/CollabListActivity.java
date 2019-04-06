@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
@@ -31,7 +33,7 @@ import com.example.socialmediaapp.tools.GeneralTools;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: FILTER COLLAB SCREEN (ALL/MINE/RECOMMENDED) (EDWIN)
+// TODO: FILTER COLLAB SCREEN (MINE/RECOMMENDED GETS SERVER ERROR -- WAITING FOR ARIEL)
 
 /**
  * An activity representing a list of Collabs. This activity
@@ -97,7 +99,7 @@ public class CollabListActivity extends AppCompatActivity
         //This will set up the spinner
         //Depending on tne item selected, a different function is called
         spinner = (Spinner) findViewById(R.id.my_spinner);
-        //Makes a spinnerAdapter with our costume field and list of array located in strings
+        //Makes a spinnerAdapter with our custom field and list of array located in strings
         ArrayAdapter<String> spinnerAdapter =
                 new ArrayAdapter<String>(CollabListActivity.this,
                         R.layout.custom_spinner, getResources().getStringArray(R.array.collabs));
@@ -110,38 +112,38 @@ public class CollabListActivity extends AppCompatActivity
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 switch (position){
+                    // get ALL collabs in the database
+                    // This one gets called at start up by default
                     case 0:
-
-                        if(listOfCollabs !=null){
+                        if(listOfCollabs != null){
                             listOfCollabs.clear();
                         }
-                        //This one gets called at start up by default
                         collabsClass.getCollabs("getAllCollabs");
                         break;
-
+                    // get collabs USER is a part of
                     case 1:
-                        if(listOfCollabs !=null){
+                        if(listOfCollabs != null){
                             listOfCollabs.clear();
                         }
-                        collabsClass.getCollabs("getCollabs");
+                        collabsClass.getCollabs("getUserCollabs");
                         break;
-
+                    // get collab recommendations for user
                     case 2:
-                        if(listOfCollabs !=null){
+                        if(listOfCollabs != null){
                             listOfCollabs.clear();
                         }
-                        collabsClass.getCollabs("getRecCollabs");
+                        collabsClass.getCollabs("getRecommendedCollabs");
                         break;
-
+                    // not used
+                    /*
                     case 3:
                         if(listOfCollabs !=null){
                             listOfCollabs.clear();
                         }
                         collabsClass.getCollabs("getActiveCollabs");
                         break;
-
+                        */
                 }
 
             }
@@ -200,19 +202,32 @@ public class CollabListActivity extends AppCompatActivity
 
     @Override
     public void getAllCollabs(Boolean success) {
-
         if(success){
             listOfCollabs = collabsClass.returnCollabs();
-            View recyclerView = findViewById(R.id.collab_list);
-            assert recyclerView != null;
-            setupRecyclerView((RecyclerView) recyclerView);
-
+            if (listOfCollabs != null){
+                View recyclerView = findViewById(R.id.collab_list);
+                assert recyclerView != null;
+                setupRecyclerView((RecyclerView) recyclerView);
+            }
+            // if user collabs is empty
+            else {
+                Toast t = Toast.makeText(getApplicationContext(), "Nothing to show.", Toast.LENGTH_LONG);
+                t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                t.show();
+            }
         } else {
             listOfCollabs.clear();
             listOfCollabs.add(errorHandler);
-            View recyclerView = findViewById(R.id.collab_list);
+
+            // show error message to user
+            Toast t = Toast.makeText(getApplicationContext(), "Error.  Could not retrieve data.", Toast.LENGTH_LONG);
+            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+            t.show();
+
+            /*View recyclerView = findViewById(R.id.collab_list);
             assert recyclerView != null;
             setupRecyclerView((RecyclerView) recyclerView);
+            */
         }
 
     }
@@ -289,7 +304,11 @@ public class CollabListActivity extends AppCompatActivity
             ArrayList<String> membersArray = listOfCollabs.get(position).getMembers();
             Integer sizeOfCollab = listOfCollabs.get(position).getSize();
             Integer slotsOpen = sizeOfCollab-membersArray.size();
-            holder.mSlotsOpen.setText(slotsOpen + "/" + sizeOfCollab + " slots open");
+            if (!sizeOfCollab.equals(membersArray.size())){
+                holder.mSlotsOpen.setText(slotsOpen + "/" + sizeOfCollab + " open slots");
+            } else {
+                holder.mSlotsOpen.setText("FULL");
+            }
 
             holder.detailsButton.setTag(listOfCollabs.get(position));
             holder.detailsButton.setOnClickListener(mOnClickListener);

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/customborder"
+    tools:context=".EditCollabStartFragment">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Start Date/Time"
+        android:textSize="25sp"
+        android:textColor="@color/colorPrimary"/>
+
+    <EditText
+        android:id="@+id/editDate"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text1"
+        android:editable="false"
+        android:hint="Select a date..."/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT DATE"
+        android:id="@+id/button_date"
+        android:layout_alignBottom="@+id/editDate"
+        android:layout_toRightOf="@+id/editDate"
+        android:layout_toEndOf="@+id/editDate" />
+
+    <EditText
+        android:id="@+id/editTime"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editDate"
+        android:editable="false"
+        android:hint="Select a time..."/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT TIME"
+        android:id="@+id/button_time"
+        android:layout_alignBottom="@+id/editTime"
+        android:layout_toRightOf="@+id/editTime"
+        android:layout_toEndOf="@+id/editTime" />
+
+    <Button
+        android:id="@+id/saveStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTime"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:text="SAVE"
+        android:stateListAnimator="@null"
+        android:layout_centerInParent="true"
+        android:textSize="25sp"/>
+
+</RelativeLayout>

@@ -1,6 +1,5 @@
 package com.example.socialmediaapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -9,17 +8,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseBooleanArray;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 import android.app.DatePickerDialog;
@@ -203,7 +198,6 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     collabDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
                     dateTimeInMS = collabDateTime.getTimeInMillis();
                     long dateTime = dateTimeInMS;
-                    collabDurationLong += dateTime;
                     confirmAddCollab.setEnabled(false);
 
                     // call the API
