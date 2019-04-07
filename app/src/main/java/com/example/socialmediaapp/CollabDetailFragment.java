@@ -258,12 +258,10 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             editCollabSize = (Button) rootView.findViewById(R.id.editCollabSize_button);
             editCollabDescrip = (Button) rootView.findViewById(R.id.editCollabDescription_button);
             editCollabLocation = (Button) rootView.findViewById(R.id.editCollabLocation_button);
+            editCollabStart = (Button) rootView.findViewById(R.id.editCollabStartTime_button);
             editCollabEnd = (Button) rootView.findViewById(R.id.editCollabEndTime_button);
             editCollabSkills = (Button) rootView.findViewById(R.id.editCollabSkills_button);
             editCollabClasses = (Button) rootView.findViewById(R.id.editCollabClasses_button);
-
-            // TODO: NEED TO TEST HTTP POST REQUESTS FOR EDIT COLLAB (COLLAB START DATE/TIME -- WAITING FOR ARIEL)
-            editCollabStart = (Button) rootView.findViewById(R.id.editCollabStartTime_button);
 
             // edit title button
             editCollabTitle.setOnClickListener(new View.OnClickListener() {
