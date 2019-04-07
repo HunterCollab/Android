@@ -23,6 +23,24 @@
         android:textColor="@android:color/black"
         android:textSize="15dp" />
 
+    <Button
+        android:id="@+id/editCollabSize_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/editCollabTitle_button"
+        android:stateListAnimator="@null"
+        android:background="@drawable/profileeditbutton"
+        android:minWidth="40dp"
+        android:minHeight="20dp"
+        android:text="Edit Size"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
     <TextView
         android:id="@+id/collab_detail"
         android:layout_marginTop="15dp"

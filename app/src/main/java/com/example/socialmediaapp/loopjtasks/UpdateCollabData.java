@@ -42,7 +42,7 @@ public class UpdateCollabData {
         this.updateCollabListener = updateCollabListener;
     }
 
-    public void updateCollabTitle(String newTitle){
+    public void updateCollabTitle(String newTitle, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -51,6 +51,7 @@ public class UpdateCollabData {
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("title", newTitle);
+            jsonParams.put("id", collabId);
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -74,7 +75,40 @@ public class UpdateCollabData {
         }
     }
 
-    public void updateCollabDescription(String newDescription){
+    public void updateCollabSize(int newSize, String collabId){
+
+        AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/editCollab";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("size", newSize);
+            jsonParams.put("id", collabId);
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                    updateCollabListener.updateCollabComplete(true);
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                    updateCollabListener.updateCollabComplete(false);
+                }
+            });
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCollabDescription(String newDescription, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -83,6 +117,7 @@ public class UpdateCollabData {
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("description", newDescription);
+            jsonParams.put("id", collabId);
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -106,7 +141,7 @@ public class UpdateCollabData {
         }
     }
 
-    public void updateCollabLocation(String newLocation){
+    public void updateCollabLocation(String newLocation, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -114,7 +149,8 @@ public class UpdateCollabData {
 
         JSONObject jsonParams = new JSONObject();
         try {
-            jsonParams.put("description", newLocation);
+            jsonParams.put("location", newLocation);
+            jsonParams.put("id", collabId);
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -138,7 +174,7 @@ public class UpdateCollabData {
         }
     }
 
-    public void updateCollabStartDate(String newStartDate){
+    public void updateCollabStartDate(long newStartDate, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -146,7 +182,8 @@ public class UpdateCollabData {
 
         JSONObject jsonParams = new JSONObject();
         try {
-            jsonParams.put("duration", newStartDate);
+            jsonParams.put("date", newStartDate);
+            jsonParams.put("id", collabId);
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -170,7 +207,7 @@ public class UpdateCollabData {
         }
     }
 
-    public void updateCollabEndDate(String newDuration){
+    public void updateCollabEndDate(long newDuration, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
@@ -179,6 +216,7 @@ public class UpdateCollabData {
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("duration", newDuration);
+            jsonParams.put("id", collabId);
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -197,6 +235,85 @@ public class UpdateCollabData {
                     updateCollabListener.updateCollabComplete(false);
                 }
             });
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCollabSkills(ArrayList<String> skillList, String collabId){
+
+        AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/editCollab";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            JSONArray array = new JSONArray();
+            for (String oneClass : skillList) {
+                array.put(oneClass);
+            }
+            jsonParams.accumulate("skills",array);
+            jsonParams.put("id", collabId);
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                    updateCollabListener.updateCollabComplete(true);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                    updateCollabListener.updateCollabComplete(false);
+                }
+            });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updateCollabClasses(ArrayList<String> classList, String collabId){
+
+        AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/editCollab";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            JSONArray array = new JSONArray();
+            for (String oneClass : classList) {
+                array.put(oneClass);
+            }
+            jsonParams.accumulate("classes",array);
+            jsonParams.put("id", collabId);
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            client.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.i("response", String.valueOf(response));
+                    updateCollabListener.updateCollabComplete(true);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.i("response", String.valueOf(responseString));
+                    updateCollabListener.updateCollabComplete(false);
+                }
+            });
+
         } catch (JSONException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }

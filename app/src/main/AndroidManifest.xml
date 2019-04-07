@@ -32,6 +32,14 @@
             android:name=".ProfilePage"
             android:label="Profile" />
         <activity
+            android:name=".EditCollabClassesActivity"
+            android:label="EditCollabClasses"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditCollabSkillsActivity"
+            android:label="EditCollabSkills"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".UserClassesActivity"
             android:label="@string/title_activity_user_classes"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-public class EditCollabActivity extends AppCompatActivity {
+public class EditCollabActivity extends AppCompatActivity implements EditCollabTitleFragment.OnDataPass, EditCollabSizeFragment.OnSizePass  {
+
+    private int value = 0;
+    private int size = 0;
+    public String collabId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,10 +17,13 @@ public class EditCollabActivity extends AppCompatActivity {
 
         // grab key from previous activity
         Bundle x = getIntent().getExtras();
-        int value = 0;
-        if (x != null)
+        if (x != null) {
             value = x.getInt("key");
+            size = x.getInt("numOfMembers");
+            collabId = x.getString("collabId");
+        }
 
+        // edit collab fragments
         if (value == 1) {
             FragmentTransaction editTitle = getSupportFragmentManager().beginTransaction();
             editTitle.replace(R.id.fragmentContainer, new EditCollabTitleFragment());
@@ -37,8 +44,21 @@ public class EditCollabActivity extends AppCompatActivity {
             FragmentTransaction editEndDate = getSupportFragmentManager().beginTransaction();
             editEndDate.replace(R.id.fragmentContainer, new EditCollabEndFragment());
             editEndDate.commit();
+        } else if (value == 9) {
+            FragmentTransaction editSize = getSupportFragmentManager().beginTransaction();
+            editSize.replace(R.id.fragmentContainer, new EditCollabSizeFragment());
+            editSize.commit();
         }
 
     }
 
+    @Override
+    public String onDataPass() {
+        return collabId;
+    }
+
+    @Override
+    public int onSizePass() {
+        return size;
+    }
 }

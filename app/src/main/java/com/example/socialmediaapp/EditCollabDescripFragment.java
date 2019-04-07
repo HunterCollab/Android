@@ -1,5 +1,6 @@
 package com.example.socialmediaapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -19,14 +20,25 @@ public class EditCollabDescripFragment extends Fragment implements UpdateCollabD
         // Required empty public constructor
     }
 
+    EditCollabTitleFragment.OnDataPass dataPasser;
+    private String collabid;
     private EditText editDescrip;
     private Button saveDescripButton;
     private EditCollabDescripFragment instance = null;
     private UpdateCollabData updateDescription;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (EditCollabTitleFragment.OnDataPass) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        collabid = dataPasser.onDataPass();
+
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_description, container, false);
@@ -37,7 +49,7 @@ public class EditCollabDescripFragment extends Fragment implements UpdateCollabD
             public void onClick(View v) {
                 String newDescrip = editDescrip.getText().toString();
                 updateDescription = new UpdateCollabData(getContext(), instance);
-                updateDescription.updateCollabDescription(newDescrip);
+                updateDescription.updateCollabDescription(newDescrip, collabid);
                 saveDescripButton.setEnabled(false);
             }
         });
