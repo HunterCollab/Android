@@ -14,25 +14,25 @@ import android.widget.Toast;
 import com.example.socialmediaapp.loopjtasks.UpdateCollabData;
 
 
-public class EditCollabEndFragment extends Fragment implements UpdateCollabData.UpdateCollabComplete {
+public class EditCollabSizeFragment extends Fragment implements UpdateCollabData.UpdateCollabComplete {
 
-    public EditCollabEndFragment() {
+    public EditCollabSizeFragment() {
         // Required empty public constructor
     }
 
     EditCollabTitleFragment.OnDataPass dataPasser;
+    EditCollabSizeFragment.OnSizePass sizePasser;
     private String collabid;
-    private EditText editDuration;
-    private Button saveDurationButton;
-    private EditCollabEndFragment instance = null;
-    private UpdateCollabData updateDuration;
-
-    private boolean allowRefresh = true;
+    private EditText editSize;
+    private Button saveSizeButton;
+    private EditCollabSizeFragment instance = null;
+    private UpdateCollabData updateSize;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         dataPasser = (EditCollabTitleFragment.OnDataPass) context;
+        sizePasser = (EditCollabSizeFragment.OnSizePass) context;
     }
 
     @Override
@@ -43,25 +43,24 @@ public class EditCollabEndFragment extends Fragment implements UpdateCollabData.
 
         // Inflate the layout for this fragment
         instance = this;
-        View view = inflater.inflate(R.layout.fragment_edit_collab_duration, container, false);
-        editDuration = (EditText) view.findViewById(R.id.editText);
-        saveDurationButton = (Button) view.findViewById(R.id.saveDuration);
-        saveDurationButton.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_edit_collab_size, container, false);
+        editSize = (EditText) view.findViewById(R.id.editText);
+        saveSizeButton = (Button) view.findViewById(R.id.saveSize);
+        saveSizeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // get duration int, and convert to ms to multiply and convert back to string
-                String newDuration = editDuration.getText().toString();
-                long collabDurationLong = 0;
-                try {
-                    collabDurationLong = Long.parseLong(newDuration);
-                } catch (NumberFormatException nfe) {
-                    nfe.printStackTrace();
+                String newSize = editSize.getText().toString();
+                int sizeInt = Integer.parseInt(newSize);
+                if (sizeInt < sizePasser.onSizePass()){
+                    Toast t = Toast.makeText(getContext(), "Size cannot be less than # of current members.", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    t.show();
+                } else {
+                    updateSize = new UpdateCollabData(getContext(), instance);
+                    updateSize.updateCollabSize(sizeInt, collabid);
+                    saveSizeButton.setEnabled(false);
                 }
-                collabDurationLong *= 86400000;
-                //newDuration = Long.toString(collabDurationLong);
-                updateDuration = new UpdateCollabData(getContext(), instance);
-                updateDuration.updateCollabEndDate(collabDurationLong, collabid);
-                saveDurationButton.setEnabled(false);
+
             }
         });
         return view;
@@ -77,7 +76,11 @@ public class EditCollabEndFragment extends Fragment implements UpdateCollabData.
             Toast t = Toast.makeText(getContext(), "ERROR. TRY AGAIN.", Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
-            saveDurationButton.setEnabled(true);
+            saveSizeButton.setEnabled(true);
         }
+    }
+
+    public interface OnSizePass{
+        public int onSizePass();
     }
 }

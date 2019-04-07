@@ -33,7 +33,7 @@ import com.example.socialmediaapp.tools.GeneralTools;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: FILTER COLLAB SCREEN (MINE/RECOMMENDED GETS SERVER ERROR -- WAITING FOR ARIEL)
+// TODO: FILTER COLLAB SCREEN (RECOMMENDED GETS SERVER ERROR -- WAITING FOR ARIEL)
 
 /**
  * An activity representing a list of Collabs. This activity
@@ -68,10 +68,7 @@ public class CollabListActivity extends AppCompatActivity
         errorHandler = new CollabModel();
         instance = this;
 
-        //////////////My Code////////
         collabsClass = new GetCollabsData(getApplicationContext(), instance, instance);
-        //collabsClass.getCollabs("getAllCollabs");
-        ////////////////////////////
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -96,6 +93,12 @@ public class CollabListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         //This will set up the spinner
         //Depending on tne item selected, a different function is called
         spinner = (Spinner) findViewById(R.id.my_spinner);
@@ -126,7 +129,7 @@ public class CollabListActivity extends AppCompatActivity
                         if(listOfCollabs != null){
                             listOfCollabs.clear();
                         }
-                        collabsClass.getCollabs("getUserCollabs");
+                        collabsClass.getCollabs("getCollabDetails");
                         break;
                     // get collab recommendations for user
                     case 2:
@@ -135,15 +138,6 @@ public class CollabListActivity extends AppCompatActivity
                         }
                         collabsClass.getCollabs("getRecommendedCollabs");
                         break;
-                    // not used
-                    /*
-                    case 3:
-                        if(listOfCollabs !=null){
-                            listOfCollabs.clear();
-                        }
-                        collabsClass.getCollabs("getActiveCollabs");
-                        break;
-                        */
                 }
 
             }
@@ -155,14 +149,6 @@ public class CollabListActivity extends AppCompatActivity
         });
 
 
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        // API call again to refresh the page with updated data
-        //collabsClass = new GetCollabsData(getApplicationContext(), instance, instance);
-        //collabsClass.getCollabs("getAllCollabs");
     }
 
     // menu navigation

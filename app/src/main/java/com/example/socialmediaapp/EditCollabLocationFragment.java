@@ -1,5 +1,6 @@
 package com.example.socialmediaapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -19,14 +20,25 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
         // Required empty public constructor
     }
 
+    EditCollabTitleFragment.OnDataPass dataPasser;
+    private String collabid;
     private EditText editLocation;
     private Button saveLocationButton;
     private EditCollabLocationFragment instance = null;
     private UpdateCollabData updateLocation;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (EditCollabTitleFragment.OnDataPass) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        collabid = dataPasser.onDataPass();
+
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_location, container, false);
@@ -37,7 +49,7 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
             public void onClick(View v) {
                 String newLocation = editLocation.getText().toString();
                 updateLocation = new UpdateCollabData(getContext(), instance);
-                updateLocation.updateCollabLocation(newLocation);
+                updateLocation.updateCollabLocation(newLocation, collabid);
                 saveLocationButton.setEnabled(false);
             }
         });

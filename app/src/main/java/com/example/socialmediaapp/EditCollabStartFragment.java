@@ -2,6 +2,7 @@ package com.example.socialmediaapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,8 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
         // Required empty public constructor
     }
 
+    EditCollabTitleFragment.OnDataPass dataPasser;
+    private String collabid;
     private EditText date;
     private EditText time;
     private Button editDateButton;
@@ -39,8 +42,17 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
     private UpdateCollabData updateStart;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (EditCollabTitleFragment.OnDataPass) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        collabid = dataPasser.onDataPass();
+
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_start, container, false);
@@ -127,10 +139,10 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
                     dateTimeInMS = collabDateTime.getTimeInMillis();
                     long dateTime = dateTimeInMS;
 
-                    String newStart = Long.toString(dateTime);
+                    //String newStart = Long.toString(dateTime);
 
                     updateStart = new UpdateCollabData(getContext(), instance);
-                    updateStart.updateCollabStartDate(newStart);
+                    updateStart.updateCollabStartDate(dateTime, collabid);
                     saveStartButton.setEnabled(false);
                 }
             }

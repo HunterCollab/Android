@@ -1,5 +1,6 @@
 package com.example.socialmediaapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -19,14 +20,25 @@ public class EditCollabTitleFragment extends Fragment implements UpdateCollabDat
         // Required empty public constructor
     }
 
+    OnDataPass dataPasser;
+    private String collabid;
     private EditText editTitle;
     private Button saveTitleButton;
     private EditCollabTitleFragment instance = null;
     private UpdateCollabData updateTitle;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (OnDataPass) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        collabid = dataPasser.onDataPass();
+
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_title, container, false);
@@ -37,7 +49,7 @@ public class EditCollabTitleFragment extends Fragment implements UpdateCollabDat
             public void onClick(View v) {
                 String newTitle = editTitle.getText().toString();
                 updateTitle = new UpdateCollabData(getContext(), instance);
-                updateTitle.updateCollabTitle(newTitle);
+                updateTitle.updateCollabTitle(newTitle, collabid);
                 saveTitleButton.setEnabled(false);
             }
         });
@@ -56,5 +68,9 @@ public class EditCollabTitleFragment extends Fragment implements UpdateCollabDat
             t.show();
             saveTitleButton.setEnabled(true);
         }
+    }
+
+    public interface OnDataPass{
+        public String onDataPass();
     }
 }
