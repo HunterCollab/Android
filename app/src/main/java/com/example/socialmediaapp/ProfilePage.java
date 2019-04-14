@@ -25,8 +25,7 @@ import java.util.Observer;
 public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
         GetUserData.OwnerDownloadComplete{
 
-    // TODO: IMPLEMENT MESSAGING (TBD)
-    // TODO: IMPLEMENT NOTIFICATIONS (TBD)
+    // TODO: IMPLEMENT MESSAGING (CHAT SCREEN)
     // TODO: SHOULD NOT BE ABLE TO ADD FAKE/MISSPELLED/DUPE CLASSES (BACKEND AND FRONTEND)
 
     private Context context = ProfilePage.this;
@@ -170,6 +169,8 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
                 this.startActivity(collabIntent);
                 return true;
             case R.id.nav_messages:
+                Intent messageIntent = new Intent(this, ViewMessagesActivity.class);
+                this.startActivity(messageIntent);
                 return true;
             case R.id.nav_logout:
                 GeneralTools.doRestart(this);

@@ -16,6 +16,10 @@
             android:label="@string/title_activity_view_members_of_collab"
             android:parentActivityName=".CollabDetailActivity" />
         <activity
+            android:name=".ViewMessagesActivity"
+            android:label="Messages"
+            android:parentActivityName=".CollabDetailActivity" />
+        <activity
             android:name=".ProfilePageOfOthers"
             android:parentActivityName=".ViewMembersOfCollabActivity"
             android:label="Member Profile"

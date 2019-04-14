@@ -50,7 +50,6 @@ public class GetCollabsData {
 
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
-        System.out.println(GlobalConfig.BASE_API_URL + "/collab/" + collabType);
         asyncHttpClient.get(GlobalConfig.BASE_API_URL + "/collab/" + collabType, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

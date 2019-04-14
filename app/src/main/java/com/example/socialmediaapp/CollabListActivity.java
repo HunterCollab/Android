@@ -173,6 +173,8 @@ public class CollabListActivity extends AppCompatActivity
                 this.finish();
                 return true;
             case R.id.nav_messages:
+                Intent messageIntent = new Intent(this, ViewMessagesActivity.class);
+                this.startActivity(messageIntent);
                 return true;
             case R.id.nav_logout:
                 GeneralTools.doRestart(this);
@@ -210,10 +212,6 @@ public class CollabListActivity extends AppCompatActivity
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
 
-            /*View recyclerView = findViewById(R.id.collab_list);
-            assert recyclerView != null;
-            setupRecyclerView((RecyclerView) recyclerView);
-            */
         }
 
     }

@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ViewMembersAdapter extends RecyclerView.Adapter<ViewMembersAdapter.ViewHolder> {
+public class ViewMessagesAdapter extends RecyclerView.Adapter<ViewMessagesAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    ViewMembersAdapter(Context context, List<String> data) {
+    ViewMessagesAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -24,7 +24,7 @@ public class ViewMembersAdapter extends RecyclerView.Adapter<ViewMembersAdapter.
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.view_members_item, parent, false);
+        View view = mInflater.inflate(R.layout.view_messages_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,14 +41,13 @@ public class ViewMembersAdapter extends RecyclerView.Adapter<ViewMembersAdapter.
         return mData.size();
     }
 
-
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.memberName);
+            myTextView = itemView.findViewById(R.id.messageName);
             itemView.setOnClickListener(this);
         }
 
