@@ -20,6 +20,9 @@
             android:label="Messages"
             android:parentActivityName=".CollabDetailActivity" />
         <activity
+            android:name=".MessageListActivity"
+            android:label="Chatroom" />
+        <activity
             android:name=".ProfilePageOfOthers"
             android:parentActivityName=".ViewMembersOfCollabActivity"
             android:label="Member Profile"

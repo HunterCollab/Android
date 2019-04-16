@@ -31,9 +31,8 @@ import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
-import java.util.List;
 
-// TODO: FILTER COLLAB SCREEN (RECOMMENDED GETS SERVER ERROR -- WAITING FOR ARIEL)
+// TODO: FILTER COLLAB (DONE BUT RECOMMEND SHOULD BE FIXED ON BACKEND)
 
 /**
  * An activity representing a list of Collabs. This activity
@@ -44,7 +43,8 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class CollabListActivity extends AppCompatActivity
-        implements GetCollabsData.GetCollabDataComplete, AdapterView.OnItemSelectedListener, GetCollabsData.AddCollabComplete {
+        implements GetCollabsData.GetCollabDataComplete, AdapterView.OnItemSelectedListener, GetCollabsData.AddCollabComplete,
+        GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete, GetUserData.OwnerDownloadComplete{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -55,6 +55,10 @@ public class CollabListActivity extends AppCompatActivity
     private CollabListActivity instance;
     public ArrayList<CollabModel> listOfCollabs;
     public CollabModel errorHandler;
+
+    private GetUserData userDetails;
+    private ArrayList<String> skillsArray;
+    private ArrayList<String> classesArray;
 
     //spinner for dropdown
     private Spinner spinner;
@@ -69,6 +73,8 @@ public class CollabListActivity extends AppCompatActivity
         instance = this;
 
         collabsClass = new GetCollabsData(getApplicationContext(), instance, instance);
+        userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
+        userDetails.getUserData();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -136,7 +142,8 @@ public class CollabListActivity extends AppCompatActivity
                         if(listOfCollabs != null){
                             listOfCollabs.clear();
                         }
-                        collabsClass.getCollabs("getRecommendedCollabs");
+                        //collabsClass.getCollabs("getRecommendedCollabs");
+                        collabsClass.getCollabs(skillsArray, classesArray);
                         break;
                 }
 
@@ -230,6 +237,22 @@ public class CollabListActivity extends AppCompatActivity
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    // abstract function from GetUserData.java defined here
+    // populate profile screen with data on successful API call
+    @Override
+    public void downloadComplete(Boolean success) {
+        skillsArray = userDetails.getUserSkills();
+        classesArray = userDetails.getUserClasses();
+    }
+
+    @Override
+    public void downloadProfileComplete(Boolean success) {
+    }
+
+    @Override
+    public void ownerDownloadComplete(Boolean success) {
     }
 
 

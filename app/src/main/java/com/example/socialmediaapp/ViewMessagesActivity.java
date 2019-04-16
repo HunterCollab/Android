@@ -17,15 +17,17 @@ import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
 
-public class ViewMessagesActivity extends AppCompatActivity implements ViewMessagesAdapter.ItemClickListener, MessagingAPI.DownloadComplete {
+public class ViewMessagesActivity extends AppCompatActivity implements ViewMessagesAdapter.ItemClickListener, MessagingAPI.MessageDownloadComplete,
+        MessagingAPI.MessageSendComplete {
 
-    private ArrayList< ArrayList<String> > listOfParticipants;
     private RecyclerView recyclerView;
     private ViewMessagesAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private ViewMessagesActivity instance;
     private MessagingAPI messages;
+
+    private ArrayList< ArrayList<String> > arrayOfChats = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,8 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
         setSupportActionBar(myToolbar);
 
         instance = this;
-        messages = new MessagingAPI(getApplicationContext(), instance);
+
+        messages = new MessagingAPI(getApplicationContext(), instance, instance);
         messages.getListOfMessages();
 
         // setting up recyclerview
@@ -86,20 +89,20 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
-        /*
-        Intent viewMemberProfile = new Intent(getApplicationContext(), ProfilePageOfOthers.class);
-        viewMemberProfile.putExtra("memberUsername", membersOfCollab.get(position));
-        viewMemberProfile.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(viewMemberProfile);
-        */
+        Intent viewChat = new Intent(getApplicationContext(), MessageListActivity.class);
+        viewChat.putExtra("members", arrayOfChats.get(position));
+        viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(viewChat);
     }
 
     @Override
-    public void downloadComplete(Boolean success) {
+    public void messageDownloadComplete(Boolean success) {
         if (success) {
             // use a linear layout manager
             layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
+
+            arrayOfChats = messages.getParticipants();
 
             // specify an adapter
             mAdapter = new ViewMessagesAdapter(this, messages.getParticipantsAsOneString());
@@ -109,4 +112,10 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
             mAdapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    public void messageSendComplete(Boolean success) {
+
+    }
+
 }

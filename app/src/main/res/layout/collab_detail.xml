@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".CollabDetailFragment" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CollabDetailFragment">
 
     <Button
         android:id="@+id/editCollabTitle_button"
@@ -41,16 +41,28 @@
         android:textColor="@android:color/black"
         android:textSize="15dp" />
 
-    <TextView
-        android:id="@+id/collab_detail"
-        android:layout_marginTop="15dp"
-        style="?android:attr/textAppearanceMedium"
+    <LinearLayout
+        android:id="@+id/detail_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editCollabTitle_button"
-        android:padding="12dp"
-        android:textIsSelectable="true"
-        android:text="Collab Details"/>
+        android:layout_below="@id/editCollabTitle_button">
+
+        <TextView
+            android:id="@+id/collab_detail"
+            android:layout_marginTop="15dp"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:textIsSelectable="true"
+            android:layout_weight="1"
+            android:text="Collab Details"/>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/editCollabDescription_button"
@@ -59,7 +71,7 @@
         android:visibility="gone"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_below="@id/collab_detail"
+        android:layout_below="@id/detail_wrapper"
         android:stateListAnimator="@null"
         android:background="@drawable/profileeditbutton"
         android:minWidth="50dp"
@@ -367,6 +379,20 @@
         android:layout_below="@id/edit_collab_button"
         />
 
+    <FrameLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:visibility="gone"
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@android:drawable/stat_notify_chat" />
+    </FrameLayout>
 
 </RelativeLayout>
-
