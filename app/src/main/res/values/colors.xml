@@ -3,14 +3,11 @@
 <color name="colorPrimary">#162A58</color>
 <color name="colorPrimaryDark">#162A58</color>
 <color name="colorAccent">#162A58</color>
-    <color name ="white">#FFFFFF</color>
+<color name ="white">#FFFFFF</color>
 <color name="colorBright">#F8FFFFFF</color>
-
+<color name="teal">#3EEEDC</color>
 <color name="AutoPrimary">#535353</color>
 <color name="AutoSecondary">#E9F0EFEF</color>
 
-
-
->>>>>>> master
 </resources>
 

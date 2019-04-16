@@ -68,6 +68,51 @@ public class GetCollabsData {
 
     }
 
+    // temp for recommended collabs
+    public void getCollabs(ArrayList<String> skills, ArrayList<String> classes){
+
+        AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
+
+        String restApiUrl = GlobalConfig.BASE_API_URL + "/collab/getRecommendedCollabs";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            JSONArray skillArray = new JSONArray();
+            for (String skill : skills) {
+                skillArray.put(skill);
+                jsonParams.put("skills", skillArray);
+            }
+            JSONArray classArray = new JSONArray();
+            for (String Class : classes) {
+                classArray.put(Class);
+                jsonParams.put("classes", classArray);
+            }
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            asyncHttpClient.get(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.i("response" , String.valueOf(response));
+                setCollabDetails(response);
+                listener.getAllCollabs(true);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                listener.getAllCollabs(false);
+            }
+        });
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void setCollabDetails(JSONArray collabData){
 
         for(int i = 0; i < collabData.length(); i++){
@@ -76,8 +121,6 @@ public class GetCollabsData {
 
                 JSONObject collabId = (JSONObject) tmp.getJSONObject("_id");
                 String id = collabId.getString("$oid");
-
-                System.out.println("id: " + id);
 
                 String owner = tmp.getString("owner");
                 int size = tmp.getInt("size");

@@ -8,6 +8,7 @@ import android.os.Parcel;
 import android.os.SystemClock;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 /**
@@ -75,6 +77,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     private Button deleteCollab;
     private JoinDropCollab doDeleteCollab;
+
+    private FloatingActionButton fab;
 
     private GetUserData userDetails;
     private GetUserData memberDetails;
@@ -126,6 +130,17 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         memberDetails = new GetUserData(getContext(), instance, instance, instance);
         ownerDetails = new GetUserData(getContext(), instance, instance, instance);
         userDetails.getUserData();
+
+        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewChat = new Intent(getContext(), MessageListActivity.class);
+                viewChat.putExtra("members", membersArrayForRecyclerView);
+                viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(viewChat);
+            }
+        });
 
         // Show the content as text in a TextView.
         if (mItem != null) {
@@ -497,8 +512,9 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
 
-            joinCollab.setVisibility(View.INVISIBLE);
+            joinCollab.setVisibility(INVISIBLE);
             leaveCollab.setVisibility(VISIBLE);
+            fab.setVisibility(VISIBLE);
             joinCollab.setEnabled(true);
 
             // add member locally
@@ -525,18 +541,19 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
             toast.show();
 
-            leaveCollab.setVisibility(View.INVISIBLE);
+            leaveCollab.setVisibility(INVISIBLE);
             joinCollab.setVisibility(VISIBLE);
+            fab.setVisibility(INVISIBLE);
 
-            editCollabTitle.setVisibility(View.INVISIBLE);
-            editCollabSize.setVisibility(View.INVISIBLE);
-            editCollabDescrip.setVisibility(View.INVISIBLE);
-            editCollabStart.setVisibility(View.INVISIBLE);
-            editCollabEnd.setVisibility(View.INVISIBLE);
-            editCollabLocation.setVisibility(View.INVISIBLE);
-            editCollabSkills.setVisibility(View.INVISIBLE);
-            editCollabClasses.setVisibility(View.INVISIBLE);
-            deleteCollab.setVisibility(View.INVISIBLE);
+            editCollabTitle.setVisibility(INVISIBLE);
+            editCollabSize.setVisibility(INVISIBLE);
+            editCollabDescrip.setVisibility(INVISIBLE);
+            editCollabStart.setVisibility(INVISIBLE);
+            editCollabEnd.setVisibility(INVISIBLE);
+            editCollabLocation.setVisibility(INVISIBLE);
+            editCollabSkills.setVisibility(INVISIBLE);
+            editCollabClasses.setVisibility(INVISIBLE);
+            deleteCollab.setVisibility(INVISIBLE);
 
             leaveCollab.setEnabled(true);
 
@@ -581,6 +598,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             // if user is IN collab, show leave, else show join
             if (membersArray.contains(currentUsername)){
                 leaveCollab.setVisibility(VISIBLE);
+                fab.setVisibility(VISIBLE);
             }
             else {
                 joinCollab.setVisibility(VISIBLE);

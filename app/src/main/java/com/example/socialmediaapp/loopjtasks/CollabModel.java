@@ -2,13 +2,7 @@ package com.example.socialmediaapp.loopjtasks;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import org.json.JSONArray;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
-
 
 public class CollabModel implements Parcelable {
     public int id;
@@ -138,7 +132,6 @@ public class CollabModel implements Parcelable {
         return applicants;
     }
     public int getId() {return id;}
-
     public String getCollabId(){
         return collabId;
     }
