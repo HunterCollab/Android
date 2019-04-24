@@ -91,7 +91,7 @@ public class GetCollabsData {
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            asyncHttpClient.get(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
+            asyncHttpClient.post(context, restApiUrl, entity,"application/json", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
