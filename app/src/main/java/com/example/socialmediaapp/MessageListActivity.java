@@ -80,6 +80,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
                     sendMessage.setEnabled(true);
                 }
                 else {
+
                     // currently removing current user and sending to API
                     ArrayList<String> tmp = members;
                     tmp.remove(userDetails.getUserName());
