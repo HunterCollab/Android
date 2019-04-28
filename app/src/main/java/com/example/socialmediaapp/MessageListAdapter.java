@@ -17,10 +17,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 // TODO: REQUEST FOR ALL MESSAGES INSTEAD OF PAGES
-// TODO: REQUEST FOR NICKNAMES INSTEAD OF EMAILS
-// TODO: REQUEST FOR COLLAB NAMES
+// TODO: IMPLEMENT PAGINATION
 // TODO: REAL-TIME MESSAGING????
-// TODO: BUG -- SENDING MESSAGE CREATES NEW GROUP (DUPLICATE USER)
 
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
