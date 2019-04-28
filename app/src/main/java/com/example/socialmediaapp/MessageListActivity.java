@@ -15,6 +15,7 @@ import com.example.socialmediaapp.loopjtasks.MessageModel;
 import com.example.socialmediaapp.loopjtasks.MessagingAPI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MessageListActivity extends AppCompatActivity implements MessagingAPI.MessageDownloadComplete, MessagingAPI.MessageSendComplete,
         GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete, GetUserData.OwnerDownloadComplete {
@@ -91,6 +92,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
     public void messageDownloadComplete(Boolean success) {
         if (success) {
             messages = messageDetails.getMessages();
+            Collections.reverse(messages);
 
             mMessageAdapter = new MessageListAdapter(this, messages, user);
             mMessageRecycler.setAdapter(mMessageAdapter);
