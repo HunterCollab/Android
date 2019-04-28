@@ -39,7 +39,8 @@ public class MessagingAPI {
     private Context context;
 
     private ArrayList<MessageModel> messages;
-    private ArrayList< ArrayList<String> > chatMembers;
+    private ArrayList<String> chatIds;
+    private ArrayList<String> chatTitles;
     private MessageDownloadComplete dataDownloadComplete;
     private MessageSendComplete messageSent;
 
@@ -49,7 +50,8 @@ public class MessagingAPI {
         this.messageSent = listener1;
 
         requestParams = new RequestParams();
-        chatMembers = new ArrayList<>();
+        chatIds = new ArrayList<>();
+        chatTitles = new ArrayList<>();
         messages = new ArrayList<>();
     }
 
@@ -60,7 +62,7 @@ public class MessagingAPI {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
-                setParticipants(response);
+                setChatList(response);
                 dataDownloadComplete.messageDownloadComplete(true);
             }
 
@@ -175,22 +177,26 @@ public class MessagingAPI {
         }
     }
 
-    public void setParticipants(JSONArray data){
+    public void setChatList (JSONArray data){
         // parse JSON array (list of ALL chats)
         for (int i = 0; i < data.length(); i++) {
             try {
                 JSONObject jsonobject = data.getJSONObject(i);
-                ArrayList<String> membersOfChat = new ArrayList<>();
+                String chatId = new String();
+                String chatTitle = new String();
+                chatTitle = jsonobject.getString("title");
 
-                // parse JSON array (participants list of each message group)
-                JSONArray terms = jsonobject.getJSONArray("participants");
-                for(int j = 0; j < terms.length(); j++){
-                    String term = terms.getString(j);
-                    membersOfChat.add(term);
+                if (jsonobject.has("otherUser")) {
+                    chatId = jsonobject.getString("otherUser");
+                }
+                else {
+                    JSONObject collabId = jsonobject.getJSONObject("_id");
+                    chatId = collabId.getString("$oid");
                 }
 
-                // add members of chat array to message list
-                chatMembers.add(membersOfChat);
+                // add chatId's and titles to respective arrays
+                chatIds.add(chatId);
+                chatTitles.add(chatTitle);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -202,28 +208,12 @@ public class MessagingAPI {
         return messages;
     }
 
-    public ArrayList< ArrayList<String> > getParticipants(){
-        return chatMembers;
+    public ArrayList<String> getChatIds(){
+        return chatIds;
     }
 
-    public ArrayList<String> getParticipantsAsOneString(){
-        ArrayList<String> temp = new ArrayList<>();
-        String participants;
-
-        // loop through outer array
-        for (int i = 0; i < chatMembers.size(); i++){
-            participants = "";
-            // loop through inner array
-            for (int j = 0; j < chatMembers.get(i).size(); j++){
-                participants += chatMembers.get(i).get(j);
-                if (j < chatMembers.get(i).size()-1){
-                    participants += "\n";
-                }
-            }
-            temp.add(participants);
-        }
-
-        return temp;
+    public ArrayList<String> getChatTitles(){
+        return chatTitles;
     }
 
     public interface MessageDownloadComplete {

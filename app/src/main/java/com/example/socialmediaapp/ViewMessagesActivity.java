@@ -27,7 +27,7 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
     private ViewMessagesActivity instance;
     private MessagingAPI messages;
 
-    private ArrayList< ArrayList<String> > arrayOfChats = new ArrayList<>();
+    private ArrayList<String> arrayOfChatIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
         Intent viewChat = new Intent(getApplicationContext(), MessageListActivity.class);
-        viewChat.putExtra("members", arrayOfChats.get(position));
+        viewChat.putExtra("members", arrayOfChatIds.get(position));
         viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(viewChat);
     }
@@ -102,10 +102,10 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
             layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
 
-            arrayOfChats = messages.getParticipants();
+            arrayOfChatIds = messages.getChatIds();
 
             // specify an adapter
-            mAdapter = new ViewMessagesAdapter(this, messages.getParticipantsAsOneString());
+            mAdapter = new ViewMessagesAdapter(this, messages.getChatTitles());
             ((ViewMessagesAdapter) mAdapter).setClickListener(this);
             recyclerView.setAdapter(mAdapter);
 
