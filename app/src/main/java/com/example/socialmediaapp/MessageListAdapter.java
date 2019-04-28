@@ -133,7 +133,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             //convert.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date result = new Date(dateInMilli);
             timeText.setText(convert.format(result));
-            nameText.setText(message.getSender());
+            nameText.setText(message.getDisplayName());
 
             // Insert the profile image from the URL into the ImageView.
             //Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);

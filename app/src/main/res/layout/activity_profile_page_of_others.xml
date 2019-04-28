@@ -118,6 +118,18 @@
                 android:textSize="25sp"
                 android:layout_marginLeft="5dp" />
 
+            <Button
+                android:id="@+id/send_message_to_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="SEND MESSAGE"
+                android:background="@drawable/button"
+                android:textSize="20dp"
+                android:textColor="@color/colorBright"
+                android:layout_below="@id/classesList"
+                />
+
         </RelativeLayout>
 
     </ScrollView>

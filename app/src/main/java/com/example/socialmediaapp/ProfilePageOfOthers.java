@@ -1,12 +1,16 @@
 package com.example.socialmediaapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
     private TextView linkedinLink;
     private TextView skills;
     private TextView classes;
+    private Button sendUserMessage;
 
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
@@ -50,6 +55,17 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
         linkedinLink = (TextView) findViewById(R.id.linkedinLink);
         skills = (TextView) findViewById(R.id.skillsList);
         classes = (TextView) findViewById(R.id.classesList);
+
+        sendUserMessage = (Button) findViewById(R.id.send_message_to_user);
+        sendUserMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewChat = new Intent(getApplicationContext(), MessageListActivity.class);
+                viewChat.putExtra("chatId", memberUsername);
+                viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(viewChat);
+            }
+        });
 
         userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
         userDetails.getOtherUserData(memberUsername);

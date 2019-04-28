@@ -136,7 +136,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             @Override
             public void onClick(View view) {
                 Intent viewChat = new Intent(getContext(), MessageListActivity.class);
-                viewChat.putExtra("members", membersArrayForRecyclerView);
+                viewChat.putExtra("chatId", currentCollabId);
                 viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(viewChat);
             }

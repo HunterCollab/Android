@@ -23,7 +23,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
     private RecyclerView.LayoutManager layoutManager;
 
     private String user = "";
-    private ArrayList<String> members;
+    private String chatId;
     private ArrayList<MessageModel> messages = new ArrayList<>();
 
     private String messageToSend;
@@ -65,7 +65,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
         // grab members from previous activity
         Bundle x = getIntent().getExtras();
         if (x != null)
-            members = x.getStringArrayList("members");
+            chatId = x.getString("chatId");
 
         // send message button
         sendMessage.setOnClickListener(new View.OnClickListener() {
@@ -80,17 +80,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
                     sendMessage.setEnabled(true);
                 }
                 else {
-
-                    // currently removing current user and sending to API
-                    ArrayList<String> tmp = members;
-                    tmp.remove(userDetails.getUserName());
-
-                    messageDetails.sendMessage(messageToSend, tmp);
-
-                    // debugging (see how many members are being sent to API)
-                    for (int i = 0; i < members.size(); i++){
-                        System.out.println("MEMBER " + members.get(i));
-                    }
+                    messageDetails.sendMessage(messageToSend, chatId);
                 }
 
             }
@@ -113,7 +103,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
     public void messageSendComplete(Boolean success) {
         if (success) {
             typeMessage.getText().clear();
-            MessageModel tmp = new MessageModel(user, messageToSend, System.currentTimeMillis());
+            MessageModel tmp = new MessageModel(user, messageToSend, System.currentTimeMillis(), "");
             messages.add(tmp);
             mMessageAdapter.notifyDataSetChanged();
             sendMessage.setEnabled(true);
@@ -125,7 +115,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
     @Override
     public void downloadComplete(Boolean success) {
         user = userDetails.getUserName();
-        messageDetails.retrieveChatroom(0, members);
+        messageDetails.retrieveChatroom(0, chatId);
     }
 
     @Override

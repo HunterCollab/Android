@@ -74,20 +74,22 @@ public class MessagingAPI {
         });
     }
 
-    public void retrieveChatroom(int page, ArrayList<String> people){
+    public void retrieveChatroom(int page, String id){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
         String restApiUrl = GlobalConfig.BASE_API_URL + "/messaging/getMessages";
 
+        String lastThreeChars = id.substring(id.length() - 3);
+
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("page", page);
-
-            JSONArray chatters = new JSONArray();
-            for (String member : people) {
-                chatters.put(member);
-                jsonParams.put("participants", chatters);
+            if (lastThreeChars.equals("edu")){
+                jsonParams.put("otherUser", id);
+            }
+            else {
+                jsonParams.put("collabId", id);
             }
 
             StringEntity entity = new StringEntity(jsonParams.toString());
@@ -113,20 +115,22 @@ public class MessagingAPI {
         }
     }
 
-    public void sendMessage(String message, ArrayList<String> people){
+    public void sendMessage(String message, String id){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
 
         String restApiUrl = GlobalConfig.BASE_API_URL + "/messaging/sendMessage";
 
+        String lastThreeChars = id.substring(id.length() - 3);
+
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("message", message);
-
-            JSONArray chatters = new JSONArray();
-            for (String member : people) {
-                chatters.put(member);
-                jsonParams.put("recipients", chatters);
+            if (lastThreeChars.equals("edu")){
+                jsonParams.put("recipient", id);
+            }
+            else {
+                jsonParams.put("collabId", id);
             }
 
             StringEntity entity = new StringEntity(jsonParams.toString());
@@ -165,10 +169,11 @@ public class MessagingAPI {
 
                     String sender = tmp.getString("sender");
                     String msg = tmp.getString("message");
+                    String displayName = tmp.getString("dispName");
                     long time = tmp.getLong("time");
 
                     // create message and store in array list
-                    MessageModel tmpMessage = new MessageModel(sender, msg, time);
+                    MessageModel tmpMessage = new MessageModel(sender, msg, time, displayName);
                     messages.add(tmpMessage);
                 }
             } catch (JSONException e) {

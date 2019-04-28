@@ -90,7 +90,7 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
         Intent viewChat = new Intent(getApplicationContext(), MessageListActivity.class);
-        viewChat.putExtra("members", arrayOfChatIds.get(position));
+        viewChat.putExtra("chatId", arrayOfChatIds.get(position));
         viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(viewChat);
     }
