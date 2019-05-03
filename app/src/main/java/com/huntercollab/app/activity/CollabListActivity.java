@@ -97,12 +97,6 @@ public class CollabListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
         //This will set up the spinner
         //Depending on tne item selected, a different function is called
         spinner = (Spinner) findViewById(R.id.my_spinner);
@@ -153,6 +147,11 @@ public class CollabListActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
 
     }
 

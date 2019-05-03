@@ -45,7 +45,7 @@ public class DoRegister {
                         PersistentCookieStore myCookieStore = new PersistentCookieStore(context.getApplicationContext());
                         // Create & save cookie into the cookie store.
                         BasicClientCookie newCookie = new BasicClientCookie("capstoneAuth", token);
-                        newCookie.setDomain("huntercollabapi.herokuapp.com");
+                        newCookie.setDomain("13.58.204.157");
                         newCookie.setPath("/");
                         myCookieStore.addCookie(newCookie);
                         Log.i ( "token", "Token successfully retrieved and saved to cookie store: " + token);
