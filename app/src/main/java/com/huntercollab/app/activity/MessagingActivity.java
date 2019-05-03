@@ -11,18 +11,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.adapter.MessageListAdapter;
-import com.huntercollab.app.loopjtasks.GetUserData;
-import com.huntercollab.app.loopjtasks.MessageModel;
-import com.huntercollab.app.loopjtasks.MessagingAPI;
+import com.huntercollab.app.adapter.MessagesAdapter;
+import com.huntercollab.app.network.loopjtasks.GetUserData;
+import com.huntercollab.app.network.loopjtasks.MessageModel;
+import com.huntercollab.app.network.loopjtasks.MessagingAPI;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MessageListActivity extends AppCompatActivity implements MessagingAPI.MessageDownloadComplete, MessagingAPI.MessageSendComplete,
+public class MessagingActivity extends AppCompatActivity implements MessagingAPI.MessageDownloadComplete, MessagingAPI.MessageSendComplete,
         GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete, GetUserData.OwnerDownloadComplete {
     private RecyclerView mMessageRecycler;
-    private MessageListAdapter mMessageAdapter;
+    private MessagesAdapter mMessageAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private String user = "";
@@ -33,7 +33,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
     private EditText typeMessage;
     private Button sendMessage;
 
-    private MessageListActivity instance;
+    private MessagingActivity instance;
     private GetUserData userDetails;
 
     private MessagingAPI messageDetails;
@@ -51,7 +51,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
         userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
         userDetails.getUserData();
 
-        mMessageAdapter = new MessageListAdapter(getApplicationContext(), null, null);
+        mMessageAdapter = new MessagesAdapter(getApplicationContext(), null, null);
         messageDetails = new MessagingAPI(getApplicationContext(), this, this);
 
         // setting up recyclerview
@@ -96,7 +96,7 @@ public class MessageListActivity extends AppCompatActivity implements MessagingA
             messages = messageDetails.getMessages();
             Collections.reverse(messages);
 
-            mMessageAdapter = new MessageListAdapter(this, messages, user);
+            mMessageAdapter = new MessagesAdapter(this, messages, user);
             mMessageRecycler.setAdapter(mMessageAdapter);
             mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
             mMessageAdapter.notifyDataSetChanged();

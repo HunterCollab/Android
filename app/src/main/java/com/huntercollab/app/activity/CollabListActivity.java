@@ -25,9 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.CollabModel;
-import com.huntercollab.app.loopjtasks.GetCollabsData;
-import com.huntercollab.app.loopjtasks.GetUserData;
+import com.huntercollab.app.network.loopjtasks.CollabModel;
+import com.huntercollab.app.network.loopjtasks.GetCollabsData;
+import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.tools.GeneralTools;
 
 import java.util.ArrayList;
@@ -178,7 +178,7 @@ public class CollabListActivity extends AppCompatActivity
                 this.finish();
                 return true;
             case R.id.nav_messages:
-                Intent messageIntent = new Intent(this, ViewMessagesActivity.class);
+                Intent messageIntent = new Intent(this, ConversationsActivity.class);
                 this.startActivity(messageIntent);
                 return true;
             case R.id.nav_logout:

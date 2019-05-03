@@ -16,11 +16,11 @@
             android:label="@string/title_activity_view_members_of_collab"
             android:parentActivityName="com.huntercollab.app.activity.CollabDetailActivity" />
         <activity
-            android:name="com.huntercollab.app.activity.ViewMessagesActivity"
+            android:name="com.huntercollab.app.activity.ConversationsActivity"
             android:label="Messages"
             android:parentActivityName="com.huntercollab.app.activity.CollabDetailActivity" />
         <activity
-            android:name="com.huntercollab.app.activity.MessageListActivity"
+            android:name="com.huntercollab.app.activity.MessagingActivity"
             android:label="Chatroom" />
         <activity
             android:name="com.huntercollab.app.activity.OtherProfileActivity"

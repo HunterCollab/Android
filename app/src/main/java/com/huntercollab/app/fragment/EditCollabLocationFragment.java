@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.UpdateCollabData;
+import com.huntercollab.app.network.loopjtasks.UpdateCollabData;
 
 
 public class EditCollabLocationFragment extends Fragment implements UpdateCollabData.UpdateCollabComplete {

@@ -17,7 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.UpdateCollabData;
+import com.huntercollab.app.network.loopjtasks.UpdateCollabData;
 
 import java.util.Calendar;
 

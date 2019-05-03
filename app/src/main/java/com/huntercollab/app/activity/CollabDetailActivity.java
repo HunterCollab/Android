@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.huntercollab.app.fragment.CollabDetailFragment;
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.CollabModel;
+import com.huntercollab.app.network.loopjtasks.CollabModel;
 
 /**
  * An activity representing a single Collab detail screen. This

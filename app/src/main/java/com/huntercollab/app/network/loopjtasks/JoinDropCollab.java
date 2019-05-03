@@ -1,4 +1,4 @@
-package com.huntercollab.app.loopjtasks;
+package com.huntercollab.app.network.loopjtasks;
 
 import android.content.Context;
 import android.util.Log;

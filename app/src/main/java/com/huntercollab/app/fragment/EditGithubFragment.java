@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.SetUserData;
+import com.huntercollab.app.network.loopjtasks.SetUserData;
 
 
 public class EditGithubFragment extends Fragment implements SetUserData.UpdateComplete {

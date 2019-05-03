@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.DoLogin;
+import com.huntercollab.app.network.loopjtasks.DoLogin;
 
 public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLoginComplete {
 

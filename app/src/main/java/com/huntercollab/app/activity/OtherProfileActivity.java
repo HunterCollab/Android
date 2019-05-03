@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.GetUserData;
+import com.huntercollab.app.network.loopjtasks.GetUserData;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class OtherProfileActivity extends AppCompatActivity implements GetUserDa
         sendUserMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewChat = new Intent(getApplicationContext(), MessageListActivity.class);
+                Intent viewChat = new Intent(getApplicationContext(), MessagingActivity.class);
                 viewChat.putExtra("chatId", memberUsername);
                 viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(viewChat);

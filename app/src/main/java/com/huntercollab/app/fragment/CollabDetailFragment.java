@@ -20,15 +20,15 @@ import android.widget.Toast;
 
 import com.huntercollab.app.activity.EditCollabClassesActivity;
 import com.huntercollab.app.activity.EditCollabSkillsActivity;
-import com.huntercollab.app.activity.MessageListActivity;
+import com.huntercollab.app.activity.MessagingActivity;
 import com.example.socialmediaapp.R;
 import com.huntercollab.app.activity.ViewMembersOfCollabActivity;
 import com.huntercollab.app.activity.CollabDetailActivity;
 import com.huntercollab.app.activity.CollabListActivity;
 import com.huntercollab.app.activity.EditCollabActivity;
-import com.huntercollab.app.loopjtasks.CollabModel;
-import com.huntercollab.app.loopjtasks.GetUserData;
-import com.huntercollab.app.loopjtasks.JoinDropCollab;
+import com.huntercollab.app.network.loopjtasks.CollabModel;
+import com.huntercollab.app.network.loopjtasks.GetUserData;
+import com.huntercollab.app.network.loopjtasks.JoinDropCollab;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -143,7 +143,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewChat = new Intent(getContext(), MessageListActivity.class);
+                Intent viewChat = new Intent(getContext(), MessagingActivity.class);
                 viewChat.putExtra("chatId", currentCollabId);
                 viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(viewChat);

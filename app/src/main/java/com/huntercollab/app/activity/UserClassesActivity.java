@@ -23,9 +23,9 @@ import android.widget.Toast;
 import com.huntercollab.app.adapter.AutoCompleteAdapter;
 import com.example.socialmediaapp.R;
 import com.huntercollab.app.adapter.UserListAdapter;
-import com.huntercollab.app.loopjtasks.DoClassSearch;
-import com.huntercollab.app.loopjtasks.GetUserData;
-import com.huntercollab.app.loopjtasks.SetUserData;
+import com.huntercollab.app.network.loopjtasks.DoClassSearch;
+import com.huntercollab.app.network.loopjtasks.GetUserData;
+import com.huntercollab.app.network.loopjtasks.SetUserData;
 
 import java.util.ArrayList;
 

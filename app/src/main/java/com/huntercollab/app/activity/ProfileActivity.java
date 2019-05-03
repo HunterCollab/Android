@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.GetUserData;
+import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.tools.GeneralTools;
 
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class ProfileActivity extends AppCompatActivity implements GetUserData.Do
                 this.startActivity(collabIntent);
                 return true;
             case R.id.nav_messages:
-                Intent messageIntent = new Intent(this, ViewMessagesActivity.class);
+                Intent messageIntent = new Intent(this, ConversationsActivity.class);
                 this.startActivity(messageIntent);
                 return true;
             case R.id.nav_logout:

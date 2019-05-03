@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.GetCollabsData;
+import com.huntercollab.app.network.loopjtasks.GetCollabsData;
 
 import java.util.ArrayList;
 import java.util.Calendar;

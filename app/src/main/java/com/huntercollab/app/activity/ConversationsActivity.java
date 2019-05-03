@@ -13,20 +13,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.adapter.ViewMessagesAdapter;
-import com.huntercollab.app.loopjtasks.MessagingAPI;
+import com.huntercollab.app.adapter.ConversationAdapter;
+import com.huntercollab.app.network.loopjtasks.MessagingAPI;
 import com.huntercollab.app.tools.GeneralTools;
 
 import java.util.ArrayList;
 
-public class ViewMessagesActivity extends AppCompatActivity implements ViewMessagesAdapter.ItemClickListener, MessagingAPI.MessageDownloadComplete,
+public class ConversationsActivity extends AppCompatActivity implements ConversationAdapter.ItemClickListener, MessagingAPI.MessageDownloadComplete,
         MessagingAPI.MessageSendComplete {
 
     private RecyclerView recyclerView;
-    private ViewMessagesAdapter mAdapter;
+    private ConversationAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private ViewMessagesActivity instance;
+    private ConversationsActivity instance;
     private MessagingAPI messages;
 
     private ArrayList<String> arrayOfChatIds = new ArrayList<>();
@@ -76,7 +76,7 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
                 this.startActivity(collabIntent);
                 return true;
             case R.id.nav_messages:
-                Intent messageIntent = new Intent(this, ViewMessagesActivity.class);
+                Intent messageIntent = new Intent(this, ConversationsActivity.class);
                 this.startActivity(messageIntent);
                 this.finish();
                 return true;
@@ -91,7 +91,7 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
-        Intent viewChat = new Intent(getApplicationContext(), MessageListActivity.class);
+        Intent viewChat = new Intent(getApplicationContext(), MessagingActivity.class);
         viewChat.putExtra("chatId", arrayOfChatIds.get(position));
         viewChat.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(viewChat);
@@ -107,8 +107,8 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
             arrayOfChatIds = messages.getChatIds();
 
             // specify an adapter
-            mAdapter = new ViewMessagesAdapter(this, messages.getChatTitles());
-            ((ViewMessagesAdapter) mAdapter).setClickListener(this);
+            mAdapter = new ConversationAdapter(this, messages.getChatTitles());
+            ((ConversationAdapter) mAdapter).setClickListener(this);
             recyclerView.setAdapter(mAdapter);
 
             mAdapter.notifyDataSetChanged();

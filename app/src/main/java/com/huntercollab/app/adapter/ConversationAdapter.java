@@ -11,14 +11,14 @@ import com.example.socialmediaapp.R;
 
 import java.util.List;
 
-public class ViewMessagesAdapter extends RecyclerView.Adapter<ViewMessagesAdapter.ViewHolder> {
+public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public ViewMessagesAdapter(Context context, List<String> data) {
+    public ConversationAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

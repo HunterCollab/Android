@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.DoRegister;
+import com.huntercollab.app.network.loopjtasks.DoRegister;
 
 
 public class RegisterActivity extends AppCompatActivity implements DoRegister.OnDoRegisterComplete {

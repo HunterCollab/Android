@@ -1,4 +1,4 @@
-package com.huntercollab.app.loopjtasks;
+package com.huntercollab.app.network.loopjtasks;
 
 import android.os.Parcel;
 import android.os.Parcelable;

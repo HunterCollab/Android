@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.socialmediaapp.R;
-import com.huntercollab.app.loopjtasks.MessageModel;
+import com.huntercollab.app.network.loopjtasks.MessageModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ import java.util.Date;
 // TODO: IMPLEMENT PAGINATION
 // TODO: REAL-TIME MESSAGING????
 
-public class MessageListAdapter extends RecyclerView.Adapter {
+public class MessagesAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
@@ -27,9 +27,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private ArrayList<MessageModel> mMessageList;
     private String mUserEmail;
 
-    private MessageListAdapter instance;
+    private MessagesAdapter instance;
 
-    public MessageListAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
+    public MessagesAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
         mContext = context;
         mMessageList = messageList;
         mUserEmail = userEmail;
