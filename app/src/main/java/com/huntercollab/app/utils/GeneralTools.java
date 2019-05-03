@@ -1,8 +1,6 @@
-package com.huntercollab.app.tools;
+package com.huntercollab.app.utils;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
-import com.loopj.android.http.RequestParams;
 
 import android.content.Context;
 import android.content.Intent;

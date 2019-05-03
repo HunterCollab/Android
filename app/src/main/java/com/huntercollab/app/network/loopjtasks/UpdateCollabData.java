@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.huntercollab.app.config.GlobalConfig;
-import com.huntercollab.app.tools.GeneralTools;
+import com.huntercollab.app.utils.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

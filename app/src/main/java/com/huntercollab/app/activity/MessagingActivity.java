@@ -15,12 +15,13 @@ import com.huntercollab.app.adapter.MessagesAdapter;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.network.loopjtasks.MessageModel;
 import com.huntercollab.app.network.loopjtasks.MessagingAPI;
+import com.huntercollab.app.utils.Interfaces;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MessagingActivity extends AppCompatActivity implements MessagingAPI.MessageDownloadComplete, MessagingAPI.MessageSendComplete,
-        GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete, GetUserData.OwnerDownloadComplete {
+        Interfaces.DownloadComplete, Interfaces.DownloadProfleComplete, Interfaces.OwnerDownloadComplete {
     private RecyclerView mMessageRecycler;
     private MessagesAdapter mMessageAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -36,7 +37,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     private MessagingActivity instance;
     private GetUserData userDetails;
 
-    private MessagingAPI messageDetails;
+    private MessagingAPI messagingAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         userDetails.getUserData();
 
         mMessageAdapter = new MessagesAdapter(getApplicationContext(), null, null);
-        messageDetails = new MessagingAPI(getApplicationContext(), this, this);
+        messagingAPI = new MessagingAPI(getApplicationContext(), this, this);
 
         // setting up recyclerview
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
@@ -83,7 +84,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
                     sendMessage.setEnabled(true);
                 }
                 else {
-                    messageDetails.sendMessage(messageToSend, chatId);
+                    messagingAPI.sendMessage(messageToSend, chatId);
                 }
 
             }
@@ -93,7 +94,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     @Override
     public void messageDownloadComplete(Boolean success) {
         if (success) {
-            messages = messageDetails.getMessages();
+            messages = messagingAPI.getMessages();
             Collections.reverse(messages);
 
             mMessageAdapter = new MessagesAdapter(this, messages, user);
@@ -119,7 +120,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     @Override
     public void downloadComplete(Boolean success) {
         user = userDetails.getUserName();
-        messageDetails.retrieveChatroom(0, chatId);
+        messagingAPI.retrieveChatroom(0, chatId);
     }
 
     @Override

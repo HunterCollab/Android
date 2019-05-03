@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
+import com.huntercollab.app.utils.Interfaces;
 
 import java.util.ArrayList;
 
-public class OtherProfileActivity extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
-        GetUserData.OwnerDownloadComplete {
+public class OtherProfileActivity extends AppCompatActivity implements Interfaces.DownloadComplete, Interfaces.DownloadProfleComplete,
+        Interfaces.OwnerDownloadComplete {
 
     private Context context = OtherProfileActivity.this;
     private TextView userNickname;

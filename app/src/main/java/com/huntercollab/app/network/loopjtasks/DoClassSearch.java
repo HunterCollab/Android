@@ -3,7 +3,7 @@ package com.huntercollab.app.network.loopjtasks;
 import android.content.Context;
 
 import com.huntercollab.app.config.GlobalConfig;
-import com.huntercollab.app.tools.GeneralTools;
+import com.huntercollab.app.utils.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;

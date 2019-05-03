@@ -26,13 +26,14 @@ import com.huntercollab.app.adapter.UserListAdapter;
 import com.huntercollab.app.network.loopjtasks.DoClassSearch;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.network.loopjtasks.SetUserData;
+import com.huntercollab.app.utils.Interfaces;
 
 import java.util.ArrayList;
 
 
 public class UserClassesActivity extends AppCompatActivity
-        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
-        GetUserData.OwnerDownloadComplete{
+        implements DoClassSearch.OnDoClassSearchComplete, SetUserData.UpdateComplete, Interfaces.DownloadComplete, Interfaces.DownloadProfleComplete,
+        Interfaces.OwnerDownloadComplete {
 
     private Context context = UserClassesActivity.this;
     private RecyclerView recyclerView;
