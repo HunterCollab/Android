@@ -25,8 +25,6 @@ import java.util.Observer;
 public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
         GetUserData.OwnerDownloadComplete{
 
-    // TODO: SHOULD NOT BE ABLE TO ADD FAKE/MISSPELLED/DUPE CLASSES (BACKEND AND FRONTEND)
-
     private Context context = ProfilePage.this;
     private TextView userNickname;
     private TextView githubLink;

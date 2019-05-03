@@ -31,8 +31,7 @@ import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
-
-// TODO: FILTER COLLAB (DONE BUT RECOMMEND SHOULD BE FIXED ON BACKEND)
+import java.util.Collections;
 
 /**
  * An activity representing a list of Collabs. This activity
@@ -286,7 +285,6 @@ public class CollabListActivity extends AppCompatActivity
                 //This part will display the CollabDetailFragment
                 Context context = view.getContext();
                 Intent intent = new Intent(context, CollabDetailActivity.class);
-                System.out.println("ID: " + item.id);
                 intent.putExtra("collab", listOfCollabs.get(item.id));
 
                 context.startActivity(intent);

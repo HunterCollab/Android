@@ -197,7 +197,6 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             // populate end time (duration)
             collabEndDateTime = (TextView) rootView.findViewById(R.id.collab_EndDateTime_Info);
             long endDateInMilli = getArguments().getLong("duration");
-            endDateInMilli += dateInMilli;
             DateFormat convert1 = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
             //convert1.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date result1 = new Date(endDateInMilli);
@@ -211,6 +210,7 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                     Intent viewMembersIntent = new Intent(getContext(), ViewMembersOfCollabActivity.class);
                     viewMembersIntent.putExtra("membersList", membersArrayForRecyclerView);
                     viewMembersIntent.putExtra("membersListNicknames", membersArrayNicknames);
+                    viewMembersIntent.putExtra("currentUser", currentUsername);
                     viewMembersIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(viewMembersIntent);
                 }

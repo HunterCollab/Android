@@ -153,8 +153,6 @@ public class SetUserData {
                 jsonParams.accumulate("skills",array);
                 //////////////////////////////////////////////////
 
-            System.out.println("skillList" + skillList);
-            System.out.println("jsonParams: " + jsonParams);
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 

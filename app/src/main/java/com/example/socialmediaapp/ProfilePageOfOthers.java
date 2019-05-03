@@ -35,6 +35,7 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
     private ProfilePageOfOthers instance = null;
     private GetUserData userDetails;
     private String memberUsername;
+    private String currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,11 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
 
         // grab username from previous activity
         Bundle x = getIntent().getExtras();
-        if (x != null)
+        if (x != null) {
             memberUsername = x.getString("memberUsername");
+            currentUser = x.getString("currentUser");
+            System.out.println(currentUser);
+        }
 
         instance = this;
         userNickname = (TextView) findViewById(R.id.userName);
@@ -67,6 +71,9 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
             }
         });
 
+        if (currentUser.equals(memberUsername))
+            sendUserMessage.setVisibility(View.INVISIBLE);
+
         userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
         userDetails.getOtherUserData(memberUsername);
     }
@@ -75,37 +82,7 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
     // populate profile screen with data on successful API call
     @Override
     public void downloadComplete(Boolean success) {
-        if (success) {
-            // set text fields to user details
-            userNickname.setText(userDetails.getUserNickname());
 
-            // linkify = links lead to browser
-            githubLink.setText(userDetails.getUserGithub());
-            Linkify.addLinks(githubLink, Linkify.WEB_URLS);
-
-            linkedinLink.setText(userDetails.getUserLinkedIn());
-            Linkify.addLinks(linkedinLink, Linkify.WEB_URLS);
-
-            // clear skills + classes, and populate them
-            skills.setText(null);
-            classes.setText(null);
-            skillsArray = userDetails.getUserSkills();
-            classesArray = userDetails.getUserClasses();
-
-            for(int i=0; i < skillsArray.size(); i++) {
-                skills.append(skillsArray.get(i) + "\n");
-            }
-
-            for(int i=0; i < classesArray.size(); i++) {
-                classes.append(classesArray.get(i) + "\n");
-            }
-
-        } else {
-            // show error message to user
-            Toast t = Toast.makeText(context, "ERROR", Toast.LENGTH_LONG);
-            t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-            t.show();
-        }
     }
 
     @Override

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class ViewMembersOfCollabActivity extends AppCompatActivity implements ViewMembersAdapter.ItemClickListener{
 
+    private String currentUser;
     private ArrayList<String> membersOfCollab;
     private ArrayList<String> membersOfCollabNicknames;
     private RecyclerView recyclerView;
@@ -33,6 +34,7 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
         if (x != null) {
             membersOfCollab = x.getStringArrayList("membersList");
             membersOfCollabNicknames = x.getStringArrayList("membersListNicknames");
+            currentUser = x.getString("currentUser");
         }
 
         // setting up recyclerview
@@ -65,6 +67,7 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
             System.out.println(membersOfCollabNicknames.get(i));
         }
         viewMemberProfile.putExtra("memberUsername", membersOfCollab.get(position));
+        viewMemberProfile.putExtra("currentUser", currentUser);
         viewMemberProfile.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(viewMemberProfile);
     }

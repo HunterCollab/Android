@@ -198,6 +198,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     collabDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
                     dateTimeInMS = collabDateTime.getTimeInMillis();
                     long dateTime = dateTimeInMS;
+                    collabDurationLong += dateTime;
                     confirmAddCollab.setEnabled(false);
 
                     // call the API
