@@ -3,7 +3,8 @@ package com.huntercollab.app.network.loopjtasks;
 import android.content.Context;
 
 import com.huntercollab.app.config.GlobalConfig;
-import com.huntercollab.app.tools.GeneralTools;
+import com.huntercollab.app.utils.GeneralTools;
+import com.huntercollab.app.utils.Interfaces;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -26,11 +27,11 @@ public class GetUserData {
     private String github;
     private String linkedIn;
     private String userNickname;
-    private DownloadComplete dataDownloadComplete;
-    private DownloadProfleComplete downloadProfleComplete;
-    private OwnerDownloadComplete ownerDownloadComplete;
+    private Interfaces.DownloadComplete dataDownloadComplete;
+    private Interfaces.DownloadProfleComplete downloadProfleComplete;
+    private Interfaces.OwnerDownloadComplete ownerDownloadComplete;
 
-    public GetUserData(Context context, DownloadComplete listener, DownloadProfleComplete listener1, OwnerDownloadComplete listener2){
+    public GetUserData(Context context, Interfaces.DownloadComplete listener, Interfaces.DownloadProfleComplete listener1, Interfaces.OwnerDownloadComplete listener2){
         this.context = context;
         this.dataDownloadComplete = listener;
         this.downloadProfleComplete = listener1;
@@ -204,15 +205,4 @@ public class GetUserData {
         return skillStringList;
     }
 
-    public interface DownloadComplete {
-        public void downloadComplete(Boolean success);
-    }
-
-    public interface DownloadProfleComplete {
-        public void downloadProfileComplete(Boolean success);
-    }
-
-    public interface OwnerDownloadComplete {
-        public void ownerDownloadComplete(Boolean success);
-    }
 }

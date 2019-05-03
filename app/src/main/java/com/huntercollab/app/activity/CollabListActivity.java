@@ -28,7 +28,8 @@ import com.example.socialmediaapp.R;
 import com.huntercollab.app.network.loopjtasks.CollabModel;
 import com.huntercollab.app.network.loopjtasks.GetCollabsData;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
-import com.huntercollab.app.tools.GeneralTools;
+import com.huntercollab.app.utils.GeneralTools;
+import com.huntercollab.app.utils.Interfaces;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ import java.util.ArrayList;
  */
 public class CollabListActivity extends AppCompatActivity
         implements GetCollabsData.GetCollabDataComplete, AdapterView.OnItemSelectedListener, GetCollabsData.AddCollabComplete,
-        GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete, GetUserData.OwnerDownloadComplete{
+        Interfaces.DownloadComplete, Interfaces.DownloadProfleComplete, Interfaces.OwnerDownloadComplete {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet

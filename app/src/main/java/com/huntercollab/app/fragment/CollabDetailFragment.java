@@ -29,6 +29,7 @@ import com.huntercollab.app.activity.EditCollabActivity;
 import com.huntercollab.app.network.loopjtasks.CollabModel;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.network.loopjtasks.JoinDropCollab;
+import com.huntercollab.app.utils.Interfaces;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,8 +46,8 @@ import static android.view.View.VISIBLE;
  * on handsets.
  */
 public class CollabDetailFragment extends Fragment implements JoinDropCollab.JoinComplete, JoinDropCollab.LeaveComplete,
-        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
-        GetUserData.OwnerDownloadComplete {
+        JoinDropCollab.EditComplete, JoinDropCollab.DeleteComplete, Interfaces.DownloadComplete, Interfaces.DownloadProfleComplete,
+        Interfaces.OwnerDownloadComplete {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.

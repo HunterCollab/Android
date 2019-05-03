@@ -15,7 +15,7 @@ import android.view.View;
 import com.example.socialmediaapp.R;
 import com.huntercollab.app.adapter.ConversationAdapter;
 import com.huntercollab.app.network.loopjtasks.MessagingAPI;
-import com.huntercollab.app.tools.GeneralTools;
+import com.huntercollab.app.utils.GeneralTools;
 
 import java.util.ArrayList;
 

@@ -27,12 +27,13 @@ import com.huntercollab.app.adapter.UserListAdapter;
 import com.huntercollab.app.network.loopjtasks.DoSkillSearch;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.network.loopjtasks.SetUserData;
+import com.huntercollab.app.utils.Interfaces;
 
 import java.util.ArrayList;
 
 public class UserSkillsActivity extends AppCompatActivity
-        implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete, GetUserData.DownloadProfleComplete,
-        GetUserData.OwnerDownloadComplete{
+        implements SetUserData.UpdateComplete , Interfaces.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete, Interfaces.DownloadProfleComplete,
+        Interfaces.OwnerDownloadComplete {
 
     private Context context = UserSkillsActivity.this;
     private RecyclerView recyclerView;
