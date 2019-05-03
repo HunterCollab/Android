@@ -7,6 +7,10 @@ import android.content.Intent;
 
 import com.huntercollab.app.MainActivity;
 
+import java.util.List;
+
+import cz.msebera.android.httpclient.cookie.Cookie;
+
 public class GeneralTools {
 
     //Creates an ASyncHttpClient, sets cookies, and returns it.
@@ -25,6 +29,17 @@ public class GeneralTools {
         AsyncHttpClient client = new AsyncHttpClient();
 
         return client;
+    }
+
+    public static String getAuthToken(Context context) {
+        PersistentCookieStore cookieStore = new PersistentCookieStore(context.getApplicationContext());
+        List<Cookie> cks = cookieStore.getCookies();
+        for (Cookie c : cks) {
+            if (c.getName().equals("capstoneAuth")) {
+                return c.getValue();
+            }
+        }
+        return null;
     }
 
     // restart the app

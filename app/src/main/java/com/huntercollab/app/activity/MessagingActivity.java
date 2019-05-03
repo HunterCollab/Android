@@ -15,13 +15,14 @@ import com.huntercollab.app.adapter.MessagesAdapter;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.network.loopjtasks.MessageModel;
 import com.huntercollab.app.network.loopjtasks.MessagingAPI;
+import com.huntercollab.app.network.loopjtasks.realtime.RealtimeAsync;
 import com.huntercollab.app.utils.Interfaces;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MessagingActivity extends AppCompatActivity implements MessagingAPI.MessageDownloadComplete, MessagingAPI.MessageSendComplete,
-        Interfaces.DownloadComplete, Interfaces.DownloadProfleComplete, Interfaces.OwnerDownloadComplete {
+        Interfaces.DownloadComplete {
     private RecyclerView mMessageRecycler;
     private MessagesAdapter mMessageAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -38,13 +39,16 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     private GetUserData userDetails;
 
     private MessagingAPI messagingAPI;
+    private RealtimeAsync realtimeAync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-
+        this.realtimeAync = new RealtimeAsync();
+        //Start realtime connection
+        this.realtimeAync.execute(this);
 
         setContentView(R.layout.activity_message_list);
 
@@ -53,7 +57,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         sendMessage = (Button) findViewById(R.id.button_chatbox_send);
 
         // used to grab users email and send to adapter
-        userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
+        userDetails = new GetUserData(getApplicationContext(), instance, null, null);
         userDetails.getUserData();
 
         mMessageAdapter = new MessagesAdapter(getApplicationContext(), null, null);
@@ -119,8 +123,6 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         }
     }
 
-    // abstract function from GetUserData.java defined here
-    // populate profile screen with data on successful API call
     @Override
     public void downloadComplete(Boolean success) {
         user = userDetails.getUserName();
@@ -128,10 +130,12 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     }
 
     @Override
-    public void downloadProfileComplete(Boolean success) {
-    }
-
-    @Override
-    public void ownerDownloadComplete(Boolean success) {
+    public void onStop() {
+        System.out.println("OnStop Called. Clearing RMS Connection.");
+        if (this.realtimeAync != null) {
+            this.realtimeAync.killConn();
+        }
+        this.realtimeAync.cancel(true);
+        super.onStop();
     }
 }
