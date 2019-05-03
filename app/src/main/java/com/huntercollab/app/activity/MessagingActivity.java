@@ -42,6 +42,10 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
         setContentView(R.layout.activity_message_list);
 
         instance = this;
