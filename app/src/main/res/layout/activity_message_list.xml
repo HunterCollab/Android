@@ -11,15 +11,17 @@
         android:id="@+id/reyclerview_message_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:isScrollContainer="true"></android.support.v7.widget.RecyclerView>
+        android:isScrollContainer="true"
+        android:layout_above="@+id/line99"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
     <!-- A horizontal line between the chatbox and RecyclerView -->
     <View
+        android:id="@+id/line99"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginBottom="0dp"
-        android:layout_below="@id/reyclerview_message_list"
+        android:layout_above="@id/layout_chatbox"
         android:background="#dfdfdf" />
 
     <LinearLayout
@@ -33,8 +35,8 @@
 
         <EditText
             android:id="@+id/edittext_chatbox"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:background="@android:color/transparent"
