@@ -1,11 +1,8 @@
 
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -19,34 +16,19 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.socialmediaapp.config.GlobalConfig;
-import com.example.socialmediaapp.loopjtasks.DoClassSearch;
+import com.example.socialmediaapp.adapter.AutoCompleteAdapter;
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.adapter.UserListAdapter;
 import com.example.socialmediaapp.loopjtasks.DoSkillSearch;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.loopjtasks.SetUserData;
-import com.example.socialmediaapp.tools.GeneralTools;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
 
 public class UserSkillsActivity extends AppCompatActivity
         implements SetUserData.UpdateComplete ,GetUserData.DownloadComplete, DoSkillSearch.OnDoSkillSearchComplete, GetUserData.DownloadProfleComplete,
@@ -54,7 +36,7 @@ public class UserSkillsActivity extends AppCompatActivity
 
     private Context context = UserSkillsActivity.this;
     private RecyclerView recyclerView;
-    private UserRecyclerView mAdapter;
+    private UserListAdapter mAdapter;
     private ArrayList<String> skillNames;
     private AutoCompleteTextView autoCompleteTextView;
     private UserSkillsActivity instance = null;
@@ -248,7 +230,7 @@ public class UserSkillsActivity extends AppCompatActivity
 
         skillNames = userData.getUserSkills();
         recyclerView = (RecyclerView) findViewById(R.id.skill_recycler_view);
-        mAdapter = new UserRecyclerView(skillNames, this);
+        mAdapter = new UserListAdapter(skillNames, this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.notifyDataSetChanged();

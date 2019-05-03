@@ -1,7 +1,5 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -12,18 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.SetUserData;
 
 
-public class EditGithubFrag extends Fragment implements SetUserData.UpdateComplete {
+public class EditGithubFragment extends Fragment implements SetUserData.UpdateComplete {
 
-    public EditGithubFrag() {
+    public EditGithubFragment() {
         // Required empty public constructor
     }
 
     private EditText editGithub;
     private Button saveGithubButton;
-    private EditGithubFrag instance = null;
+    private EditGithubFragment instance = null;
     private SetUserData updateGithub;
 
     @Override

@@ -1,29 +1,17 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.socialmediaapp.config.GlobalConfig;
-import com.example.socialmediaapp.loopjtasks.DoLogin;
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.DoRegister;
-import com.example.socialmediaapp.tools.GeneralTools;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 
 
 public class RegisterActivity extends AppCompatActivity implements DoRegister.OnDoRegisterComplete {

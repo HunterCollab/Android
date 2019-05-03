@@ -2,16 +2,13 @@ package com.example.socialmediaapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
+
+import com.example.socialmediaapp.activity.OtherProfileActivity;
 
 import java.util.ArrayList;
 
@@ -59,7 +56,7 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
-        Intent viewMemberProfile = new Intent(getApplicationContext(), ProfilePageOfOthers.class);
+        Intent viewMemberProfile = new Intent(getApplicationContext(), OtherProfileActivity.class);
         for (int i = 0; i < membersOfCollab.size(); i++){
             System.out.println(membersOfCollab.get(i));
         }

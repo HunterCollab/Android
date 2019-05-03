@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.socialmediaapp.R;
+
 import java.util.ArrayList;
 
-public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.ViewHolder>{
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
 
@@ -20,7 +22,7 @@ public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.View
 
     private Context mContext;
 
-    public UserRecyclerView(ArrayList<String> data_names, Context mContext) {
+    public UserListAdapter(ArrayList<String> data_names, Context mContext) {
         this.data_names = data_names;
         this.mContext = mContext;
     }

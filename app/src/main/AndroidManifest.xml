@@ -14,60 +14,60 @@
         <activity
             android:name=".ViewMembersOfCollabActivity"
             android:label="@string/title_activity_view_members_of_collab"
-            android:parentActivityName=".CollabDetailActivity" />
+            android:parentActivityName=".activity.CollabDetailActivity" />
         <activity
             android:name=".ViewMessagesActivity"
             android:label="Messages"
-            android:parentActivityName=".CollabDetailActivity" />
+            android:parentActivityName=".activity.CollabDetailActivity" />
         <activity
             android:name=".MessageListActivity"
             android:label="Chatroom" />
         <activity
-            android:name=".ProfilePageOfOthers"
+            android:name=".activity.OtherProfileActivity"
             android:parentActivityName=".ViewMembersOfCollabActivity"
             android:label="Member Profile"
             />
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".activity.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
-            android:name=".EditCollabActivity"
+            android:name=".activity.EditCollabActivity"
             android:label="Edit Collab"
             android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
-            android:name=".ProfilePage"
+            android:name=".activity.ProfileActivity"
             android:label="Profile" />
         <activity
-            android:name=".EditCollabClassesActivity"
+            android:name=".activity.EditCollabClassesActivity"
             android:label="EditCollabClasses"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".EditCollabSkillsActivity"
+            android:name=".activity.EditCollabSkillsActivity"
             android:label="EditCollabSkills"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UserClassesActivity"
+            android:name=".activity.UserClassesActivity"
             android:label="@string/title_activity_user_classes"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddCollabActivity"
-            android:parentActivityName=".CollabListActivity" />
-        <activity android:name=".CollabListActivity" />
+            android:name=".activity.AddCollabActivity"
+            android:parentActivityName=".activity.CollabListActivity" />
+        <activity android:name=".activity.CollabListActivity" />
         <activity
-            android:name=".CollabDetailActivity"
+            android:name=".activity.CollabDetailActivity"
             android:label="@string/title_collab_detail"
-            android:parentActivityName=".CollabListActivity">
+            android:parentActivityName=".activity.CollabListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.socialmediaapp.CollabListActivity" />
+                android:value="com.example.socialmediaapp.activity.CollabListActivity" />
         </activity>
         <activity
-            android:name=".UserSkillsActivity"
+            android:name=".activity.UserSkillsActivity"
             android:label="Skills"
-            android:parentActivityName=".ProfilePage" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+            android:parentActivityName=".activity.ProfileActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

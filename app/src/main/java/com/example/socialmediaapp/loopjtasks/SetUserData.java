@@ -3,7 +3,6 @@ package com.example.socialmediaapp.loopjtasks;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.socialmediaapp.UserClassesActivity;
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;

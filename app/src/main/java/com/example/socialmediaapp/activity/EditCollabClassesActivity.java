@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -20,6 +20,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.adapter.AutoCompleteAdapter;
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.adapter.UserListAdapter;
 import com.example.socialmediaapp.loopjtasks.DoClassSearch;
 import com.example.socialmediaapp.loopjtasks.UpdateCollabData;
 
@@ -31,7 +34,7 @@ public class EditCollabClassesActivity extends AppCompatActivity
 
     private Context context = EditCollabClassesActivity.this;
     private RecyclerView recyclerView;
-    private UserRecyclerView mAdapter;
+    private UserListAdapter mAdapter;
     private ArrayList<String> classNames;
     private AutoCompleteTextView autoCompleteTextView;
     private EditCollabClassesActivity instance = null;
@@ -182,7 +185,7 @@ public class EditCollabClassesActivity extends AppCompatActivity
                 };
 
         recyclerView = (RecyclerView) findViewById(R.id.classes_recycler_view);
-        mAdapter = new UserRecyclerView(classNames, this);
+        mAdapter = new UserListAdapter(classNames, this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.notifyDataSetChanged();

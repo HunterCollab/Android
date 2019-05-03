@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.UpdateCollabData;
 
 import java.util.Calendar;

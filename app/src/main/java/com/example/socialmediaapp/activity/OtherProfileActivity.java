@@ -1,9 +1,7 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,14 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.MessageListActivity;
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 
 import java.util.ArrayList;
 
-public class ProfilePageOfOthers extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
+public class OtherProfileActivity extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
         GetUserData.OwnerDownloadComplete {
 
-    private Context context = ProfilePageOfOthers.this;
+    private Context context = OtherProfileActivity.this;
     private TextView userNickname;
     private TextView githubLink;
     private TextView linkedinLink;
@@ -32,7 +32,7 @@ public class ProfilePageOfOthers extends AppCompatActivity implements GetUserDat
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
 
-    private ProfilePageOfOthers instance = null;
+    private OtherProfileActivity instance = null;
     private GetUserData userDetails;
     private String memberUsername;
     private String currentUser;

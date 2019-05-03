@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;

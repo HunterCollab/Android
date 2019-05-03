@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.socialmediaapp.activity.CollabListActivity;
+import com.example.socialmediaapp.activity.ProfileActivity;
 import com.example.socialmediaapp.loopjtasks.MessagingAPI;
 import com.example.socialmediaapp.tools.GeneralTools;
 
@@ -66,7 +68,7 @@ public class ViewMessagesActivity extends AppCompatActivity implements ViewMessa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_profile:
-                Intent profIntent = new Intent(this, ProfilePage.class);
+                Intent profIntent = new Intent(this, ProfileActivity.class);
                 this.startActivity(profIntent);
                 return true;
             case R.id.collab_Nav:

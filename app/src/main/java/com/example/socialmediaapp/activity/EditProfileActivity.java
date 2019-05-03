@@ -1,8 +1,13 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.fragment.EditGithubFragment;
+import com.example.socialmediaapp.fragment.EditLinkedInFragment;
+import com.example.socialmediaapp.fragment.EditNameFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -24,7 +29,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         else if (value == 2){
             FragmentTransaction editGithub = getSupportFragmentManager().beginTransaction();
-            editGithub.replace(R.id.fragmentContainer, new EditGithubFrag());
+            editGithub.replace(R.id.fragmentContainer, new EditGithubFragment());
             editGithub.commit();
         }
         else if (value == 3){

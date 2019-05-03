@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.adapter.MessageListAdapter;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.loopjtasks.MessageModel;
 import com.example.socialmediaapp.loopjtasks.MessagingAPI;

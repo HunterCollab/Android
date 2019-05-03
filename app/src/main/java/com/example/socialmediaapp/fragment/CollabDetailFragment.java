@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +18,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.activity.EditCollabClassesActivity;
+import com.example.socialmediaapp.activity.EditCollabSkillsActivity;
+import com.example.socialmediaapp.MessageListActivity;
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.ViewMembersOfCollabActivity;
+import com.example.socialmediaapp.activity.CollabDetailActivity;
+import com.example.socialmediaapp.activity.CollabListActivity;
+import com.example.socialmediaapp.activity.EditCollabActivity;
 import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.loopjtasks.JoinDropCollab;

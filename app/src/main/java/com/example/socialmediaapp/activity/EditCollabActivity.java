@@ -1,10 +1,18 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-public class EditCollabActivity extends AppCompatActivity implements EditCollabTitleFragment.OnDataPass, EditCollabSizeFragment.OnSizePass  {
+import com.example.socialmediaapp.fragment.EditCollabDescripFragment;
+import com.example.socialmediaapp.fragment.EditCollabEndFragment;
+import com.example.socialmediaapp.fragment.EditCollabLocationFragment;
+import com.example.socialmediaapp.fragment.EditCollabSizeFragment;
+import com.example.socialmediaapp.fragment.EditCollabStartFragment;
+import com.example.socialmediaapp.fragment.EditCollabTitleFragment;
+import com.example.socialmediaapp.R;
+
+public class EditCollabActivity extends AppCompatActivity implements EditCollabTitleFragment.OnDataPass, EditCollabSizeFragment.OnSizePass {
 
     private int value = 0;
     private int size = 0;

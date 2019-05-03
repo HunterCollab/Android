@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import android.app.TimePickerDialog;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 
 import java.util.ArrayList;

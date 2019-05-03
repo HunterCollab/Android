@@ -1,9 +1,8 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -25,13 +24,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.ViewMessagesActivity;
 import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * An activity representing a list of Collabs. This activity
@@ -170,7 +170,7 @@ public class CollabListActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_profile:
-                Intent profIntent = new Intent(this, ProfilePage.class);
+                Intent profIntent = new Intent(this, ProfileActivity.class);
                 this.startActivity(profIntent);
                 return true;
             case R.id.collab_Nav:

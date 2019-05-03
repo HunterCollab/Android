@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,26 +11,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.UpdateCollabData;
 
 
-public class EditCollabTitleFragment extends Fragment implements UpdateCollabData.UpdateCollabComplete {
+public class EditCollabLocationFragment extends Fragment implements UpdateCollabData.UpdateCollabComplete {
 
-    public EditCollabTitleFragment() {
+    public EditCollabLocationFragment() {
         // Required empty public constructor
     }
 
-    OnDataPass dataPasser;
+    EditCollabTitleFragment.OnDataPass dataPasser;
     private String collabid;
-    private EditText editTitle;
-    private Button saveTitleButton;
-    private EditCollabTitleFragment instance = null;
-    private UpdateCollabData updateTitle;
+    private EditText editLocation;
+    private Button saveLocationButton;
+    private EditCollabLocationFragment instance = null;
+    private UpdateCollabData updateLocation;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        dataPasser = (OnDataPass) context;
+        dataPasser = (EditCollabTitleFragment.OnDataPass) context;
     }
 
     @Override
@@ -41,16 +42,16 @@ public class EditCollabTitleFragment extends Fragment implements UpdateCollabDat
 
         // Inflate the layout for this fragment
         instance = this;
-        View view = inflater.inflate(R.layout.fragment_edit_collab_title, container, false);
-        editTitle = (EditText) view.findViewById(R.id.editText);
-        saveTitleButton = (Button) view.findViewById(R.id.saveTitle);
-        saveTitleButton.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_edit_collab_location, container, false);
+        editLocation = (EditText) view.findViewById(R.id.editText);
+        saveLocationButton = (Button) view.findViewById(R.id.saveLocation);
+        saveLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newTitle = editTitle.getText().toString();
-                updateTitle = new UpdateCollabData(getContext(), instance);
-                updateTitle.updateCollabTitle(newTitle, collabid);
-                saveTitleButton.setEnabled(false);
+                String newLocation = editLocation.getText().toString();
+                updateLocation = new UpdateCollabData(getContext(), instance);
+                updateLocation.updateCollabLocation(newLocation, collabid);
+                saveLocationButton.setEnabled(false);
             }
         });
         return view;
@@ -66,11 +67,7 @@ public class EditCollabTitleFragment extends Fragment implements UpdateCollabDat
             Toast t = Toast.makeText(getContext(), "ERROR. TRY AGAIN.", Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
-            saveTitleButton.setEnabled(true);
+            saveLocationButton.setEnabled(true);
         }
-    }
-
-    public interface OnDataPass{
-        public String onDataPass();
     }
 }

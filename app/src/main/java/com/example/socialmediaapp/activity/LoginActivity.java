@@ -1,9 +1,7 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.loopjtasks.DoLogin;
-import com.example.socialmediaapp.loopjtasks.GetUserData;
 
 public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLoginComplete {
 

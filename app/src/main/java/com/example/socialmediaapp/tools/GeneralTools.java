@@ -1,26 +1,11 @@
 package com.example.socialmediaapp.tools;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.util.Log;
 
-import com.example.socialmediaapp.LoginActivity;
 import com.example.socialmediaapp.MainActivity;
-import com.example.socialmediaapp.config.GlobalConfig;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
-
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
-
-import static android.content.ContentValues.TAG;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class GeneralTools {
 

@@ -3,28 +3,17 @@ package com.example.socialmediaapp.loopjtasks;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.socialmediaapp.AddCollabActivity;
 import com.example.socialmediaapp.config.GlobalConfig;
 import com.example.socialmediaapp.tools.GeneralTools;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.security.Key;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;

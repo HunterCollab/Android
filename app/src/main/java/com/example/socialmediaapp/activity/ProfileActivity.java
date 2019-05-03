@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,16 +16,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.ViewMessagesActivity;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
-public class ProfilePage extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
+public class ProfileActivity extends AppCompatActivity implements GetUserData.DownloadComplete, GetUserData.DownloadProfleComplete,
         GetUserData.OwnerDownloadComplete{
 
-    private Context context = ProfilePage.this;
+    private Context context = ProfileActivity.this;
     private TextView userNickname;
     private TextView githubLink;
     private TextView linkedinLink;
@@ -35,7 +36,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
 
-    private ProfilePage instance = null;
+    private ProfileActivity instance = null;
     private Button editName;
     private Button editGit;
     private Button editLi;
@@ -157,7 +158,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_profile:
-                Intent profIntent = new Intent(this, ProfilePage.class);
+                Intent profIntent = new Intent(this, ProfileActivity.class);
                 this.startActivity(profIntent);
                 this.finish();
                 return true;
@@ -179,20 +180,20 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
 
     // send User to skills screen so they can edit
     private void sendUserToSkills() {
-        Intent skillPage = new Intent (ProfilePage.this, UserSkillsActivity.class);
+        Intent skillPage = new Intent (ProfileActivity.this, UserSkillsActivity.class);
         startActivity(skillPage);
     }
 
     // send User to classes screen so they can edit
     private void sendUserToClasses() {
-        Intent classPage = new Intent (ProfilePage.this, UserClassesActivity.class);
+        Intent classPage = new Intent (ProfileActivity.this, UserClassesActivity.class);
         startActivity(classPage);
     }
 
     // send User to editName fragment
     // bundle + key to pass parameter to EditProfileActivity.java
     private void sendUserToEditName() {
-        Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
+        Intent editProfile = new Intent (ProfileActivity.this, EditProfileActivity.class);
         Bundle x = new Bundle();
         x.putInt("key",1);
         editProfile.putExtras(x);
@@ -201,7 +202,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
 
     // send User to editGithub fragment
     private void sendUserToEditGithub() {
-        Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
+        Intent editProfile = new Intent (ProfileActivity.this, EditProfileActivity.class);
         Bundle x = new Bundle();
         x.putInt("key",2);
         editProfile.putExtras(x);
@@ -210,7 +211,7 @@ public class ProfilePage extends AppCompatActivity implements GetUserData.Downlo
 
     // send User to editLinkedIn fragment
     private void sendUserToEditLinkedIn() {
-        Intent editProfile = new Intent (ProfilePage.this, EditProfileActivity.class);
+        Intent editProfile = new Intent (ProfileActivity.this, EditProfileActivity.class);
         Bundle x = new Bundle();
         x.putInt("key",3);
         editProfile.putExtras(x);
