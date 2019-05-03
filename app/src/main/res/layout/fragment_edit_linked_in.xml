@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/customborder"
-    tools:context=".fragment.EditLinkedInFragment">
+    tools:context="com.huntercollab.app.fragment.EditLinkedInFragment">
 
     <TextView
         android:id="@+id/text1"

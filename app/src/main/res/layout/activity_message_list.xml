@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MessageListActivity">
+    tools:context="com.huntercollab.app.activity.MessageListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reyclerview_message_list"

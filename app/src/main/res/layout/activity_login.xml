@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#162A58"
-    tools:context=".activity.LoginActivity">
+    tools:context="com.huntercollab.app.activity.LoginActivity">
 
     <ImageView
         android:id="@+id/login_logo"

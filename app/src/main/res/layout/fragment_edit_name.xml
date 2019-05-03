@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/customborder"
-    tools:context=".fragment.EditNameFragment">
+    tools:context="com.huntercollab.app.fragment.EditNameFragment">
 
     <TextView
         android:id="@+id/text1"

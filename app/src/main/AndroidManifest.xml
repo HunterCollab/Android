@@ -12,63 +12,63 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.ViewMembersOfCollabActivity"
+            android:name="com.huntercollab.app.activity.ViewMembersOfCollabActivity"
             android:label="@string/title_activity_view_members_of_collab"
-            android:parentActivityName=".activity.CollabDetailActivity" />
+            android:parentActivityName="com.huntercollab.app.activity.CollabDetailActivity" />
         <activity
-            android:name=".activity.ViewMessagesActivity"
+            android:name="com.huntercollab.app.activity.ViewMessagesActivity"
             android:label="Messages"
-            android:parentActivityName=".activity.CollabDetailActivity" />
+            android:parentActivityName="com.huntercollab.app.activity.CollabDetailActivity" />
         <activity
-            android:name=".activity.MessageListActivity"
+            android:name="com.huntercollab.app.activity.MessageListActivity"
             android:label="Chatroom" />
         <activity
-            android:name=".activity.OtherProfileActivity"
-            android:parentActivityName=".activity.ViewMembersOfCollabActivity"
+            android:name="com.huntercollab.app.activity.OtherProfileActivity"
+            android:parentActivityName="com.huntercollab.app.activity.ViewMembersOfCollabActivity"
             android:label="Member Profile"
             />
         <activity
-            android:name=".activity.EditProfileActivity"
+            android:name="com.huntercollab.app.activity.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
-            android:name=".activity.EditCollabActivity"
+            android:name="com.huntercollab.app.activity.EditCollabActivity"
             android:label="Edit Collab"
             android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
-            android:name=".activity.ProfileActivity"
+            android:name="com.huntercollab.app.activity.ProfileActivity"
             android:label="Profile" />
         <activity
-            android:name=".activity.EditCollabClassesActivity"
+            android:name="com.huntercollab.app.activity.EditCollabClassesActivity"
             android:label="EditCollabClasses"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.EditCollabSkillsActivity"
+            android:name="com.huntercollab.app.activity.EditCollabSkillsActivity"
             android:label="EditCollabSkills"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.UserClassesActivity"
+            android:name="com.huntercollab.app.activity.UserClassesActivity"
             android:label="@string/title_activity_user_classes"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.AddCollabActivity"
-            android:parentActivityName=".activity.CollabListActivity" />
-        <activity android:name=".activity.CollabListActivity" />
+            android:name="com.huntercollab.app.activity.AddCollabActivity"
+            android:parentActivityName="com.huntercollab.app.activity.CollabListActivity" />
+        <activity android:name="com.huntercollab.app.activity.CollabListActivity" />
         <activity
-            android:name=".activity.CollabDetailActivity"
+            android:name="com.huntercollab.app.activity.CollabDetailActivity"
             android:label="@string/title_collab_detail"
-            android:parentActivityName=".activity.CollabListActivity">
+            android:parentActivityName="com.huntercollab.app.activity.CollabListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.socialmediaapp.activity.CollabListActivity" />
+                android:value="com.huntercollab.app.activity.CollabListActivity" />
         </activity>
         <activity
-            android:name=".activity.UserSkillsActivity"
+            android:name="com.huntercollab.app.activity.UserSkillsActivity"
             android:label="Skills"
-            android:parentActivityName=".activity.ProfileActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".MainActivity">
+            android:parentActivityName="com.huntercollab.app.activity.ProfileActivity" />
+        <activity android:name="com.huntercollab.app.activity.LoginActivity" />
+        <activity android:name="com.huntercollab.app.activity.RegisterActivity" />
+        <activity android:name="com.huntercollab.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
