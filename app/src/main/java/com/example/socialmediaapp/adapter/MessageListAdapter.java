@@ -29,7 +29,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     private MessageListAdapter instance;
 
-    MessageListAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
+    public MessageListAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
         mContext = context;
         mMessageList = messageList;
         mUserEmail = userEmail;

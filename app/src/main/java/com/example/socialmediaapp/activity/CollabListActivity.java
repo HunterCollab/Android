@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.example.socialmediaapp.ViewMessagesActivity;
 import com.example.socialmediaapp.loopjtasks.CollabModel;
 import com.example.socialmediaapp.loopjtasks.GetCollabsData;
 import com.example.socialmediaapp.loopjtasks.GetUserData;

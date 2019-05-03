@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.example.socialmediaapp.R;
 import com.example.socialmediaapp.activity.OtherProfileActivity;
+import com.example.socialmediaapp.adapter.ViewMembersAdapter;
 
 import java.util.ArrayList;
 

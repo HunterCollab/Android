@@ -20,9 +20,9 @@ import android.widget.Toast;
 
 import com.example.socialmediaapp.activity.EditCollabClassesActivity;
 import com.example.socialmediaapp.activity.EditCollabSkillsActivity;
-import com.example.socialmediaapp.MessageListActivity;
+import com.example.socialmediaapp.activity.MessageListActivity;
 import com.example.socialmediaapp.R;
-import com.example.socialmediaapp.ViewMembersOfCollabActivity;
+import com.example.socialmediaapp.activity.ViewMembersOfCollabActivity;
 import com.example.socialmediaapp.activity.CollabDetailActivity;
 import com.example.socialmediaapp.activity.CollabListActivity;
 import com.example.socialmediaapp.activity.EditCollabActivity;

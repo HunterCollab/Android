@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.socialmediaapp.activity.CollabListActivity;
-import com.example.socialmediaapp.activity.ProfileActivity;
+import com.example.socialmediaapp.R;
+import com.example.socialmediaapp.adapter.ViewMessagesAdapter;
 import com.example.socialmediaapp.loopjtasks.MessagingAPI;
 import com.example.socialmediaapp.tools.GeneralTools;
 

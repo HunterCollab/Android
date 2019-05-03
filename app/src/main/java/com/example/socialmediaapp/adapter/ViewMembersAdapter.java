@@ -1,4 +1,4 @@
-package com.example.socialmediaapp;
+package com.example.socialmediaapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.socialmediaapp.R;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class ViewMembersAdapter extends RecyclerView.Adapter<ViewMembersAdapter.
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    ViewMembersAdapter(Context context, List<String> data) {
+    public ViewMembersAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -64,7 +66,7 @@ public class ViewMembersAdapter extends RecyclerView.Adapter<ViewMembersAdapter.
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

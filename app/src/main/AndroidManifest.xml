@@ -12,19 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".ViewMembersOfCollabActivity"
+            android:name=".activity.ViewMembersOfCollabActivity"
             android:label="@string/title_activity_view_members_of_collab"
             android:parentActivityName=".activity.CollabDetailActivity" />
         <activity
-            android:name=".ViewMessagesActivity"
+            android:name=".activity.ViewMessagesActivity"
             android:label="Messages"
             android:parentActivityName=".activity.CollabDetailActivity" />
         <activity
-            android:name=".MessageListActivity"
+            android:name=".activity.MessageListActivity"
             android:label="Chatroom" />
         <activity
             android:name=".activity.OtherProfileActivity"
-            android:parentActivityName=".ViewMembersOfCollabActivity"
+            android:parentActivityName=".activity.ViewMembersOfCollabActivity"
             android:label="Member Profile"
             />
         <activity

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
-import com.example.socialmediaapp.ViewMessagesActivity;
 import com.example.socialmediaapp.loopjtasks.GetUserData;
 import com.example.socialmediaapp.tools.GeneralTools;
 
