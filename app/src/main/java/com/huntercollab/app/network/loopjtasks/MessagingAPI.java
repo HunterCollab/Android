@@ -147,6 +147,7 @@ public class MessagingAPI {
 
     public void setMessageDetails(JSONArray data){
         // parse JSON array (list of ALL chats)
+        messages = new ArrayList<>();
         for (int i = 0; i < data.length(); i++) {
             try {
                 JSONObject jsonobject = data.getJSONObject(i);

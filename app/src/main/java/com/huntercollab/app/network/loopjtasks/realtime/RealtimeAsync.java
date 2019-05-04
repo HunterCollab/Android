@@ -1,6 +1,7 @@
 package com.huntercollab.app.network.loopjtasks.realtime;
 
 import android.os.AsyncTask;
+import android.os.Message;
 
 import com.huntercollab.app.activity.MessagingActivity;
 import com.huntercollab.app.config.GlobalConfig;
@@ -46,7 +47,8 @@ public class RealtimeAsync extends AsyncTask<MessagingActivity, Void, Void> {
                 String msg = this.getNextMessage();
                 if (msg.equals("PING")) {
                     System.out.println("Received ping. Checking for new message.");
-                    //use the messagingActivity variable to fetch the messages again and update.
+                    messagingActivity.getHandlerThread().sendMessage(new Message());
+                    //messagingActivity.downloadComplete(true);
                 }
             }
         } catch (Exception e) {

@@ -1,11 +1,17 @@
 package com.huntercollab.app.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,6 +47,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     private MessagingAPI messagingAPI;
     private RealtimeAsync realtimeAync;
 
+    private Handler mHandlerThread;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +74,15 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
 
         // setting up recyclerview
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-
+        mMessageRecycler.setAdapter(mMessageAdapter);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mMessageRecycler.setHasFixedSize(true);
 
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setStackFromEnd(true);
+        this.layoutManager = mLinearLayoutManager;
         mMessageRecycler.setLayoutManager(layoutManager);
 
         // grab members from previous activity
@@ -97,6 +108,22 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
 
             }
         });
+
+        typeMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                mMessageRecycler.scrollToPosition(mMessageAdapter.getItemCount() - 1);
+            }
+        });
+
+        typeMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMessageRecycler.scrollToPosition(mMessageAdapter.getItemCount() - 1);
+            }
+        });
+
+
     }
 
     @Override
@@ -105,10 +132,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
             messages = messagingAPI.getMessages();
             Collections.reverse(messages);
 
-            mMessageAdapter = new MessagesAdapter(this, messages, user);
-            mMessageRecycler.setAdapter(mMessageAdapter);
-            mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+            mMessageAdapter.setMessages(messages);
             mMessageAdapter.notifyDataSetChanged();
+            mMessageRecycler.scrollToPosition(mMessageAdapter.getItemCount() - 1);
         }
     }
 
@@ -126,7 +152,24 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     @Override
     public void downloadComplete(Boolean success) {
         user = userDetails.getUserName();
+        mMessageAdapter.setUser(user);
         messagingAPI.retrieveChatroom(0, chatId);
+    }
+
+    public void refreshChatroom() {
+        messagingAPI.retrieveChatroom(0, chatId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHandlerThread = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                refreshChatroom();
+            }
+        };
     }
 
     @Override
@@ -137,5 +180,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         }
         this.realtimeAync.cancel(true);
         super.onStop();
+    }
+
+    public Handler getHandlerThread() {
+        return mHandlerThread;
     }
 }

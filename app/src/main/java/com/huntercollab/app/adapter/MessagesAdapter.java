@@ -31,8 +31,16 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     public MessagesAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
         mContext = context;
-        mMessageList = messageList;
+        mMessageList = messageList == null ? new ArrayList<MessageModel>() : messageList;
         mUserEmail = userEmail;
+    }
+
+    public void setUser(String mUserEmail) {
+        this.mUserEmail = mUserEmail;
+    }
+
+    public void setMessages(ArrayList<MessageModel> mMessageList) {
+        this.mMessageList = mMessageList;
     }
 
     @Override
