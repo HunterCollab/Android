@@ -28,6 +28,7 @@ public class RealtimeAsync extends AsyncTask<MessagingActivity, Void, Void> {
                 System.out.println("Auth token not found.");
                 return null;
             }
+            //System.out.println(token);
 
             socket = new Socket(GlobalConfig.HOST, GlobalConfig.RMS_PORT);
             dout = new DataOutputStream(socket.getOutputStream());

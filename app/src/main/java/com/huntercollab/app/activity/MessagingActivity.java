@@ -51,12 +51,6 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        this.realtimeAync = new RealtimeAsync();
-        //Start realtime connection
-        this.realtimeAync.execute(this);
-
         setContentView(R.layout.activity_message_list);
 
         instance = this;
@@ -158,6 +152,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         messagingAPI.retrieveChatroom(0, chatId);
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onResume() {
         super.onResume();
@@ -168,15 +163,32 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
                 refreshChatroom();
             }
         };
+        this.startRealtimeConnection();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.out.println("OnStop Called. Clearing RMS Connection.");
+        this.killRealtimeConnection();
+    }
+
+    public void startRealtimeConnection() {
+        this.killRealtimeConnection();
+        this.realtimeAync = new RealtimeAsync();
+        //Start realtime connection
+        this.realtimeAync.execute(this);
+    }
+
+    public void killRealtimeConnection() {
+        if (this.realtimeAync != null) {
+            this.realtimeAync.killConn();
+            this.realtimeAync.cancel(true);
+        }
     }
 
     @Override
     public void onStop() {
-        System.out.println("OnStop Called. Clearing RMS Connection.");
-        if (this.realtimeAync != null) {
-            this.realtimeAync.killConn();
-        }
-        this.realtimeAync.cancel(true);
         super.onStop();
     }
 

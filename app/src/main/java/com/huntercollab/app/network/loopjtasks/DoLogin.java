@@ -45,11 +45,13 @@ public class DoLogin {
                         String token = response.getString("token"); //Extract the token
                         // Retrieve cookie store for this application context.
                         PersistentCookieStore myCookieStore = new PersistentCookieStore(context.getApplicationContext());
+                        myCookieStore.clear();
                         // Create & save cookie into the cookie store.
                         BasicClientCookie newCookie = new BasicClientCookie("capstoneAuth", token);
                         newCookie.setDomain(GlobalConfig.HOST);
                         newCookie.setPath("/");
                         myCookieStore.addCookie(newCookie);
+
                         Log.i ("token", "Token successfully retrieved and saved to cookie store: " + token);
                         loginCompleteListener.loginCompleted(true, token);
                     } else {
