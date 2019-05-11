@@ -15,10 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-// TODO: REQUEST FOR ALL MESSAGES INSTEAD OF PAGES
-// TODO: IMPLEMENT PAGINATION
-// TODO: REAL-TIME MESSAGING????
-
 public class MessagesAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
