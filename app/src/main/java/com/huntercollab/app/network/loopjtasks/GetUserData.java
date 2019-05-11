@@ -27,6 +27,7 @@ public class GetUserData {
     private String github;
     private String linkedIn;
     private String userNickname;
+    private String userProfileLink;
     private Interfaces.DownloadComplete dataDownloadComplete;
     private Interfaces.DownloadProfleComplete downloadProfleComplete;
     private Interfaces.OwnerDownloadComplete ownerDownloadComplete;
@@ -44,6 +45,7 @@ public class GetUserData {
         github = new String();
         linkedIn = new String();
         userNickname = new String();
+        userProfileLink = new String();
     }
 
     public void getUserData(){
@@ -59,6 +61,7 @@ public class GetUserData {
                 setUserLinkedIn(response);
                 setUserGithub(response);
                 setUserNickname(response);
+                setUserProfile(response);
                 dataDownloadComplete.downloadComplete(true);
             }
 
@@ -83,6 +86,7 @@ public class GetUserData {
                 setUserLinkedIn(response);
                 setUserGithub(response);
                 setUserNickname(response);
+                setUserProfile(response);
                 downloadProfleComplete.downloadProfileComplete(true);
             }
 
@@ -107,6 +111,7 @@ public class GetUserData {
                 setUserLinkedIn(response);
                 setUserGithub(response);
                 setUserNickname(response);
+                setUserProfile(response);
                 ownerDownloadComplete.ownerDownloadComplete(true);
             }
 
@@ -116,6 +121,14 @@ public class GetUserData {
                 ownerDownloadComplete.ownerDownloadComplete(false);
             }
         });
+    }
+
+    private void setUserProfile(JSONObject response){
+        try {
+            userProfileLink = response.getString("profilePicture");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setUserName(JSONObject response){
@@ -180,6 +193,10 @@ public class GetUserData {
         }
     }
 
+    public String getUserProfileLink() {
+        System.out.println("I AM HERE" + userProfileLink);
+        return userProfileLink; }
+
     public String getUserNickname(){
         return userNickname;
     }
@@ -201,7 +218,6 @@ public class GetUserData {
     }
 
     public ArrayList<String> getUserSkills(){
-        System.out.println(skillStringList);
         return skillStringList;
     }
 

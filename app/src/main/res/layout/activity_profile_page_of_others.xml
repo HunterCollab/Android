@@ -29,11 +29,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/profilePicture"
+                android:layout_centerHorizontal="true"
+                />
+
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Name/Nickname"
+                android:layout_below="@+id/profilePicture"
                 android:textColor="@color/colorPrimary"
                 android:textSize="30sp"
                 android:layout_marginLeft="5dp"/>

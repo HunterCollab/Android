@@ -9,12 +9,14 @@ import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaapp.R;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.utils.Interfaces;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,9 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
     private TextView skills;
     private TextView classes;
     private Button sendUserMessage;
+    private ImageView profilePic;
 
+    private String profilePicLink = "https://i.imgur.com/EK6jPjm.png";
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
 
@@ -54,6 +58,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
         }
 
         instance = this;
+        profilePic = (ImageView) findViewById(R.id.profilePicture);
         userNickname = (TextView) findViewById(R.id.userName);
         githubLink = (TextView) findViewById(R.id.githubLink);
         linkedinLink = (TextView) findViewById(R.id.linkedinLink);
@@ -103,6 +108,11 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
             classes.setText(null);
             skillsArray = userDetails.getUserSkills();
             classesArray = userDetails.getUserClasses();
+
+            if (!userDetails.getUserProfileLink().isEmpty()){
+                profilePicLink = userDetails.getUserProfileLink();
+            }
+            Picasso.get().load(profilePicLink).into(profilePic);
 
             for(int i=0; i < skillsArray.size(); i++) {
                 skills.append(skillsArray.get(i) + "\n");

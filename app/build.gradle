@@ -49,5 +49,8 @@ dependencies {
     //Swipe View
     implementation 'com.baoyz.swipemenulistview:library:1.3.0'
 
+    // images
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }

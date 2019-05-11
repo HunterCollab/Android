@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.socialmediaapp.R;
 import com.huntercollab.app.network.loopjtasks.GetUserData;
 import com.huntercollab.app.utils.GeneralTools;
 import com.huntercollab.app.utils.Interfaces;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,7 +34,9 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
     private TextView linkedinLink;
     private TextView skills;
     private TextView classes;
+    private ImageView profilePic;
 
+    private String profilePicLink = "https://i.imgur.com/EK6jPjm.png";
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
 
@@ -54,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         setSupportActionBar(myToolbar);
 
         instance = this;
+        profilePic = (ImageView) findViewById(R.id.profilePicture);
         userNickname = (TextView) findViewById(R.id.userName);
         githubLink = (TextView) findViewById(R.id.githubLink);
         linkedinLink = (TextView) findViewById(R.id.linkedinLink);
@@ -64,9 +69,6 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         editLi = (Button) findViewById(R.id.editLI_button);
         editSkill = (Button) findViewById(R.id.editSkills_button);
         editClass = (Button) findViewById(R.id.editClasses_button);
-
-        //userDetails = new GetUserData(getApplicationContext(), instance);
-        //userDetails.getUserData();
 
         // editName Button
         editName.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +241,11 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
             classes.setText(null);
             skillsArray = userDetails.getUserSkills();
             classesArray = userDetails.getUserClasses();
+
+            if (!userDetails.getUserProfileLink().isEmpty()){
+                profilePicLink = userDetails.getUserProfileLink();
+            }
+            Picasso.get().load(profilePicLink).into(profilePic);
 
             for(int i=0; i < skillsArray.size(); i++) {
                 skills.append(skillsArray.get(i) + "\n");
