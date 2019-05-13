@@ -245,7 +245,7 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
             if (!userDetails.getUserProfileLink().isEmpty()){
                 profilePicLink = userDetails.getUserProfileLink();
             }
-            Picasso.get().load(profilePicLink).into(profilePic);
+            Picasso.get().load("https://dkdno63yk5s4u.cloudfront.net/" + profilePicLink).into(profilePic);
 
             for(int i=0; i < skillsArray.size(); i++) {
                 skills.append(skillsArray.get(i) + "\n");

@@ -195,7 +195,7 @@ public class GetUserData {
 
     public String getUserProfileLink() {
         System.out.println("I AM HERE" + userProfileLink);
-        return userProfileLink; }
+        return  userProfileLink; }
 
     public String getUserNickname(){
         return userNickname;
