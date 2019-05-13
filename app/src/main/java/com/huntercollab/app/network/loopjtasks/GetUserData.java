@@ -61,7 +61,7 @@ public class GetUserData {
                 setUserLinkedIn(response);
                 setUserGithub(response);
                 setUserNickname(response);
-                setUserProfile(response);
+                setUserProfilePic(response);
                 dataDownloadComplete.downloadComplete(true);
             }
 
@@ -86,7 +86,7 @@ public class GetUserData {
                 setUserLinkedIn(response);
                 setUserGithub(response);
                 setUserNickname(response);
-                setUserProfile(response);
+                setUserProfilePic(response);
                 downloadProfleComplete.downloadProfileComplete(true);
             }
 
@@ -111,7 +111,7 @@ public class GetUserData {
                 setUserLinkedIn(response);
                 setUserGithub(response);
                 setUserNickname(response);
-                setUserProfile(response);
+                setUserProfilePic(response);
                 ownerDownloadComplete.ownerDownloadComplete(true);
             }
 
@@ -123,7 +123,7 @@ public class GetUserData {
         });
     }
 
-    private void setUserProfile(JSONObject response){
+    private void setUserProfilePic(JSONObject response){
         try {
             userProfileLink = response.getString("profilePicture");
         } catch (JSONException e) {
@@ -194,7 +194,6 @@ public class GetUserData {
     }
 
     public String getUserProfileLink() {
-        System.out.println("I AM HERE" + userProfileLink);
         return  userProfileLink; }
 
     public String getUserNickname(){

@@ -110,7 +110,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
             classesArray = userDetails.getUserClasses();
 
             if (!userDetails.getUserProfileLink().isEmpty()){
-                profilePicLink = userDetails.getUserProfileLink();
+                profilePicLink = "https://dkdno63yk5s4u.cloudfront.net/" + userDetails.getUserProfileLink();
             }
             Picasso.get().load(profilePicLink).into(profilePic);
 
