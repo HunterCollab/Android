@@ -1,11 +1,10 @@
 package com.huntercollab.app.utils;
+import com.huntercollab.app.activity.LoginActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 
 import android.content.Context;
 import android.content.Intent;
-
-import com.huntercollab.app.MainActivity;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class GeneralTools {
 
     // restart the app
     public static void doRestart(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
         //Runtime.getRuntime().exit(0);

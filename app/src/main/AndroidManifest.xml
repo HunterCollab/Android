@@ -66,9 +66,9 @@
             android:name="com.huntercollab.app.activity.UserSkillsActivity"
             android:label="Skills"
             android:parentActivityName="com.huntercollab.app.activity.ProfileActivity" />
-        <activity android:name="com.huntercollab.app.activity.LoginActivity" />
+
         <activity android:name="com.huntercollab.app.activity.RegisterActivity" />
-        <activity android:name="com.huntercollab.app.MainActivity">
+        <activity android:name="com.huntercollab.app.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
