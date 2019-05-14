@@ -30,6 +30,7 @@ public class GeneralTools {
         return client;
     }
 
+    // Gets JWT authentication token from the server
     public static String getAuthToken(Context context) {
         PersistentCookieStore cookieStore = new PersistentCookieStore(context.getApplicationContext());
         List<Cookie> cks = cookieStore.getCookies();
@@ -41,7 +42,8 @@ public class GeneralTools {
         return null;
     }
 
-    // restart the app
+    // Logs user out and sends them back to the login screen
+    // restarts the app
     public static void doRestart(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
