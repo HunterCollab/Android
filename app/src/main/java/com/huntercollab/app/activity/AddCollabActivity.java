@@ -51,7 +51,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long dateTimeInMS;
 
-    // skill listview
+    // skill + class listview
     private ArrayAdapter<String> skillAdapter;
     private ListView skillsListView;
     private ArrayAdapter<String> classAdapter;
@@ -67,6 +67,7 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
 
         instance = this;
 
+        // toolbar + back button on top
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -99,8 +100,13 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         classAdapter = new ArrayAdapter<String>(this, R.layout.addcollab_classlistview, R.id.classView, classesArray);
         classesListView.setAdapter(classAdapter);
 
+        // user selects date and time through a dialog box
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
+
+        // when user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        // if the skill is valid, it will be added to the 'skillsArray'
+        // text box will be cleared for new entry, and list view will be updated
         addSkillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +130,9 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        // when user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        // if the class is valid, it will be added to the 'classesArray'
+        // text box will be cleared for new entry, and list view will be updated
         addClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +156,10 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-        // build JSON and send HTTP request
+        // When user clicks, takes values that the user entered and does necessary conversions (ie: time in milliseconds, etc)
+        // Checks if any fields are empty or invalid (if so, prompt user)
+        // API call to add the collaboration
+        // See: GetCollabsData.java
         confirmAddCollab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,9 +217,6 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
                     // call the API
                     addCollab = new GetCollabsData(getApplicationContext(), instance, instance);
                     addCollab.addCollab(CollabName, CollabLocation, CollabDescription, collabSizeInt, skillsArray, classesArray, dateTime, collabDurationLong);
-                    Intent collabIntent = new Intent(getApplicationContext(), CollabListActivity.class);
-                    collabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(collabIntent);
                 }
             }
         });
@@ -218,6 +227,8 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
      **** Hack to fix the issue of not showing all the items of the ListView
      **** when placed inside a ScrollView
      **** https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view ****/
+    // Takes in a ListView argument and adjusts the view accordingly whether something is added or deleted from the list view
+    // Used for classes and skills list view
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
@@ -239,7 +250,10 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         listView.setLayoutParams(params);
     }
 
-    //////////////////////////////////////////////////////// remove skill/class handler
+    // remove skill/class handler
+    // Handles removal of a unwanted skill/class
+    // Used in 'addcollab_skilllistview.xml' + 'addcollab_classlistview for ImageButton
+    // User can click button to remove
     public void removeSkillHandler(View view) {
         int positionForView = skillsListView.getPositionForView(view);
         skillsArray.remove(positionForView);
@@ -253,7 +267,6 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         classAdapter.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(classesListView);
     }
-    //////////////////////////////////////////////////////////////////////////////////
 
     // letting user select date and time
     @Override
@@ -319,9 +332,15 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    // Interface function for ASYNC HTTP request from GetCollabsData.java
+    // If collaboration is successfully added to the database, screen will close
+    // If failed to add, will show error message to user
     @Override
     public void addCollabComplete (Boolean success) {
         if (success) {
+            Intent collabIntent = new Intent(getApplicationContext(), CollabListActivity.class);
+            collabIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(collabIntent);
             finish();
         }
         else {

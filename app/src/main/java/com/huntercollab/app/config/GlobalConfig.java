@@ -6,6 +6,7 @@
 
 package com.huntercollab.app.config;
 
+// initialized base URL here
 public class GlobalConfig {
 
     public static final String HOST = "13.58.204.157";

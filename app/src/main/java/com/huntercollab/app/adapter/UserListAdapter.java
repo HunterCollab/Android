@@ -22,12 +22,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private Context mContext;
 
+    // Constructor initialized with values passed into the adapter
     public UserListAdapter(ArrayList<String> data_names, Context mContext) {
         this.data_names = data_names;
         this.mContext = mContext;
     }
 
 
+    // Inflates the views inside the activity/recycler view
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -38,6 +40,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         return holder;
     }
 
+    // Binds the views to the UI
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG, "onBindViewHolder: called.");
@@ -48,6 +51,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         data_names.remove(position);
     }
 
+    // Returns total number of items
     @Override
     public int getItemCount() {
         if (data_names != null){
@@ -58,7 +62,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     }
 
-
+    // Stores and recycles views as they are scrolled off the screen
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView className;

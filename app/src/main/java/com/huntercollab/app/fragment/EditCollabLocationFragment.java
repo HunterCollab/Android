@@ -38,12 +38,16 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Used to update the correct collaboration
         collabid = dataPasser.onDataPass();
 
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_location, container, false);
         editLocation = (EditText) view.findViewById(R.id.editText);
+
+        // API call to update the collaboration data from user input
+        // See: UpdateCollabData.java
         saveLocationButton = (Button) view.findViewById(R.id.saveLocation);
         saveLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +61,8 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
         return view;
     }
 
+    // Interface function for ASYNC HTTP request from UpdateCollabData.java
+    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

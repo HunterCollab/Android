@@ -17,6 +17,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         // grab key from previous activity
+        // and build fragments based on key
         Bundle x = getIntent().getExtras();
         int value = 0;
         if (x != null)

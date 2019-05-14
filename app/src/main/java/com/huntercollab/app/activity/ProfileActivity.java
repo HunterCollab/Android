@@ -221,8 +221,9 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
     }
 
 
-    // abstract function from GetUserData.java defined here
-    // populate profile screen with data on successful API call
+    // Interface function for ASYNC HTTP request from GetUserData.java
+    // If information is successfully received from the database, populate the screen with user information
+    // See: GetUserData.java
     @Override
     public void downloadComplete(Boolean success) {
         if (success) {

@@ -41,6 +41,8 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
 
         instance = this;
 
+        // API call to retrieve list of active conversations from the database
+        // See: MessagingAPI.java
         messages = new MessagingAPI(getApplicationContext(), instance, instance);
         messages.getListOfMessages();
 
@@ -88,6 +90,8 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
         }
     }
 
+    // User can view the conversation they click on
+    // Moves them to MessagingActivity.java
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
@@ -97,6 +101,9 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
         startActivity(viewChat);
     }
 
+    // Interface function for ASYNC HTTP request from MessagingAPI.java
+    // If list of conversations was retrieved successfully
+    // send information to ConversationAdapter to populate the recycler view for display
     @Override
     public void messageDownloadComplete(Boolean success) {
         if (success) {

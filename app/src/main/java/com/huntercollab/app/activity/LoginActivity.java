@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         needNewAccountLink =  (TextView) findViewById(R.id.register_link);
 
         // register button
+        // Sends user to RegisterActivity.java to create a new account
         needNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +49,8 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         });
 
         // login button
+        // Takes the users input values (username + password) and makes an API call to the server for login
+        // See: DoLogin.java
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +78,9 @@ public class LoginActivity extends AppCompatActivity implements DoLogin.OnDoLogi
         startActivity(collabIntent);
     }
 
-    // abstract function from DoLogin.java defined here
+    // Interface function from DoLogin.java
+    // If server notifies us of success, user is logged in and sent to the 'home' screen
+    // If login fails, user will see error message given to us by the server
     @Override
     public void loginCompleted(Boolean success, String message) {
         Log.i("received", "Success " + message);

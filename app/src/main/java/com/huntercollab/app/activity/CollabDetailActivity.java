@@ -20,7 +20,6 @@ import com.huntercollab.app.network.loopjtasks.CollabModel;
  */
 public class CollabDetailActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +47,8 @@ public class CollabDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
 
             Intent intent = getIntent();
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
+
+            // Gets parcel that was passed from CollabListActivity.java
             CollabModel collab = intent.getParcelableExtra("collab");
 
             Bundle arguments = new Bundle();
@@ -65,6 +64,8 @@ public class CollabDetailActivity extends AppCompatActivity {
             arguments.putStringArrayList("members", collab.getMembers());
             arguments.putString("collabId", collab.getCollabId());
 
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
             CollabDetailFragment fragment = new CollabDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

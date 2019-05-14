@@ -59,7 +59,7 @@ public class CollabListActivity extends AppCompatActivity
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
 
-    //spinner for dropdown
+    // spinner for drop down menu for user to select
     private Spinner spinner;
     private static final String[] paths = {"collabs", "active collabs"};
 
@@ -78,14 +78,13 @@ public class CollabListActivity extends AppCompatActivity
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        // User clicks button to open a screen to add new collaborations
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // sent to add collab screen
                 Context context = view.getContext();
                 Intent intent = new Intent(context, AddCollabActivity.class);
-
                 context.startActivity(intent);
             }
         });
@@ -98,8 +97,8 @@ public class CollabListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        //This will set up the spinner
-        //Depending on tne item selected, a different function is called
+        // This will set up the spinner
+        // Drop down menu for user to select filters for their collaboration feed
         spinner = (Spinner) findViewById(R.id.my_spinner);
         //Makes a spinnerAdapter with our custom field and list of array located in strings
         ArrayAdapter<String> spinnerAdapter =
@@ -135,7 +134,6 @@ public class CollabListActivity extends AppCompatActivity
                         if(listOfCollabs != null){
                             listOfCollabs.clear();
                         }
-                        //collabsClass.getCollabs("getRecommendedCollabs");
                         collabsClass.getCollabs(skillsArray, classesArray);
                         break;
                 }
@@ -193,6 +191,9 @@ public class CollabListActivity extends AppCompatActivity
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, listOfCollabs));
     }
 
+    // Interface function for ASYNC HTTP request from GetCollabsData.java
+    // If data is successfully retrieved from the database, RecyclerView is built with the retrieved data
+    // If request fails, let user know
     @Override
     public void getAllCollabs(Boolean success) {
         if(success){
@@ -212,11 +213,9 @@ public class CollabListActivity extends AppCompatActivity
             listOfCollabs.clear();
             listOfCollabs.add(errorHandler);
 
-            // show error message to user
             Toast t = Toast.makeText(getApplicationContext(), "Error.  Could not retrieve data.", Toast.LENGTH_LONG);
             t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
             t.show();
-
         }
 
     }
@@ -254,9 +253,11 @@ public class CollabListActivity extends AppCompatActivity
     }
 
 
-//HERE'S WHERE WE PLACE THE COSTUME VIEW FOR OUR RECYCLER VIEW ADAPTER
-//SIMILAR TO OUR ADAPTER FOR SKILLS AND CLASSES
-//FRAGMENT IS CALLED FROM HERE
+    // HERE'S WHERE WE PLACE THE COSTUME VIEW FOR OUR RECYCLER VIEW ADAPTER
+    // SIMILAR TO OUR ADAPTER FOR SKILLS AND CLASSES
+    // RecyclerView is built here to show collaborations to the user
+    // Fragment is called from here if/when user clicks 'details'
+    // moves them to CollabDetailActivity.java
 
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {

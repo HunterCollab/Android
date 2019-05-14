@@ -70,7 +70,7 @@ public class UserClassesActivity extends AppCompatActivity
         //Will be used to make the API call
         search = new DoClassSearch(getApplicationContext(), instance);
 
-        //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
+        //Maps the classes_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.classes_auto_complete);
 
         Button addClassButton = (Button) findViewById(R.id.add_class_button);
@@ -123,6 +123,9 @@ public class UserClassesActivity extends AppCompatActivity
             }
         });
 
+        // When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        // If the class is valid, it will be added to the 'classNames'
+        // Text box will be cleared for new entry, and list view will be updated
         addClassButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -150,6 +153,7 @@ public class UserClassesActivity extends AppCompatActivity
 
 
         //skills
+        // API call to retrieve user information from the database to modify user classes
         classNames = new ArrayList<String>();
         userData = new GetUserData(getApplicationContext(), instance, instance, instance);
         userData.getUserData();
@@ -170,7 +174,6 @@ public class UserClassesActivity extends AppCompatActivity
                 int pos = viewHolder.getAdapterPosition();
                 classNames.remove(pos);
                 mAdapter.notifyItemRemoved(pos);
-                System.out.println("Array: " + classNames);
 
             }
 
@@ -189,12 +192,17 @@ public class UserClassesActivity extends AppCompatActivity
 ////////////////////////////////////Update Skills/////////////////////////////////////////////////////////
 
         updateClass = new SetUserData(getApplicationContext(), instance);
+
+        // Updates the classes after user is done adding/removing them from the recycler view
+        // API call to server
+        // See: SetUserData.java
         updateClassButton = (Button) findViewById(R.id.update_class);
         updateClassButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
+                // API call to update the user's classes after they are done editing
                 updateClass.setUserClasses(classNames);
                 CharSequence message = "Classes Updated";
                 Toast t = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
@@ -207,6 +215,8 @@ public class UserClassesActivity extends AppCompatActivity
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
+    // Interface function from DoClassSearch.java
+    // Everytime API is successful in retrieving class data for the auto complete, the recycler view is updated with a new ArrayList<String>
     @Override
     public void classSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -215,13 +225,15 @@ public class UserClassesActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
+    // Interface function for ASYNC HTTP request from SetUserData.java
+    // If classes are updated successfully, the adapter is updated
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         mAdapter.notifyDataSetChanged();
-        System.out.println(message);
-
     }
 
+    // Interface function from GetUserData.java
+    // If retrieving user information is successful, recycler view is built with array of user's classes
     @Override
     public void downloadComplete(Boolean success) {
         classNames = userData.getUserClasses();

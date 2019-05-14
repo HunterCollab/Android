@@ -79,7 +79,7 @@ public class EditCollabClassesActivity extends AppCompatActivity
         //Will be used to make the API call
         search = new DoClassSearch(getApplicationContext(), instance);
 
-        //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
+        //Maps the classes_auto_complete from the activity_user_classes.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.classes_auto_complete);
 
         Button addClassButton = (Button) findViewById(R.id.add_class_button);
@@ -132,6 +132,7 @@ public class EditCollabClassesActivity extends AppCompatActivity
             }
         });
 
+        // Checks if there are duplicate/empty entries, if so, notify user
         addClassButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -173,8 +174,6 @@ public class EditCollabClassesActivity extends AppCompatActivity
                         int pos = viewHolder.getAdapterPosition();
                         classNames.remove(pos);
                         mAdapter.notifyItemRemoved(pos);
-                        System.out.println("Array: " + classNames);
-
                     }
 
                     @Override
@@ -207,6 +206,8 @@ public class EditCollabClassesActivity extends AppCompatActivity
 
     }
 
+    // Interface function from DoClassSearch.java
+    // Everytime API is successful in retrieving class data for the auto complete, the recycler view is updated
     @Override
     public void classSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -215,6 +216,9 @@ public class EditCollabClassesActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
+    // Interface function from UpdateCollabData.java
+    // If updating classes in the database is successful, notify user
+    // If updating classes fails, notify user
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

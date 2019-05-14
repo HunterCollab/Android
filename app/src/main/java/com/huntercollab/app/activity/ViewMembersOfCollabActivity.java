@@ -54,6 +54,8 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     }
 
+    // Interface function from ViewMembersAdapter.java
+    // Sends user to OtherProfileActivity.java with name of user they want to view
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)

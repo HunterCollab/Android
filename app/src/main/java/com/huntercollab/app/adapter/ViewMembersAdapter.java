@@ -65,7 +65,7 @@ public class ViewMembersAdapter extends RecyclerView.Adapter<ViewMembersAdapter.
         return mData.get(id);
     }
 
-    // allows clicks events to be caught
+    // allows clicks events to be 'caught'
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }

@@ -38,12 +38,16 @@ public class EditCollabDescripFragment extends Fragment implements UpdateCollabD
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Used to update the correct collaboration
         collabid = dataPasser.onDataPass();
 
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_description, container, false);
         editDescrip = (EditText) view.findViewById(R.id.editText);
+
+        // API call to update the collaboration data from user input
+        // See: UpdateCollabData.java
         saveDescripButton = (Button) view.findViewById(R.id.saveDescrip);
         saveDescripButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +61,8 @@ public class EditCollabDescripFragment extends Fragment implements UpdateCollabD
         return view;
     }
 
+    // Interface function for ASYNC HTTP request from UpdateCollabData.java
+    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

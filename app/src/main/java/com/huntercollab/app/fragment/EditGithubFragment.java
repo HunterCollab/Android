@@ -32,6 +32,9 @@ public class EditGithubFragment extends Fragment implements SetUserData.UpdateCo
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_github, container, false);
         editGithub = (EditText) view.findViewById(R.id.editText);
+
+        // API call to update the user's information with user input
+        // See: SetUserData.java
         saveGithubButton = (Button) view.findViewById(R.id.saveGithub);
         saveGithubButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +50,8 @@ public class EditGithubFragment extends Fragment implements SetUserData.UpdateCo
         return view;
     }
 
+    // Interface function for ASYNC HTTP request from SetUserData.java
+    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         if (success) {

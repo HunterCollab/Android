@@ -35,9 +35,11 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         Password = (EditText) findViewById(R.id.register_password);
         confirmPassword = (EditText) findViewById(R.id.register_confirm_password);
         registerButton = (Button) findViewById(R.id.register_create_account);
-        //MyLoopjTask myLoopTask = new MyLoopjTask(this, (MyLoopjTask.OnLoopComplete) this); //Not required -- At least for this page...
 
         // create account button
+        // Takes user input for username + password + confirm password
+        // API call with user input to attempt registration
+        // Checks if passwords match before attempting API call
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +69,9 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         startActivity(collabIntent);
     }
 
-    // abstract function from DoRegister.java defined here
+    // Interface function for ASYNC HTTP request from DoRegister.java
+    // If user successfully registers a new account, they are sent to the 'home' screen
+    // If user fails to register, user will be notified of 'message' from the server
     @Override
     public void registerCompleted(Boolean success, String message) {
         if (success) {

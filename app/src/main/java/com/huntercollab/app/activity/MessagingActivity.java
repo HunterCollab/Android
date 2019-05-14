@@ -1,7 +1,6 @@
 package com.huntercollab.app.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -58,13 +57,19 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         sendMessage = (Button) findViewById(R.id.button_chatbox_send);
 
         // used to grab users email and send to adapter
+        // for checks when building the recycler view for display
         userDetails = new GetUserData(getApplicationContext(), instance, null, null);
         userDetails.getUserData();
 
+        // Adapter used to display and update messages retrieved from database displayed in recycler view
+        // See: MessagesAdapter.java
         mMessageAdapter = new MessagesAdapter(getApplicationContext(), null, null);
+
+        // Used for API call to retrieve messages from the database
         messagingAPI = new MessagingAPI(getApplicationContext(), this, this);
 
         // setting up recyclerview
+        // View used to display the information retrieved from the database, view is built using the mMessageAdapter
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
         mMessageRecycler.setAdapter(mMessageAdapter);
         // use this setting to improve performance if you know that changes
@@ -83,6 +88,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
             chatId = x.getString("chatId");
 
         // send message button
+        // If field is empty, notify user
+        // API call to the database using messagingAPI
+        // See: MessagingAPI.java
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +126,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
 
     }
 
+    // Interface function for ASYNC HTTP requests from MessagingAPI.java
+    // Retrieves messages from the database and passes the data through mMessageAdapter to build the display
+    // See: MessagingAPI.java
     @Override
     public void messageDownloadComplete(Boolean success) {
         if (success) {
@@ -130,6 +141,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         }
     }
 
+    // Interface function for ASYNC HTTP request from MessagingAPI.java
+    // If sending a message is successful, we add the message to the user's screen locally
+    // See: MessagingAPI.java
     @Override
     public void messageSendComplete(Boolean success) {
         if (success) {
@@ -141,6 +155,8 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         }
     }
 
+    // Interface function for ASYNC HTTP request from GetUserData.java
+    // When userDetails is successful in retrieving the data, the user's email is set in a string, and the API is called to retrieve the chat messages
     @Override
     public void downloadComplete(Boolean success) {
         user = userDetails.getUserName();
@@ -148,6 +164,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         messagingAPI.retrieveChatroom(0, chatId);
     }
 
+    // Refreshes the chatroom when user resumes the application
     public void refreshChatroom() {
         messagingAPI.retrieveChatroom(0, chatId);
     }
@@ -173,6 +190,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         this.killRealtimeConnection();
     }
 
+    // Starts the real time connection to the server
     public void startRealtimeConnection() {
         this.killRealtimeConnection();
         this.realtimeAync = new RealtimeAsync();
@@ -180,6 +198,7 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         this.realtimeAync.execute(this);
     }
 
+    // Stops the real time connection to the server
     public void killRealtimeConnection() {
         if (this.realtimeAync != null) {
             this.realtimeAync.killConn();

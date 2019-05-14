@@ -25,20 +25,25 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     private MessagesAdapter instance;
 
+    // Constructor initialized with values passed into the adapter
     public MessagesAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
         mContext = context;
         mMessageList = messageList == null ? new ArrayList<MessageModel>() : messageList;
         mUserEmail = userEmail;
     }
 
+    // Sets logged in user into a string
+    // Used to determine if they are the sender or not and what views need to be inflated
     public void setUser(String mUserEmail) {
         this.mUserEmail = mUserEmail;
     }
 
+    // Sets messages passed into the adapter into an Arraylist
     public void setMessages(ArrayList<MessageModel> mMessageList) {
         this.mMessageList = mMessageList;
     }
 
+    // Returns the total number of messages
     @Override
     public int getItemCount() {
         return mMessageList.size();
@@ -90,6 +95,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
     }
 
+    // Stores and recycles 'sent messages' views as they are scrolled off the screen
     private class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
@@ -112,6 +118,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
     }
 
+    // Stores and recycles 'received messages' views as they are scrolled off the screen
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText, nameText;
         //ImageView profileImage;

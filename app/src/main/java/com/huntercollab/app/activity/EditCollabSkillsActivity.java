@@ -174,8 +174,6 @@ public class EditCollabSkillsActivity extends AppCompatActivity
                         int pos = viewHolder.getAdapterPosition();
                         skillNames.remove(pos);
                         mAdapter.notifyItemRemoved(pos);
-                        System.out.println("Array: " + skillNames);
-
                     }
 
                     @Override
@@ -212,7 +210,8 @@ public class EditCollabSkillsActivity extends AppCompatActivity
 
     }
 
-
+    // Interface function from DoSkillSearch.java
+    // Everytime API is successful in retrieving skill data for the auto complete, the recycler view is updated
     @Override
     public void searchSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -221,6 +220,9 @@ public class EditCollabSkillsActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
+    // Interface function from UpdateCollabData.java
+    // If updating classes in the database is successful, notify user
+    // If updating classes fails, notify user
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

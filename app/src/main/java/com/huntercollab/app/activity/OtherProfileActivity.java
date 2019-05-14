@@ -54,7 +54,6 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
         if (x != null) {
             memberUsername = x.getString("memberUsername");
             currentUser = x.getString("currentUser");
-            System.out.println(currentUser);
         }
 
         instance = this;
@@ -90,6 +89,9 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
 
     }
 
+    // Interface function for ASYNC HTTP request from GetUserData.java
+    // If information is successfully received from the database, populate the screen with user information
+    //See: GetUserData.java
     @Override
     public void downloadProfileComplete(Boolean success) {
         if (success) {

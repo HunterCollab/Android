@@ -60,11 +60,15 @@ public class EditCollabActivity extends AppCompatActivity implements EditCollabT
 
     }
 
+    // Returns collabId
+    // used in the fragment(s) to edit the correct collaboration
     @Override
     public String onDataPass() {
         return collabId;
     }
 
+    // Returns size of collab
+    // Used in "edit size of fragment" for error checking
     @Override
     public int onSizePass() {
         return size;

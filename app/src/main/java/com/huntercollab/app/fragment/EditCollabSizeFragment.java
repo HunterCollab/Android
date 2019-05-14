@@ -40,12 +40,17 @@ public class EditCollabSizeFragment extends Fragment implements UpdateCollabData
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Used to update the correct collaboration
         collabid = dataPasser.onDataPass();
 
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_edit_collab_size, container, false);
         editSize = (EditText) view.findViewById(R.id.editText);
+
+        // Checks if new size is less than current number of members, if so notify user
+        // API call to update the collaboration data from VALID user input
+        // See: UpdateCollabData.java
         saveSizeButton = (Button) view.findViewById(R.id.saveSize);
         saveSizeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +72,8 @@ public class EditCollabSizeFragment extends Fragment implements UpdateCollabData
         return view;
     }
 
+    // Interface function for ASYNC HTTP request from UpdateCollabData.java
+    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

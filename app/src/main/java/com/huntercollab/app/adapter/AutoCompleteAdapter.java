@@ -23,8 +23,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
         this.data = new ArrayList<>();
     }
 
-
-
+    // Filter results received
     @Override
     public Filter getFilter() {
         Filter skillsFilter = new Filter(){
@@ -62,6 +61,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     }
 
 
+    // Set data with filtered results
     public void setData(List<String> list) {
         data.clear();
         data.addAll(list);

@@ -124,6 +124,9 @@ public class UserSkillsActivity extends AppCompatActivity
             }
         });
 
+        // When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        // If the skill is valid, it will be added to the 'skillNames'
+        // Text box will be cleared for new entry, and view will be updated
         addSkillButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -151,7 +154,8 @@ public class UserSkillsActivity extends AppCompatActivity
 ///////////////////////////////////// Filling Recycler View //////////////////////////////////////////////////////////
 
 
-        //skills
+        // skills
+        // API call to retrieve user information from the database to modify user classes
         skillNames = new ArrayList<String>();
         userData = new GetUserData(getApplicationContext(), instance, instance, instance);
         userData.getUserData();
@@ -172,8 +176,6 @@ public class UserSkillsActivity extends AppCompatActivity
                         int pos = viewHolder.getAdapterPosition();
                         skillNames.remove(pos);
                         mAdapter.notifyItemRemoved(pos);
-                        System.out.println("Array: " + skillNames);
-
                     }
 
                     @Override
@@ -192,6 +194,7 @@ public class UserSkillsActivity extends AppCompatActivity
 
 
 
+        // API call to update the user's skills after they are done editing
         updateSkills = new SetUserData(getApplicationContext(), instance);
         updateSkillsButton = (Button) findViewById(R.id.update_skill);
         updateSkillsButton.setOnClickListener(new View.OnClickListener() {
@@ -212,12 +215,15 @@ public class UserSkillsActivity extends AppCompatActivity
     }
 
 
+    // Interface function for ASYNC HTTP request from SetUserData.java
+    // If classes are updated successfully, the adapter is updated
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         mAdapter.notifyDataSetChanged();
-        System.out.println(message);
     }
 
+    // Interface function from DoSkillSearch.java
+    // Everytime API is successful in retrieving class data for the auto complete, the view is updated with a new ArrayList<String>
     @Override
     public void searchSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -226,6 +232,8 @@ public class UserSkillsActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
+    // Interface function from GetUserData.java
+    // If retrieving user information is successful, recycler view is built with array of user's classes
     @Override
     public void downloadComplete(Boolean success) {
 

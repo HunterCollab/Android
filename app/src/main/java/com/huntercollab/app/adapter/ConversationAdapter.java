@@ -64,7 +64,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         return mData.get(id);
     }
 
-    // allows clicks events to be caught
+    // allows clicks events from user to be 'caught'
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }

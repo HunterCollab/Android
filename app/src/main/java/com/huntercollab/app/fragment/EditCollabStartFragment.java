@@ -52,6 +52,7 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Used to update the correct collaboration
         collabid = dataPasser.onDataPass();
 
         // Inflate the layout for this fragment
@@ -122,6 +123,9 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
         });
 
 
+        // Takes users new selected values and converts to milliseconds
+        // API call to update the collaboration data from user input (converted)
+        // See: UpdateCollabData.java
         saveStartButton = (Button) view.findViewById(R.id.saveStart);
         saveStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,8 +144,6 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
                     dateTimeInMS = collabDateTime.getTimeInMillis();
                     long dateTime = dateTimeInMS;
 
-                    //String newStart = Long.toString(dateTime);
-
                     updateStart = new UpdateCollabData(getContext(), instance);
                     updateStart.updateCollabStartDate(dateTime, collabid);
                     saveStartButton.setEnabled(false);
@@ -152,6 +154,8 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
         return view;
     }
 
+    // Interface function for ASYNC HTTP request from UpdateCollabData.java
+    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {
