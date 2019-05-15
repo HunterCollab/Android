@@ -47,6 +47,9 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
     private Button editSkill;
     private Button editClass;
     private long mLastClickTime = 0;
+
+    //@author: Hugh Leow
+    //@brief: Used for API call to retrieve user information from the database
     private GetUserData userDetails;
 
     @Override
@@ -69,6 +72,13 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         editLi = (Button) findViewById(R.id.editLI_button);
         editSkill = (Button) findViewById(R.id.editSkills_button);
         editClass = (Button) findViewById(R.id.editClasses_button);
+
+        //Button edit <x>
+        //@author: Hugh Leow
+        //@brief:
+        //User can click on any of the edit buttons and will be sent to another activity to update their information
+        //@pre condition: User is viewing their own profile
+        //@post condition: User is sent to a fragment to edit the field they want
 
         // editName Button
         editName.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +157,11 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         linkedinLink.requestLayout();
     }
 
-    // menu navigation
+    //@author: Hugh Leow
+    //@brief: Opens the navigation menu for user to use
+    //@pre condition: No menu for user to navigate the application
+    //@post condition: Menu for user to navigate the application
+    //@return: Boolean 'true' or 'false' if selected item is valid
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -180,20 +194,22 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         }
     }
 
-    // send User to skills screen so they can edit
+    //@author: Hugh Leow
+    //@brief: User is sent to UserSkillsActivity.java to update their skills
     private void sendUserToSkills() {
         Intent skillPage = new Intent (ProfileActivity.this, UserSkillsActivity.class);
         startActivity(skillPage);
     }
 
-    // send User to classes screen so they can edit
+    //@author: Hugh Leow
+    //@brief: User is sent to UserClassesActivity.java to update their classes
     private void sendUserToClasses() {
         Intent classPage = new Intent (ProfileActivity.this, UserClassesActivity.class);
         startActivity(classPage);
     }
 
-    // send User to editName fragment
-    // bundle + key to pass parameter to EditProfileActivity.java
+    //@author: Hugh Leow
+    //@brief: User is sent to EditProfileActivity.java with a key to determine what they are editing
     private void sendUserToEditName() {
         Intent editProfile = new Intent (ProfileActivity.this, EditProfileActivity.class);
         Bundle x = new Bundle();
@@ -202,7 +218,8 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         startActivityForResult(editProfile, 1);
     }
 
-    // send User to editGithub fragment
+    //@author: Hugh Leow
+    //@brief: User is sent to EditProfileActivity.java with a key to determine what they are editing
     private void sendUserToEditGithub() {
         Intent editProfile = new Intent (ProfileActivity.this, EditProfileActivity.class);
         Bundle x = new Bundle();
@@ -211,7 +228,8 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
         startActivity(editProfile);
     }
 
-    // send User to editLinkedIn fragment
+    //@author: Hugh Leow
+    //@brief: User is sent to EditProfileActivity.java with a key to determine what they are editing
     private void sendUserToEditLinkedIn() {
         Intent editProfile = new Intent (ProfileActivity.this, EditProfileActivity.class);
         Bundle x = new Bundle();
@@ -221,9 +239,20 @@ public class ProfileActivity extends AppCompatActivity implements Interfaces.Dow
     }
 
 
-    // Interface function for ASYNC HTTP request from GetUserData.java
-    // If information is successfully received from the database, populate the screen with user information
-    // See: GetUserData.java
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetUserData.java
+    //If information is successfully received from the database, populate the screen with user information
+    //Name
+    //Github (converted into a link)
+    //LinkedIn (converted into a link)
+    //Classes
+    //Skills
+    //Profile Picture (using Picasso)
+    //See: GetUserData.java
+    //@params: [Boolean success]
+    //@pre condition: User information not retrieved from the database
+    //@post condition: User information retrieved if success = 'true'
     @Override
     public void downloadComplete(Boolean success) {
         if (success) {

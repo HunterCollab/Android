@@ -16,14 +16,21 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     private List<String> data;
     //private final Context context;
 
-    //Constructor that initializes an instance of the Class with the values of Context and resources being passed down.
+    //@author: Edwin Quintuna
+    //@brief:
+    //Constructor that initializes an instance of the Class with the values of Context and resources being passed
+    //@params: [Context context] [int resource]
     public AutoCompleteAdapter(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
         //this.context = context;
         this.data = new ArrayList<>();
     }
 
-    // Filter results received
+    //@author: Edwin Quintuna
+    //@brief: Filter results received
+    //@pre condition: Results retrieved not filtered to the user's input
+    //@post condition: Results filtered based on user's input
+    //@return: Filtered results
     @Override
     public Filter getFilter() {
         Filter skillsFilter = new Filter(){
@@ -61,14 +68,18 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     }
 
 
-    // Set data with filtered results
+    //@author: Edwin Quintuna
+    //@brief: Set data with filtered results
+    //@params: [List<String> list]
     public void setData(List<String> list) {
         data.clear();
         data.addAll(list);
     }
 
     //Key word @Override will override tha method from its superclass with the same name.
-    //Will return the number of items in the array ArrayList<String>
+    //@author: Edwin Quintuna
+    //@brief: Returns the # of items in the data set
+    //@return: Int number of items in the dataset
     @Override
     public int getCount()
     {
@@ -76,7 +87,9 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
     }
 
     //@Nullable will allow a method that should return a string to be able to return a string
-    //Uses the position of an item in the array to return the item.
+    //@author: Edwin Quintuna
+    //@brief: Returns the item wanted when user clicks on it
+    //@return: String inside the list that the user clicks into the text box
     @Nullable
     @Override
     public String getItem(int position)

@@ -67,9 +67,17 @@ public class UserClassesActivity extends AppCompatActivity
 
 ///////////////////////////////////// Auto Complete //////////////////////////////////////////////////////////
 
-        //Will be used to make the API call
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Used for API call to the database to search for classes
+        //See: DoClassSearch.java
         search = new DoClassSearch(getApplicationContext(), instance);
 
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Displays the auto complete text to the user using 'search'
+        //Character limit until API call
+        //Uses the AutoCompleteAdapter to change the list of data retrieved from the API call
         //Maps the classes_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.classes_auto_complete);
 
@@ -123,9 +131,13 @@ public class UserClassesActivity extends AppCompatActivity
             }
         });
 
-        // When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
-        // If the class is valid, it will be added to the 'classNames'
-        // Text box will be cleared for new entry, and list view will be updated
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        //If the class is valid, it will be added to the 'classNames'
+        //Text box will be cleared for new entry, and view will be updated
+        //@pre condition: Class is in text box, not added to array
+        //@post condition: Class is added to array, text box cleared
         addClassButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -160,6 +172,10 @@ public class UserClassesActivity extends AppCompatActivity
 
 
         /////////////////////////Delete an Item from the Recycler View///////////////////////////////
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief: Used to remove a class with swipe function
+        //@pre condition: Class is inside the recycler view
+        //@post condition: Class is removed from the recycler view and the array
         itemTouchHelperCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -191,11 +207,17 @@ public class UserClassesActivity extends AppCompatActivity
 
 ////////////////////////////////////Update Skills/////////////////////////////////////////////////////////
 
+        //@author: Hugh Leow
+        //@brief: API call to update the user's classes after they are done editing
         updateClass = new SetUserData(getApplicationContext(), instance);
 
-        // Updates the classes after user is done adding/removing them from the recycler view
-        // API call to server
-        // See: SetUserData.java
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Updates the classes after user is done adding/removing them from the recycler view
+        //API call to server
+        //See: SetUserData.java
+        //@pre condition: Classes not updated in the database
+        //@post condition: Request sent to update database with new information
         updateClassButton = (Button) findViewById(R.id.update_class);
         updateClassButton.setOnClickListener(new View.OnClickListener() {
 
@@ -215,8 +237,13 @@ public class UserClassesActivity extends AppCompatActivity
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    // Interface function from DoClassSearch.java
-    // Everytime API is successful in retrieving class data for the auto complete, the recycler view is updated with a new ArrayList<String>
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function from DoClassSearch.java
+    //Everytime API is successful in retrieving class data for the auto complete, the view is updated with a new ArrayList<String>
+    //@params: [ArrayList<String> message]
+    //@pre condition: Autocomplete is empty
+    //@post condition: Autocomplete is filled with relevant data
     @Override
     public void classSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -225,17 +252,29 @@ public class UserClassesActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    // Interface function for ASYNC HTTP request from SetUserData.java
-    // If classes are updated successfully, the adapter is updated
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from SetUserData.java
+    //If classes are updated successfully, the adapter is updated
+    //@params: [Boolean success, String message]
+    //@pre condition: User classes not updated in database
+    //@post condition: User classes is updated in database if success = 'true'
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         mAdapter.notifyDataSetChanged();
     }
 
-    // Interface function from GetUserData.java
-    // If retrieving user information is successful, recycler view is built with array of user's classes
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function from GetUserData.java
+    //If retrieving user information is successful, recycler view is built with array of user's classes
+    //@params: [Booleans success]
+    //@pre condition: User classes not retrieved from database
+    //@post condition: User classes retrieved from database if success = 'true'
     @Override
     public void downloadComplete(Boolean success) {
+        //@author: Hugh Leow
+        //@brief: API call to retrieve user information from the database to modify user classes
         classNames = userData.getUserClasses();
         recyclerView = (RecyclerView) findViewById(R.id.classes_recycler_view);
         mAdapter = new UserListAdapter(classNames, this);

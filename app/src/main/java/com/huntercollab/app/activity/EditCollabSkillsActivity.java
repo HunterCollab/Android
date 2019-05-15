@@ -76,9 +76,18 @@ public class EditCollabSkillsActivity extends AppCompatActivity
         skillNames = skillsArray;
 
 ///////////////////////////////////// Auto Complete ////////////////////////////////////////////////////////////////
-        //Will be used to make the API call
+
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Used for API call to the database to search for skills
+        //See: DoSkillSearch.java
         search = new DoSkillSearch(getApplicationContext(), instance);
 
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Displays the auto complete text to the user using 'search'
+        //Character limit until API call
+        //Uses the AutoCompleteAdapter to change the list of data retrieved from the API call
         //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.skill_auto_complete);
 
@@ -132,6 +141,13 @@ public class EditCollabSkillsActivity extends AppCompatActivity
             }
         });
 
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        //If the skill is valid, it will be added to the 'skillNames'
+        //Text box will be cleared for new entry, and view will be updated
+        //@pre condition: Skill is in text box, not added to array
+        //@post condition: Skill is added to the array, text box cleared
         addSkillButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -160,6 +176,10 @@ public class EditCollabSkillsActivity extends AppCompatActivity
 
 
         /////////////////////////Delete an Item from the Recycler View///////////////////////////////
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief: Used to remove a skill with swipe function
+        //@pre condition: Skill is inside the recycler view
+        //@post condition: Skill is removed from the recycler view and the array
         itemTouchHelperCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                     @Override
@@ -194,7 +214,13 @@ public class EditCollabSkillsActivity extends AppCompatActivity
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////Update Skills/////////////////////////////////////////////////////////
-
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Updates the skills after user is done adding/removing them from the recycler view
+        //API call to the server
+        //See: UpdateCollabData.java
+        //@pre condition: Skills not updated in the database
+        //@post condition: Request sent to update database with new information
         updateSkills = new UpdateCollabData(getApplicationContext(), instance);
         updateSkillsButton = (Button) findViewById(R.id.update_skill);
         updateSkillsButton.setOnClickListener(new View.OnClickListener() {
@@ -210,8 +236,13 @@ public class EditCollabSkillsActivity extends AppCompatActivity
 
     }
 
-    // Interface function from DoSkillSearch.java
-    // Everytime API is successful in retrieving skill data for the auto complete, the recycler view is updated
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function from DoSkillSearch.java
+    //Everytime API is successful in retrieving skill data for the auto complete, the recycler view is updated with new ArrayList<String>
+    //@params: [ArrayList<String> message]
+    //@pre condition: Autocomplete is empty
+    //@post condition: Autocomplete is filled with relevant data
     @Override
     public void searchSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -220,9 +251,14 @@ public class EditCollabSkillsActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    // Interface function from UpdateCollabData.java
-    // If updating classes in the database is successful, notify user
-    // If updating classes fails, notify user
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function for ASYNC HTTP request from UpdateCollabData.java
+    //If updating classes in the database is successful, notify user
+    //If updating classes fails, notify user
+    //@params: [Boolean success]
+    //@pre condition: Collaboration not updated in database
+    //@post condition: Collaboration is updated in database if success = 'true'
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

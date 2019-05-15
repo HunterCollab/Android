@@ -48,9 +48,18 @@ public class CollabDetailActivity extends AppCompatActivity {
 
             Intent intent = getIntent();
 
-            // Gets parcel that was passed from CollabListActivity.java
+            //@author: Hugh Leow & Edwin Quintuna
+            //@brief:
+            //Gets parcel that was passed from CollabListActivity.java
+            //@pre condition: No collaboration data
+            //@post condition: Collaboration data in object 'collab'
             CollabModel collab = intent.getParcelableExtra("collab");
 
+            //@author: Hugh Leow & Edwin Quintuna
+            //@brief:
+            //Puts values from the parcel into a bundle for the fragment transaction
+            //@pre condition: Collaboration data isolated in variables
+            //@post condition: Collaboration data inside a new bundle to create fragment
             Bundle arguments = new Bundle();
             arguments.putString("description", collab.getDescription());
             arguments.putString("title", collab.getTitle());
@@ -64,8 +73,12 @@ public class CollabDetailActivity extends AppCompatActivity {
             arguments.putStringArrayList("members", collab.getMembers());
             arguments.putString("collabId", collab.getCollabId());
 
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
+            //@author: Hugh Leow & Edwin Quintuna
+            //@brief:
+            //Create fragment and add it to the activity using a fragment transaction
+            //See: CollabDetailFragment.java
+            //@pre condition: No fragment to display the collaboration
+            //@post condition: Fragment created to display collaboration data
             CollabDetailFragment fragment = new CollabDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

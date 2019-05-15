@@ -36,10 +36,13 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         confirmPassword = (EditText) findViewById(R.id.register_confirm_password);
         registerButton = (Button) findViewById(R.id.register_create_account);
 
-        // create account button
-        // Takes user input for username + password + confirm password
-        // API call with user input to attempt registration
-        // Checks if passwords match before attempting API call
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Takes user input for username + password + confirm password
+        //API call with user input to attempt registration
+        //Checks if passwords match before attempting API call
+        //@pre condition: User is not registered
+        //@post condition: Request for user to register new account
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,9 +72,14 @@ public class RegisterActivity extends AppCompatActivity implements DoRegister.On
         startActivity(collabIntent);
     }
 
-    // Interface function for ASYNC HTTP request from DoRegister.java
-    // If user successfully registers a new account, they are sent to the 'home' screen
-    // If user fails to register, user will be notified of 'message' from the server
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function for ASYNC HTTP request from DoRegister.java
+    //If user successfully registers a new account, they are sent to the 'home' screen
+    //If user fails to register, user will be notified of 'message' from the server
+    //@params: [Boolean success] [String message]
+    //@pre condition: User is not registered
+    //@post condition: User is registered if success = 'true', or if success = 'false' then toast will be shown with error 'message'
     @Override
     public void registerCompleted(Boolean success, String message) {
         if (success) {

@@ -38,7 +38,8 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Used to update the correct collaboration
+        //@author: Hugh Leow
+        //@brief: Used to update the correct collaboration
         collabid = dataPasser.onDataPass();
 
         // Inflate the layout for this fragment
@@ -46,8 +47,12 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
         View view = inflater.inflate(R.layout.fragment_edit_collab_location, container, false);
         editLocation = (EditText) view.findViewById(R.id.editText);
 
-        // API call to update the collaboration data from user input
-        // See: UpdateCollabData.java
+        //@author: Hugh Leow
+        //@brief:
+        //API call to update the collaboration data from user input
+        //See: UpdateCollabData.java
+        //@pre condition: New information not updated in database
+        //@post condition: Request to update database with new information
         saveLocationButton = (Button) view.findViewById(R.id.saveLocation);
         saveLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +66,13 @@ public class EditCollabLocationFragment extends Fragment implements UpdateCollab
         return view;
     }
 
-    // Interface function for ASYNC HTTP request from UpdateCollabData.java
-    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from UpdateCollabData.java
+    //If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@params: [Boolean success]
+    //@pre condition: New information not updated in database
+    //@post condition: Database updated with new information if success = 'true'
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

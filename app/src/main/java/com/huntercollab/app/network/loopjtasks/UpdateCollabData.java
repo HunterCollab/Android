@@ -26,11 +26,25 @@ public class UpdateCollabData {
     private Context context;
     private UpdateCollabComplete updateCollabListener;
 
+    //@author: Hugh Leow
+    //@brief: Constructor with listeners to pass Boolean 'true' or 'false' for API call to the activity
+    //@params: [Context context] [UpdateCollabComplete updateCollabListener]
     public UpdateCollabData(Context context, UpdateCollabComplete updateCollabListener){
         this.context = context;
         this.updateCollabListener = updateCollabListener;
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration title
+    //Takes the newTitle and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [String newTitle] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabTitle(String newTitle, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -64,6 +78,17 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration size
+    //Takes the newSize and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [String newSize] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabSize(int newSize, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -97,6 +122,17 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration description
+    //Takes the newDescription and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [String newDescription] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabDescription(String newDescription, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -130,6 +166,17 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration location
+    //Takes the newLocation and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [String newLocation] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabLocation(String newLocation, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -163,6 +210,17 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration start date and time
+    //Takes the newStartDate and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [long newStartDate] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabStartDate(long newStartDate, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -196,6 +254,17 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration end date and time
+    //Takes the newDuration and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [long newDuration] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabEndDate(long newDuration, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -229,6 +298,17 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration skills requested
+    //Takes the skillList and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [ArrayList<String> skillList] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabSkills(ArrayList<String> skillList, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -269,6 +349,17 @@ public class UpdateCollabData {
 
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to update the collaboration classes requested
+    //Takes the classList and collabId parameter and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [ArrayList<String> classList] [String collabId]
+    //@pre condition: Request not sent to server to update collab info
+    //@post condition: Request sent to server, receive response for interface
     public void updateCollabClasses(ArrayList<String> classList, String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -308,6 +399,19 @@ public class UpdateCollabData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function to pass Boolean:
+    //EditCollabDescripFragment.java
+    //EditCollabEndFragment.java
+    //EditCollabLocationFragment.java
+    //EditCollabSizeFragment.java
+    //EditCollabStartFragment.java
+    //EditCollabTitleFragment.java
+    //EditCollabClassesActivity.java
+    //EditCollabSkillsActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface UpdateCollabComplete {
 
         public void updateCollabComplete (Boolean success);

@@ -32,6 +32,9 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
 
     private String user = "";
     private String chatId;
+
+    //@author: Hugh Leow
+    //@brief: Array that holds the message objects retrieved from the database
     private ArrayList<MessageModel> messages = new ArrayList<>();
 
     private String messageToSend;
@@ -56,22 +59,32 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         typeMessage = (EditText) findViewById(R.id.edittext_chatbox);
         sendMessage = (Button) findViewById(R.id.button_chatbox_send);
 
-        // used to grab users email and send to adapter
-        // for checks when building the recycler view for display
+        //@author: Hugh Leow
+        //@brief:
+        //Used for API call for current user data
+        //for checks when building the recycler view for display
+        //See: GetUserData.java
         userDetails = new GetUserData(getApplicationContext(), instance, null, null);
         userDetails.getUserData();
 
-        // Adapter used to display and update messages retrieved from database displayed in recycler view
-        // See: MessagesAdapter.java
+        //@author: Hugh Leow
+        //@brief:
+        //Adapter used to display and update messages retrieved from database displayed in recycler view
+        //See: MessagesAdapter.java
         mMessageAdapter = new MessagesAdapter(getApplicationContext(), null, null);
 
-        // Used for API call to retrieve messages from the database
+        //@author: Hugh Leow
+        //@brief:
+        //Used for API call to retrieve messages from the database
+        //See: MessagingAPI.java
         messagingAPI = new MessagingAPI(getApplicationContext(), this, this);
 
-        // setting up recyclerview
-        // View used to display the information retrieved from the database, view is built using the mMessageAdapter
+        //@author: Hugh Leow
+        //@brief:
+        //View used to display the information retrieved from the database, view is built using the mMessageAdapter
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
         mMessageRecycler.setAdapter(mMessageAdapter);
+
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mMessageRecycler.setHasFixedSize(true);
@@ -87,10 +100,14 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         if (x != null)
             chatId = x.getString("chatId");
 
-        // send message button
-        // If field is empty, notify user
-        // API call to the database using messagingAPI
-        // See: MessagingAPI.java
+        //@author: Hugh Leow
+        //@brief:
+        //Used to send message to database
+        //If field is empty, notify user
+        //API call to the database using messagingAPI
+        //See: MessagingAPI.java
+        //@pre condition: Message is in text box, no request sent
+        //@post condition: Request sent to send message, text box cleared
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,9 +143,14 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
 
     }
 
-    // Interface function for ASYNC HTTP requests from MessagingAPI.java
-    // Retrieves messages from the database and passes the data through mMessageAdapter to build the display
-    // See: MessagingAPI.java
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from MessagingAPI.java
+    //If retrieving messages from the database is successful, passes the data through mMessageAdapter to build the display
+    //See: MessagingAPI.java
+    //@params: [Boolean success]
+    //@pre condition: Request for messages not retrieved
+    //@post condition: Messages retrieved successfully for chatroom if success = 'true'
     @Override
     public void messageDownloadComplete(Boolean success) {
         if (success) {
@@ -141,9 +163,14 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         }
     }
 
-    // Interface function for ASYNC HTTP request from MessagingAPI.java
-    // If sending a message is successful, we add the message to the user's screen locally
-    // See: MessagingAPI.java
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from MessagingAPI.java
+    //If sending a message is successful, we add the message to the user's screen locally
+    //See: MessagingAPI.java
+    //@params: [Boolean success]
+    //@pre condition: User message not sent to database
+    //@post condition: Message sent to database/chatroom if success = true'
     @Override
     public void messageSendComplete(Boolean success) {
         if (success) {
@@ -155,8 +182,13 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         }
     }
 
-    // Interface function for ASYNC HTTP request from GetUserData.java
-    // When userDetails is successful in retrieving the data, the user's email is set in a string, and the API is called to retrieve the chat messages
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetUserData.java
+    //When userDetails is successful in retrieving the data, the user's email is set in a string, and the API is called to retrieve the chat messages
+    //@params: [Boolean success]
+    //@pre condition: User data not retrieved
+    //@post condition: User data retrieved if success = 'true'
     @Override
     public void downloadComplete(Boolean success) {
         user = userDetails.getUserName();
@@ -164,7 +196,10 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         messagingAPI.retrieveChatroom(0, chatId);
     }
 
-    // Refreshes the chatroom when user resumes the application
+    //@author: Hugh Leow
+    //@brief: Refreshes the chatroom when user resumes the application
+    //@pre condition: Chatroom not up to date
+    //@post condition: Chatroom is up to date
     public void refreshChatroom() {
         messagingAPI.retrieveChatroom(0, chatId);
     }
@@ -190,7 +225,10 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         this.killRealtimeConnection();
     }
 
-    // Starts the real time connection to the server
+    //@author: Hugh Leow & Ram Vakada
+    //@brief: Starts the real time connection to the server
+    //@pre condition: Connection to real time server not established
+    //@post condition: Connection to real time server established
     public void startRealtimeConnection() {
         this.killRealtimeConnection();
         this.realtimeAync = new RealtimeAsync();
@@ -198,7 +236,10 @@ public class MessagingActivity extends AppCompatActivity implements MessagingAPI
         this.realtimeAync.execute(this);
     }
 
-    // Stops the real time connection to the server
+    //@author: Hugh Leow & Ram Vakada
+    //@brief: Stops the real time connection to the server
+    //@pre condition: Connection to the real time server is open
+    //@post condition: Connection to the real time server is closed
     public void killRealtimeConnection() {
         if (this.realtimeAync != null) {
             this.realtimeAync.killConn();

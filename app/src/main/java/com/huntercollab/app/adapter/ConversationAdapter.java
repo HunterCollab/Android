@@ -17,33 +17,47 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    // data is passed into the constructor
+    //@author: Hugh Leow
+    //@brief: Data is passed into the constructor in order to apply functions
+    //@params: [Context context] [List<String> data]
     public ConversationAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
 
-    // inflates the row layout from xml when needed
+    //@author: Hugh Leow
+    //@brief: Inflates the row layout from view_messages_item.xml when needed
+    //@params: [ViewGroup parent] [int viewType]
+    //@pre condition: row not inflated for the message item
+    //@post condition: row inflated for the message item
+    //@return: ViewHolder with new inflated row layout added
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.view_messages_item, parent, false);
         return new ViewHolder(view);
     }
 
-    // binds the data to the TextView in each row
+    //@author: Hugh Leow
+    //@brief: Binds data to TextView for each row
+    //@params: [ViewHolder holder] [int position]
+    //@pre condition: views are not binded to the view holder
+    //@post condition: views are binded to the view holder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String names = mData.get(position);
         holder.myTextView.setText(names);
     }
 
-    // total number of rows
+    //@author: Hugh Leow
+    //@brief: Returns total number of items in the List
+    //@return: int for total number of active conversations
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
-    // stores and recycles views as they are scrolled off screen
+    //@author: Hugh Leow
+    //@brief: Stores and recycles views as they are scrolled off the screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
 
@@ -64,7 +78,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         return mData.get(id);
     }
 
-    // allows clicks events from user to be 'caught'
+    //@author: Hugh Leow
+    //@brief: Allows click events by the user to be caught
+    //@params: [ItemClickListener itemClickListener]
+    //@pre condition: User has not clicked anything
+    //@post condition: When user clicks something in the view, it is registered and action is taken
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }

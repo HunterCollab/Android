@@ -33,8 +33,12 @@ public class EditNameFragment extends Fragment implements SetUserData.UpdateComp
         View view = inflater.inflate(R.layout.fragment_edit_name, container, false);
         editName = (EditText) view.findViewById(R.id.editText);
 
-        // API call to update the user's information with user input
-        // See: SetUserData.java
+        //@author: Hugh Leow
+        //@brief:
+        //API call to update the user's information with user input
+        //See: SetUserData.java
+        //@pre condition: New information not updated in database
+        //@post condition: Request to update database with new information
         saveNameButton = (Button) view.findViewById(R.id.saveName);
         saveNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +52,13 @@ public class EditNameFragment extends Fragment implements SetUserData.UpdateComp
         return view;
     }
 
-    // Interface function for ASYNC HTTP request from SetUserData.java
-    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@author: Hugh Leow
+    //@brief
+    //Interface function for ASYNC HTTP request from SetUserData.java
+    //If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@params: [Boolean success] [String message]
+    //@pre condition: New information not updated in database
+    //@post condition: Database updated with new information if success = 'true'
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         if (success) {

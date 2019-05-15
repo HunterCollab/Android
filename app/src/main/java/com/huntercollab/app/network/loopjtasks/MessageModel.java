@@ -6,6 +6,10 @@ public class MessageModel {
     private String message;
     private long time;
 
+    //@author: Hugh Leow
+    //@brief: Constructor for Messages using the parameters given
+    //@params:
+    //[String sender] [String message] [long time] [String displayName]
     public MessageModel (String sender, String message, long time, String displayName){
         this.sender = sender;
         this.message = message;

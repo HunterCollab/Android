@@ -41,11 +41,15 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
 
         instance = this;
 
-        // API call to retrieve list of active conversations from the database
-        // See: MessagingAPI.java
+        //@author: Hugh Leow
+        //@brief:
+        //API call to retrieve list of active conversations from the database
+        //See: MessagingAPI.java
         messages = new MessagingAPI(getApplicationContext(), instance, instance);
         messages.getListOfMessages();
 
+        //@author: Hugh Leow
+        //@brief: Recycler view to display the list of active conversations inside 'messages'
         // setting up recyclerview
         recyclerView = (RecyclerView) findViewById(R.id.viewMessages_recycler_view);
 
@@ -57,7 +61,11 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
 
     }
 
-    // menu navigation
+    //@author: Hugh Leow
+    //@brief: Opens the navigation menu for user to use
+    //@pre condition: No menu for user to navigate the application
+    //@post condition: Menu for user to navigate the application
+    //@return: Boolean 'true' or 'false' if selected item is valid
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -90,8 +98,13 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
         }
     }
 
-    // User can view the conversation they click on
-    // Moves them to MessagingActivity.java
+    //@author: Hugh Leow
+    //@brief:
+    //User can view the conversation they click on
+    //Moves them to MessagingActivity.java
+    //@params: [View view] [int position]
+    //@pre condition: User sees list of active conversations, but not the conversation itself
+    //@post condition: User is moved to another screen to view all the messages of the conversation they click
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)
@@ -101,9 +114,13 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
         startActivity(viewChat);
     }
 
-    // Interface function for ASYNC HTTP request from MessagingAPI.java
-    // If list of conversations was retrieved successfully
-    // send information to ConversationAdapter to populate the recycler view for display
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from MessagingAPI.java
+    //If list of conversations was retrieved successfully, send information to ConversationAdapter to populate the recycler view for display
+    //@params: [Boolean success]
+    //@pre condition: List of active conversations have not been retrieved
+    //@post condition: List of active conversations retrieved if success = 'true'
     @Override
     public void messageDownloadComplete(Boolean success) {
         if (success) {

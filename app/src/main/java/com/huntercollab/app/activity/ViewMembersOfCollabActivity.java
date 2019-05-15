@@ -35,6 +35,8 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
             currentUser = x.getString("currentUser");
         }
 
+        //@author: Hugh Leow
+        //@brief: View to display the members of the collaboration
         // setting up recyclerview
         recyclerView = (RecyclerView) findViewById(R.id.viewMembers_recycler_view);
 
@@ -54,8 +56,13 @@ public class ViewMembersOfCollabActivity extends AppCompatActivity implements Vi
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     }
 
-    // Interface function from ViewMembersAdapter.java
-    // Sends user to OtherProfileActivity.java with name of user they want to view
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function from ViewMembersAdapter.java
+    //Sends user to OtherProfileActivity.java with name of user they want to view
+    //@params: [View view] [int position]
+    //@pre condition: User sees list of members in collaboration
+    //@post condition: User is moved to screen to view the profile of a specific user
     @Override
     public void onItemClick(View view, int position) {
         //mAdapter.getItem(position)

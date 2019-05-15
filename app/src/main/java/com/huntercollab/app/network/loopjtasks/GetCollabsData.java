@@ -28,6 +28,11 @@ public class GetCollabsData {
     private AddCollabComplete addCollabListener;
     private ArrayList<CollabModel> collabs;
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Constructor with multiple listeners for different API calls
+    //Listeners pass Boolean to the activity that needs it to check if request was successful
+    //@params: [Context context] [GetCollabDataComplete listener] [AddCollabComplete addCollabListener]
     public GetCollabsData(Context context, GetCollabDataComplete listener, AddCollabComplete addCollabListener){
         this.context = context;
         this.listener = listener;
@@ -35,6 +40,18 @@ public class GetCollabsData {
         collabs = new ArrayList<>();
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Used for the spinner in CollabListActivity.java
+    //Takes in a 'collabType' parameter and sends the request to the server
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP GET request, receives a JSON from the server
+    //Returns Boolean 'true' or false' to the interface
+    //See: CollabListActivity.java
+    //If request is successful, build the dataset with public void setCollabDetails(JSONArray collabData)
+    //@params: [String collabType]
+    //@pre condition: No collaborations retrieved from database
+    //@post condition: Collaborations retrieved from database based on parameter
     public void getCollabs(String collabType){
 
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
@@ -57,7 +74,19 @@ public class GetCollabsData {
 
     }
 
-    // temp for recommended collabs
+    //@author: Hugh Leow
+    //@brief:
+    //Used for the spinner in CollabListActivity.java for recommended collaborations
+    //Takes in the user's 'skills' and 'classes' as arguments and sends request to the server
+    //'skills' and 'classes' sent as JSONArrays inside a JSONObject
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends the JSONObject to the server
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: CollabListActivity.java
+    //If request is successful, build the dataset with public void setCollabDetails(JSONArray collabData)
+    //@params: [ArrayList<String> skills] [ArrayList<String> classes]
+    //@pre condition: No collaborations retrieved from database
+    //@post condition: Recommended collaborations retrieved from database
     public void getCollabs(ArrayList<String> skills, ArrayList<String> classes){
 
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
@@ -102,6 +131,11 @@ public class GetCollabsData {
 
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Takes the data returned from getCollabs() and builds the dataset with an array of CollabModel(s)
+    //@params: [JSONArray collabData]
+    //@pre condition: Collaboration data not created
+    //@post condition: Collaboration created in a data set
     public void setCollabDetails(JSONArray collabData){
 
         for(int i = 0; i < collabData.length(); i++){
@@ -172,6 +206,25 @@ public class GetCollabsData {
 
     }
 
+    //@author: Hugh Leow
+    //@ brief:
+    //Takes all user input from AddCollabActivity.java
+    //User input values put into a JSONObject for the HTTP request
+    //AsyncHttpClient client
+    //ASYNC HTTP POST request, sends the JSONObject to the server
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: AddCollabActivity.java
+    //@params:
+    //[String title]
+    //[String location]
+    //[String description]
+    //[Integer size]
+    //[ArrayList<String> skills]
+    //[ArrayList<String> classes]
+    //[long time]
+    //[long duration]
+    //@pre condition: Collaboration not added to the database
+    //@post condition: Request to add collaboration, receive response for interface
     public void addCollab(String title, String location, String description, Integer size, ArrayList<String> skills, ArrayList<String> classes, long time, long duration){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -223,15 +276,26 @@ public class GetCollabsData {
 
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Returns 'collabs' dataset created from setCollabDetails(JSONArray collabData)
+    //@return: An ArrayList<CollabModel> of all the collaborations retrieved
     public ArrayList<CollabModel> returnCollabs(){
         return collabs;
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Interface function to pass Boolean to CollabListActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface GetCollabDataComplete {
 
         public void getAllCollabs(Boolean success);
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Interface function to pass Boolean to AddCollabActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface AddCollabComplete {
 
         public void addCollabComplete (Boolean success);

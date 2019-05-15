@@ -34,6 +34,14 @@ public class MessagingAPI {
     private MessageDownloadComplete dataDownloadComplete;
     private MessageSendComplete messageSent;
 
+    //@author: Hugh Leow
+    //@brief:
+    //Constructor with multiple listeners for different API calls
+    //Listeners pass Boolean to the activity that needs it to check if request was successful
+    //@params:
+    //[Context context]
+    //[MessageDownloadComplete listener]
+    //[MessageSendComplete listener1]
     public MessagingAPI(Context context, MessageDownloadComplete listener, MessageSendComplete listener1){
         this.context = context;
         this.dataDownloadComplete = listener;
@@ -45,6 +53,14 @@ public class MessagingAPI {
         messages = new ArrayList<>();
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to retrieve a list of active conversations for the user
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP GET request, receives JSON from the server
+    //Returns Boolean 'true' to the interface if successful and sets 'chat id' and 'chat title' to their respective arrays using setChatList(JSONArray data)
+    //@pre condition: List of active conversations not up to date
+    //@post condition: Request for up to date list of conversations sent
     public void getListOfMessages(){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
@@ -64,6 +80,18 @@ public class MessagingAPI {
         });
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to retrieve messages from a specific chat (collaboration, or user to user)
+    //Takes the chat id and page we want to view as arguments
+    //Puts the arguments into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface and call setMessageDetails(JSONArray data) to create the dataset of messages for the chatroom
+    //Failure to retrieve returns Boolean 'false' to the interface
+    //@params: [int page] [String id]
+    //@pre condition: Request for chatroom not sent to server
+    //@post condition: Request for up to date chatroom sent to server
     public void retrieveChatroom(int page, String id){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -105,6 +133,17 @@ public class MessagingAPI {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to send messages to the database using the chat id
+    //Takes the chat id and message and puts it into a JSON
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP POST request, sends JSON to the server for request
+    //If successful, return Boolean 'true' to the interface function
+    //If unsuccessful, return Boolean 'false' to the interface function
+    //@params: [String message] [String id]
+    //@pre condition: No request sent to deliver user's message
+    //@post condition: Request sent to server to deliver user's message
     public void sendMessage(String message, String id){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -145,6 +184,12 @@ public class MessagingAPI {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Creates the dataset of messages for a particular chatroom (collaboration or user to user) using data returned to us from the API call
+    //@params: [JSONArray data]
+    //@pre condition: No dataset created for the messages received
+    //@post condition: Messages created in a dataset
     public void setMessageDetails(JSONArray data){
         // parse JSON array (list of ALL chats)
         messages = new ArrayList<>();
@@ -173,6 +218,11 @@ public class MessagingAPI {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief: Takes server response with JSON and parses it to two respective arrays, chat ids and chat titles for a list of active conversations for the user
+    //@params: [JSONArray data]
+    //@pre condition: List of active conversations not created
+    //@post condition: List of active conversations created in a dataset
     public void setChatList (JSONArray data){
         // parse JSON array (list of ALL chats)
         for (int i = 0; i < data.length(); i++) {
@@ -212,10 +262,18 @@ public class MessagingAPI {
         return chatTitles;
     }
 
+    //@author: Hugh Leow
+    //@brief: Interface function to pass Boolean to MessagingActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface MessageDownloadComplete {
         public void messageDownloadComplete(Boolean success);
     }
 
+    //@author: Hugh Leow
+    //@brief: Interface function to pass Boolean to MessagingActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface MessageSendComplete {
         public void messageSendComplete(Boolean success);
     }

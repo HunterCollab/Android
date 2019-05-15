@@ -26,7 +26,16 @@ public class JoinDropCollab {
     private EditComplete editListener;
     private DeleteComplete deleteListener;
 
-
+    //@author: Hugh Leow
+    //@brief:
+    //Constructor with multiple listeners for different API calls
+    //Listeners pass Boolean to the activity that needs it to check if request was successful
+    //@params:
+    //[Context context]
+    //[JoinComplete joinListener]
+    //[LeaveComplete leaveListener]
+    //[EditComplete editListener]
+    //[DeleteComplete deleteListener]
     public JoinDropCollab(Context context, JoinComplete joinListener, LeaveComplete leaveListener, EditComplete editListener, DeleteComplete deleteListener){
         this.context = context;
         this.joinListener = joinListener;
@@ -35,6 +44,20 @@ public class JoinDropCollab {
         this.deleteListener = deleteListener;
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to join a collaboration with the 'collabid'
+    //See: CollabDetailFragment.java
+    //AsyncHttpClient client
+    //ASYNC HTTP POST request, puts 'collabid' into a JSON
+    //Sends JSON to the server to request to join the collaboration
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: CollabDetailFragment.java
+    //If request is successful, return Boolean 'true' with a 'message' from the server to the interface
+    //if request failed, return Boolean 'false' to the interface
+    //@params: [String collabId]
+    //@pre condition: No request sent to server to join collaboration
+    //@post condition: Request sent to server, receive response for interface
     public void joinCollab(String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -76,6 +99,20 @@ public class JoinDropCollab {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to leave a collaboration with the 'collabid'
+    //See: CollabDetailFragment.java
+    //AsyncHttpClient client
+    //ASYNC HTTP POST request, puts 'collabid' into a JSON
+    //Sends JSON to the server to request to leave the collaboration
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: CollabDetailFragment.java
+    //If request is successful, return Boolean 'true' with a 'message' from the server to the interface
+    //if request failed, return Boolean 'false' to the interface
+    //@params: [String collabId]
+    //@pre condition: No request sent to server to leave collaboration
+    //@post condition: Request sent to server, receive response for interface
     public void leaveCollab(String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -111,6 +148,20 @@ public class JoinDropCollab {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to delete a collaboration with the 'collabid' for OWNER of the collaboration
+    //See: CollabDetailFragment.java
+    //AsyncHttpClient client
+    //ASYNC HTTP DELETE request, puts 'collabid' into a JSON
+    //Sends JSON to the server to request to delete the collaboration
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: CollabDetailFragment.java
+    //If request is successful, return Boolean 'true' to the interface
+    //if request failed, return Boolean 'false' to the interface
+    //@params: [String collabId]
+    //@pre condition: No request sent to server to delete collaboration
+    //@post condition: Request sent to server, receive response for interface
     public void deleteCollab(String collabId){
 
         AsyncHttpClient client = GeneralTools.createAsyncHttpClient(context);
@@ -145,21 +196,37 @@ public class JoinDropCollab {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief: Interface function to pass Boolean to CollabDetailFragment.java
+    //@pre condition: No request sent and/or received
+    //@post condition: Response received and Boolean passed
     public interface JoinComplete {
 
         public void joinComplete(Boolean success, String message);
     }
 
+    //@author: Hugh Leow
+    //@brief: Interface function to pass Boolean to CollabDetailFragment.java
+    //@pre condition: No request sent and/or received
+    //@post condition: Response received and Boolean passed
     public interface LeaveComplete {
 
         public void leaveComplete(Boolean success);
     }
 
+    //@author: Hugh Leow
+    //@brief: Interface function to pass Boolean to CollabDetailFragment.java
+    //@pre condition: No request sent and/or received
+    //@post condition: Response received and Boolean passed
     public interface EditComplete {
 
         public void editComplete(Boolean success);
     }
 
+    //@author: Hugh Leow
+    //@brief: Interface function to pass Boolean to CollabDetailFragment.java
+    //@pre condition: No request sent and/or received
+    //@post condition: Response received and Boolean passed
     public interface DeleteComplete {
 
         public void deleteComplete(Boolean success);

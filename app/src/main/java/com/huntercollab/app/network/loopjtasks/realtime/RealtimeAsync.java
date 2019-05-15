@@ -28,16 +28,24 @@ public class RealtimeAsync extends AsyncTask<MessagingActivity, Void, Void> {
                 System.out.println("Auth token not found.");
                 return null;
             }
-            //System.out.println(token);
 
+            //@author: Hugh Leow & Ram Vakada
+            //@brief: Creates connection to the port on the backend server
             socket = new Socket(GlobalConfig.HOST, GlobalConfig.RMS_PORT);
+
+            //@author: Hugh Leow & Ram Vakada
+            //@brief: Output stream for the connected socket
             dout = new DataOutputStream(socket.getOutputStream());
+
+            //@author: Hugh Leow & Ram Vakada
+            //@brief: Input stream for the connected socket
             din = new DataInputStream(socket.getInputStream());
 
             //Authorize the client
             this.writeMessage(token); //First Message is the Auth Token.
 
-            //Make sure OK response is received.
+            //@author: Hugh Leow & Ram Vakada
+            //@brief: Response from server indicating 'real-time messaging' active or not
             String response = this.getNextMessage();
             if (!response.equals("AUTH_SUCCESS")) {
                 System.out.println("RMS Auth failed.");
@@ -60,14 +68,24 @@ public class RealtimeAsync extends AsyncTask<MessagingActivity, Void, Void> {
         return null;
     }
 
+    //@author: Hugh Leow & Ram Vakada
+    //@brief: Gets message from 'din' and returns the message
+    //@return: String of next message
     public String getNextMessage() throws IOException {
         return RMSProtocol.readUTF(this.din);
     }
 
+    //@author: Hugh Leow & Ram Vakada
+    //@brief: Puts message into 'dout' and sends message to the server
+    //@params: [String msg]
     public void writeMessage(String msg) throws IOException {
         RMSProtocol.writeUTF(msg, dout); //First Message is the Token.
     }
 
+    //@author: Hugh Leow & Ram Vakada
+    //@brief: Closes connection between the socket and the server
+    //@pre condition: connection to server is open
+    //@post condition: connection to server is closed
     public void killConn() {
         this.stop = true;
         if (this.socket != null) {

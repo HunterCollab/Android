@@ -22,11 +22,24 @@ public class DoClassSearch {
     private Context context;
     private RequestParams requestParams;
 
+    //@author: Edwin Quintuna
+    //@brief: Constructor with a listener for the class search
+    //@params: [Context context] [OnDoClassSearchComplete listener]
     public DoClassSearch(Context context, OnDoClassSearchComplete listener){
         this.context = context;
         this.searchListener = listener;
     }
 
+
+    //AsyncHttpClient asyncHttpClient
+    //@author: Edwin Quintuna
+    //@brief:
+    //ASYNC HTTP GET request, receives data in a JSON
+    //Retrieves class data from the database that matches user input and returns the list of matched classes if successful
+    //Empty list if not successful
+    //@params: [String constraint]
+    //@pre condition: Data set for autocomplete not matching user input
+    //@post condition: Data set for autocomplete matches user input
     public void doClassSearch(String constraint){
 
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);

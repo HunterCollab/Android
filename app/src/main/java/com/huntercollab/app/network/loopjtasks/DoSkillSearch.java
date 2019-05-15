@@ -21,14 +21,25 @@ public class DoSkillSearch {
     private final Context context;
     private final OnDoSkillSearchComplete searchListener;
 
+    //@author: Edwin Quintuna
+    //@brief: Constructor with a listener for the skill search
+    //@params: [Context context] [OnDoSkillSearchComplete listener]
     public DoSkillSearch(Context context, OnDoSkillSearchComplete listener) {
         this.context = context;
         this.searchListener = listener;
 
     }
 
+    //AsyncHttpClient asyncHttpClient
+    //@author: Edwin Quintuna
+    //@brief:
+    //ASYNC HTTP GET request, receives data in a JSON
+    //Retrieves skill data from the database that matches user input and returns the list of matched skills if successful
+    //Empty list if not successful
+    //@params: [String constraint]
+    //@pre condition: Data set for autocomplete not matching user input
+    //@post condition: Data set for autocomplete matches user input
     public void doSkillSearch(String constraint){
-
 
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 

@@ -76,9 +76,17 @@ public class EditCollabClassesActivity extends AppCompatActivity
 
 ///////////////////////////////////// Auto Complete //////////////////////////////////////////////////////////
 
-        //Will be used to make the API call
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Used for API call to the database to search for classes
+        //See: DoClassSearch.java
         search = new DoClassSearch(getApplicationContext(), instance);
 
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Displays the auto complete text to the user using 'search'
+        //Character limit until API call
+        //Uses the AutoCompleteAdapter to change the list of data retrieved from the API call
         //Maps the classes_auto_complete from the activity_user_classes.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.classes_auto_complete);
 
@@ -132,7 +140,13 @@ public class EditCollabClassesActivity extends AppCompatActivity
             }
         });
 
-        // Checks if there are duplicate/empty entries, if so, notify user
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        //If the class is valid, it will be added to the 'classNames'
+        //Text box will be cleared for new entry, and view will be updated
+        //@pre condition: Class is in text box, not added to the array
+        //@post condition: Class is added to the array, text box cleared
         addClassButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -160,6 +174,10 @@ public class EditCollabClassesActivity extends AppCompatActivity
 
 
         /////////////////////////Delete an Item from the Recycler View///////////////////////////////
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief: Used to remove a class with swipe function
+        //@pre condition: Class is inside the recycler vew
+        //@post condition: Class removed from the recycler view and the array
         itemTouchHelperCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                     @Override
@@ -194,6 +212,13 @@ public class EditCollabClassesActivity extends AppCompatActivity
 
 ////////////////////////////////////Update Classes/////////////////////////////////////////////////////////
 
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Updates the classes after user is done adding/removing them from the recycler view
+        //API call to the server
+        //See: UpdateCollabData.java
+        //@pre condition: Classes not updated in the database
+        //@post condition: Request sent to update database with new information
         updateClass = new UpdateCollabData(getApplicationContext(), instance);
         updateClassButton = (Button) findViewById(R.id.update_class);
         updateClassButton.setOnClickListener(new View.OnClickListener() {
@@ -206,8 +231,13 @@ public class EditCollabClassesActivity extends AppCompatActivity
 
     }
 
-    // Interface function from DoClassSearch.java
-    // Everytime API is successful in retrieving class data for the auto complete, the recycler view is updated
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function from DoClassSearch.java
+    //Everytime API is successful in retrieving class data for the auto complete, the recycler view is updated with a new ArrayList<String>
+    //@params: [ArrayList<String> message]
+    //@pre condition: Autocomplete is empty
+    //@post condition: Autocomplete is filled with relevant data
     @Override
     public void classSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -216,9 +246,14 @@ public class EditCollabClassesActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    // Interface function from UpdateCollabData.java
-    // If updating classes in the database is successful, notify user
-    // If updating classes fails, notify user
+    //@author: Hugh Leow & Edwin Quituna
+    //@brief:
+    //Interface function for ASYNC HTTP request from UpdateCollabData.java
+    //If updating classes in the database is successful, notify user
+    //If updating classes fails, notify user
+    //@params: [Boolean success]
+    //@pre condition: Collaboration not updated in database
+    //@post condition: Collaboration is updated in database if success = 'true'
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

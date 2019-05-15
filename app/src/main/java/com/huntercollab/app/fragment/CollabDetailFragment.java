@@ -133,16 +133,27 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
         instance = this;
 
-        // Collab ID that is associated with this fragment and the information that will be displayed
+        //@author: Hugh Leow
+        //@brief: Collab ID that is associated with this fragment and the information that will be displayed
         currentCollabId = getArguments().getString("collabId");
 
-        // Used for API calls to get information about current user, other members, and owner
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief: API call to retrieve logged in user's information
         userDetails = new GetUserData(getContext(), instance, instance, instance);
+        //@author: Hugh Leow
+        //@brief: API call to retrieve information of members of the collaboration
+        //Used to get each member's names for display rather than e-mails
         memberDetails = new GetUserData(getContext(), instance, instance, instance);
+        //@author: Hugh Leow
+        //@brief: API call to retrieve information of the owner of the collaboration
+        //Used to get owner name for display rather than e-mail
         ownerDetails = new GetUserData(getContext(), instance, instance, instance);
         userDetails.getUserData();
 
-        // Sends user to MessagingActivity.java to chat with other members of the collaboration
+        //@author: Hugh Leow
+        //@brief: Sends user to MessagingActivity.java to chat with other members of the collaboration
+        //@pre condition: User is viewing the collaboration details
+        //@post condition: User is viewing the messages of a collaboration
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +225,10 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
             Date result1 = new Date(endDateInMilli);
             collabEndDateTime.setText(convert1.format(result1));
 
-            // view members button
+            //@author: Hugh Leow
+            //@brief: Sends user to ViewMembersOfCollabActivity.java so they can view the list of members as well as view their profiles from there
+            //@pre condition: User is viewing the collaboration details
+            //@post condition: User is viewing members of the collaboration
             viewMembers = (Button) rootView.findViewById(R.id.viewMembers_button);
             viewMembers.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -228,7 +242,12 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             } );
 
-            // join button
+            //@author: Hugh Leow
+            //@brief:
+            //Attempts to join the current collaboration with an API call to the server
+            //See: JoinDropCollab.java
+            //@pre condition: User has not joined the collaboration
+            //@post condition: Request is sent for user to join the collaboration
             joinCollab = (Button) rootView.findViewById(R.id.join_collab_button);
             joinCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -240,7 +259,13 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             });
 
-            // leave button
+            //@author: Hugh Leow
+            //@brief:
+            //Attempts to leave the collaboration with an API call to the server
+            //See: JoinDropCollab.java
+            //If user is last members of collaboration, they will be prompted with a dialog box to confirm if they want to leave
+            //@pre condition: User is part of the collaboration
+            //@post condition: User is no longer part of the collaboration
             leaveCollab = (Button) rootView.findViewById(R.id.leave_collab_button);
             leaveCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -280,7 +305,12 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             });
 
-            // edit buttons (only for owner)
+            //@author: Hugh Leow
+            //@brief:
+            //Sends user to appropriate fragments according to which edit button they clicked
+            //See below
+            //@pre condition: Owner is viewing their own collaboration
+            //@post condition: Owner is editing a specific field of their collaboration
             editCollabTitle = (Button) rootView.findViewById(R.id.editCollabTitle_button);
             editCollabSize = (Button) rootView.findViewById(R.id.editCollabSize_button);
             editCollabDescrip = (Button) rootView.findViewById(R.id.editCollabDescription_button);
@@ -386,7 +416,10 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
                 }
             });
 
-            // delete button (only for owner)
+            //@author: Hugh Leow
+            //@brief: Prompts user for confirmation, if they click yes, collaboration will be deleted
+            //@pre condition: Collaboration is up and active
+            //@post condition: Collaboration is removed from the database and from all user's 'My Collabs"
             deleteCollab = (Button) rootView.findViewById(R.id.delete_collab_button);
             deleteCollab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -424,6 +457,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         return rootView;
     }
 
+    //@author: Hugh leow
+    //@brief:
     // bundle + key to pass parameter to EditCollabActivity.java
     // send User to edit title fragment
     private void sendUserToEditTitle() {
@@ -436,6 +471,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit size fragment
     private void sendUserToEditSize() {
         Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
@@ -448,6 +485,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit description fragment
     private void sendUserToEditDescription() {
         Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
@@ -459,6 +498,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit location fragment
     private void sendUserToEditLocation() {
         Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
@@ -470,6 +511,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit end date fragment
     private void sendUserToEditStartDate() {
         Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
@@ -481,6 +524,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit end date fragment
     private void sendUserToEditEndDate() {
         Intent editCollab = new Intent (getActivity(), EditCollabActivity.class);
@@ -492,6 +537,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit skills activity
     private void sendUserToEditSkills() {
         Intent editCollab = new Intent (getActivity(), EditCollabSkillsActivity.class);
@@ -504,6 +551,8 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
+    //@author: Hugh leow
+    //@brief:
     // send User to edit classes activity
     private void sendUserToEditClasses() {
         Intent editCollab = new Intent (getActivity(), EditCollabClassesActivity.class);
@@ -516,12 +565,17 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         getActivity().finish();
     }
 
-    // Interface function for ASYNC HTTP request from JoinDropCollab.java
-    // If user successfully joins the collaboration, they are notified with a toast and are added to the list of members
-    // Buttons change accordingly
-    // Messaging will show up for the user
-    // 'Join' turns to 'Leave'
-    // Etc
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from JoinDropCollab.java
+    //If user successfully joins the collaboration, they are notified with a toast and are added to the list of members
+    //Buttons change accordingly
+    //Messaging will show up for the user
+    //'Join' turns to 'Leave'
+    //Etc
+    //@params: [Boolean success] [String message]
+    //@pre condition: User has not joined the collaboration
+    //@post condition: User has joined collaboration if success = 'true', user is notified with a toast
     @Override
     public void joinComplete(Boolean success, String message) {
         if(success){
@@ -548,13 +602,18 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     }
 
-    // Interface function for ASYNC HTTP request from JoinDropCollab.java
-    // If user successfully leaves the collaboration, they are notified with a toast and are removed from the list of members
-    // Buttons change accordingly
-    // Messaging button will be removed
-    // 'Leave' turns to 'Join'
-    // If they are owners, they are no longer allowed to edit any fields
-    // Etc.
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from JoinDropCollab.java
+    //If user successfully leaves the collaboration, they are notified with a toast and are removed from the list of members
+    //Buttons change accordingly
+    //Messaging button will be removed
+    //'Leave' turns to 'Join'
+    //If they are owners, they are no longer allowed to edit any fields
+    //Etc.
+    //@params: [Boolean success]
+    //@pre condition: User is part of the collaboration
+    //@post condition: User has left the collaboration if success = 'true', user is notified with a toast
     @Override
     public void leaveComplete(Boolean success) {
         if(success){
@@ -611,12 +670,17 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
 
     }
 
-    // Interface function for ASYNC HTTP request from GetUserData.java
-    // If data is successfully retrieved from the database, do checks to show correct buttons
-    // If they are in the collaboration, show a leave instead of join, and also allow them to see the messaging button
-    // Vice versa if they are not in the collaboration
-    // If they are the owner, show them the appropriate buttons
-    // Edit + Delete
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetUserData.java
+    //If data is successfully retrieved from the database, do checks to show correct buttons
+    //If they are in the collaboration, show a leave instead of join, and also allow them to see the messaging button
+    //Vice versa if they are not in the collaboration
+    //If they are the owner, show them the appropriate buttons
+    //Edit + Delete
+    //@params: [Boolean success]
+    //@pre condition: User data not retrieved from database, no buttons show
+    //@post condition: User data retrieved, and relevant buttons are now visible to the user
     @Override
     public void downloadComplete(Boolean success) {
         if (success) {
@@ -651,8 +715,13 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         }
     }
 
-    // Interface function for ASYNC HTTP request from GetUserData.java
-    // If data is successfully retrieved from the database, retrieve 'preferred names' of the members of the collaboration and display it accordingly
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetUserData.java
+    //If data is successfully retrieved from the database, retrieve 'preferred names' of the members of the collaboration and display it accordingly
+    //@params: [Boolean success]
+    //@pre condition: Member data not retrieved, emails show instead of names
+    //@post condition: Member data retrieved, and 'preferred names' now show
     @Override
     public void downloadProfileComplete(Boolean success) {
         if (success) {
@@ -662,8 +731,13 @@ public class CollabDetailFragment extends Fragment implements JoinDropCollab.Joi
         }
     }
 
-    // Interface function for ASYNC HTTP request from GetUserData.java
-    // If data is successfully retrieved from the database, retrieve 'preferred names' of the owner of the collaboration and display it accordingly
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetUserData.java
+    //If data is successfully retrieved from the database, retrieve 'preferred names' of the owner of the collaboration and display it accordingly
+    //@params: [Boolean success]
+    //@pre condition: Owner data not retrieved, email shows instead of name
+    //@post condition: Owner data retrieved, and 'preferred name' now shows
     @Override
     public void ownerDownloadComplete(Boolean success) {
         if (success) {

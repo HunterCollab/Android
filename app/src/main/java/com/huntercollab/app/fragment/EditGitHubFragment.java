@@ -14,15 +14,15 @@ import com.example.socialmediaapp.R;
 import com.huntercollab.app.network.loopjtasks.SetUserData;
 
 
-public class EditGithubFragment extends Fragment implements SetUserData.UpdateComplete {
+public class EditGitHubFragment extends Fragment implements SetUserData.UpdateComplete {
 
-    public EditGithubFragment() {
+    public EditGitHubFragment() {
         // Required empty public constructor
     }
 
     private EditText editGithub;
     private Button saveGithubButton;
-    private EditGithubFragment instance = null;
+    private EditGitHubFragment instance = null;
     private SetUserData updateGithub;
 
     @Override
@@ -33,8 +33,12 @@ public class EditGithubFragment extends Fragment implements SetUserData.UpdateCo
         View view = inflater.inflate(R.layout.fragment_edit_github, container, false);
         editGithub = (EditText) view.findViewById(R.id.editText);
 
-        // API call to update the user's information with user input
-        // See: SetUserData.java
+        //@author: Hugh Leow
+        //@brief:
+        //API call to update the user's information with user input
+        //See: SetUserData.java
+        //@pre condition: New information not updated in database
+        //@post condition: Request to update database with new information
         saveGithubButton = (Button) view.findViewById(R.id.saveGithub);
         saveGithubButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +54,14 @@ public class EditGithubFragment extends Fragment implements SetUserData.UpdateCo
         return view;
     }
 
-    // Interface function for ASYNC HTTP request from SetUserData.java
-    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@author: Hugh Leow
+    //@brief
+    //Interface function for ASYNC HTTP request from SetUserData.java
+    //If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@params: [Boolean success] [String message]
+    //@pre condition: New information not updated in database
+    //@post condition: Database updated with new information if success = 'true'
+
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         if (success) {

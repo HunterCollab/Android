@@ -68,9 +68,17 @@ public class UserSkillsActivity extends AppCompatActivity
         instance = this;
 
 ///////////////////////////////////// Auto Complete ////////////////////////////////////////////////////////////////
-        //Will be used to make the API call
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Used for API call to the database to search for skills
+        //See: DoSkillSearch.java
         search = new DoSkillSearch(getApplicationContext(), instance);
 
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Displays the auto complete text to the user using 'search'
+        //Character limit until API call
+        //Uses the AutoCompleteAdapter to change the list of data retrieved from the API call
         //Maps the skills_auto_complete from the activity_user_skills.xml file to the variable autoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.skill_auto_complete);
 
@@ -124,9 +132,13 @@ public class UserSkillsActivity extends AppCompatActivity
             }
         });
 
-        // When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
-        // If the skill is valid, it will be added to the 'skillNames'
-        // Text box will be cleared for new entry, and view will be updated
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        //If the skill is valid, it will be added to the 'skillNames'
+        //Text box will be cleared for new entry, and view will be updated
+        //@pre condition: Skill is in text box, not added to array
+        //@post condition: Skill is added to array, text box cleared
         addSkillButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -162,6 +174,10 @@ public class UserSkillsActivity extends AppCompatActivity
 
 
         /////////////////////////Delete an Item from the Recycler View///////////////////////////////
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief: Used to remove a skill with swipe function
+        //@pre condition: Skill is inside the recycler view
+        //@post condition: Skill is removed from the recycler view and the array
         itemTouchHelperCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                     @Override
@@ -194,8 +210,17 @@ public class UserSkillsActivity extends AppCompatActivity
 
 
 
-        // API call to update the user's skills after they are done editing
+        //@author: Hugh Leow
+        //@brief: API call to update the user's skills after they are done editing
         updateSkills = new SetUserData(getApplicationContext(), instance);
+
+        //@author: Hugh Leow & Edwin Quintuna
+        //@brief:
+        //Updates the skills after user is done adding/removing them from the recycler view
+        //API call to server
+        //See: SetUserData.java
+        //@pre condition: Skills not updated in the database
+        //@post condition: Request sent to update database with new information
         updateSkillsButton = (Button) findViewById(R.id.update_skill);
         updateSkillsButton.setOnClickListener(new View.OnClickListener() {
 
@@ -215,15 +240,25 @@ public class UserSkillsActivity extends AppCompatActivity
     }
 
 
-    // Interface function for ASYNC HTTP request from SetUserData.java
-    // If classes are updated successfully, the adapter is updated
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from SetUserData.java
+    //If classes are updated successfully, the adapter is updated
+    //@params: [Boolean success, String message]
+    //@pre condition: User skills not updated in database
+    //@post condition: User skills is updated in database if success = 'true'
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         mAdapter.notifyDataSetChanged();
     }
 
-    // Interface function from DoSkillSearch.java
-    // Everytime API is successful in retrieving class data for the auto complete, the view is updated with a new ArrayList<String>
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function from DoSkillSearch.java
+    //Everytime API is successful in retrieving class data for the auto complete, the view is updated with a new ArrayList<String>
+    //@params: [ArrayList<String> message]
+    //@pre condition: Autocomplete is empty
+    //@post condition: Autocomplete is filled with relevant data
     @Override
     public void searchSkillComplete(ArrayList<String> message) {
         //Sets the new data as we retrieve new suggestions from the
@@ -232,11 +267,17 @@ public class UserSkillsActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    // Interface function from GetUserData.java
-    // If retrieving user information is successful, recycler view is built with array of user's classes
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function from GetUserData.java
+    //If retrieving user information is successful, recycler view is built with array of user's classes
+    //@params: [Booleans success]
+    //@pre condition: User skills not retrieved from database
+    //@post condition: User skills retrieved from database if success = 'true'
     @Override
     public void downloadComplete(Boolean success) {
-
+        //@author: Hugh Leow
+        //@brief: API call to retrieve user information from the database to modify user classes
         skillNames = userData.getUserSkills();
         recyclerView = (RecyclerView) findViewById(R.id.skill_recycler_view);
         mAdapter = new UserListAdapter(skillNames, this);

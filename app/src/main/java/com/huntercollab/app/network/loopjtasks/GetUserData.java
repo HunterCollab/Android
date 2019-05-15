@@ -32,6 +32,15 @@ public class GetUserData {
     private Interfaces.DownloadProfleComplete downloadProfleComplete;
     private Interfaces.OwnerDownloadComplete ownerDownloadComplete;
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Constructor with multiple listeners for different API calls
+    //Listeners pass Boolean to the activity that needs it to check if request was successful
+    //@params:
+    //[Context context]
+    //[Interfaces.DownloadComplete listener]
+    //[Interfaces.DownloadProfileComplete listener1]
+    //[Interfaces.OwnerDownloadComplete listener2]
     public GetUserData(Context context, Interfaces.DownloadComplete listener, Interfaces.DownloadProfleComplete listener1, Interfaces.OwnerDownloadComplete listener2){
         this.context = context;
         this.dataDownloadComplete = listener;
@@ -48,6 +57,18 @@ public class GetUserData {
         userProfileLink = new String();
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Used for the logged in user's profile, ProfileActivity.java
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP GET request, receives a JSON from the server
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: ProfileActivity.java
+    //If request is successful, return Boolean 'true' to the interface function and set user data to appropriate variables
+    //if request failed, return Boolean 'false' to the interface
+    //See: Interfaces.java for interface functions for GetUserData.java
+    //@pre condition: Request not sent to retrieve user data
+    //@post condition: Request sent and response received for interface
     public void getUserData(){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
@@ -73,6 +94,20 @@ public class GetUserData {
         });
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to view other member profiles, OtherProfileActivity.java
+    //Takes in a 'userEmail' parameter to determine what user info we want to retrieve from the server
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP GET request, receives a JSON from the server
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: OtherProfileActivity.java
+    //If request is successful, return Boolean 'true' to the interface function and set user data to appropriate variables
+    //if request failed, return Boolean 'false' to the interface
+    //See: Interfaces.java for interface functions for GetUserData.java
+    //@params: [String userEmail]
+    //@pre condition: Request not sent to retrieve user data
+    //@post condition: Request sent and response received for interface
     public void getOtherUserData(String userEmail){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
@@ -98,6 +133,20 @@ public class GetUserData {
         });
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Used to retrieve collaboration owner information in CollabDetailFragment.java
+    //Takes in a 'userEmail' parameter to determine what user info we want to retrieve from the server
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP GET request, receives a JSON from the server
+    //Returns Boolean 'true' or 'false' to the interface
+    //See: CollabDetailFragment.java
+    //If request is successful, return Boolean 'true' to the interface function and set user data to appropriate variables
+    //if request failed, return Boolean 'false' to the interface
+    //See: Interfaces.java for interface functions for GetUserData.java
+    //@params: [String userEmail]
+    //@pre condition: Request not sent to retrieve user data
+    //@post condition: Request sent and response received for interface
     public void getOwnerUserData(String userEmail){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
 
@@ -123,6 +172,11 @@ public class GetUserData {
         });
     }
 
+    //@author: Hugh Leow
+    //@brief: Sets the user profile pic URL
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserProfilePic(JSONObject response){
         try {
             userProfileLink = response.getString("profilePicture");
@@ -131,6 +185,11 @@ public class GetUserData {
         }
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Sets the user email/username
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserName(JSONObject response){
         try {
             username = response.getString("username");
@@ -139,6 +198,11 @@ public class GetUserData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief: Sets the user's 'preferred name'
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserNickname(JSONObject response){
         try {
             userNickname = response.getString("name");
@@ -147,6 +211,11 @@ public class GetUserData {
         }
     }
 
+    //@author: Hugh Leow
+    //@brief: Sets the user Github link
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserGithub(JSONObject response){
         try {
             github = response.getString("github");
@@ -156,6 +225,11 @@ public class GetUserData {
 
     }
 
+    //@author: Hugh Leow
+    //@brief: Sets the user LinkedIn link
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserLinkedIn(JSONObject response){
         try {
             linkedIn = response.getString("linkedin");
@@ -165,6 +239,11 @@ public class GetUserData {
 
     }
 
+    //@author: Edwin Quintuna
+    //@brief: Sets the user's skills
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserSkills(JSONObject response){
         try {
             JSONArray terms = null;
@@ -179,6 +258,11 @@ public class GetUserData {
         }
     }
 
+    //@author: Edwin Quintuna
+    //@brief: Sets the user's classes
+    //@params: [JSONObject response]
+    //@pre condition: variable empty or not updated
+    //@post condition: variable updated from 'response'
     private void setUserClasses(JSONObject response){
         try {
             JSONArray terms = null;

@@ -21,13 +21,26 @@ public class DoLogin {
     private final Context context;
     private final OnDoLoginComplete loginCompleteListener;
 
-    // constructor
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Constructor with a listener for the login function
+    //@params: [Context context] [OnDoLoginComplete listener]
     public DoLogin(Context context, OnDoLoginComplete listener) {
         this.context = context;
         this.loginCompleteListener = listener;
     }
 
-    // Async task for HTTP request
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Takes user input, for 'username' and 'password' and sends to the server
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP GET request, sends 'username' and 'password' in a JSON
+    //If successful, return Boolean 'true' to the interface function
+    //See: LoginActivity.java
+    //If successful, stores the authentication token for future use with other API calls on protected routes
+    //If unsuccessful, return Boolean 'false' and error message from the server to the interface function
+    //@params: [String username] [String password]
+    //@pre condition: No request sent to the server to login
+    //@post condition: Request sent to server to login, receive response for interface
     public void doLogin(String username, String password){
         AsyncHttpClient asyncHttpClient = GeneralTools.createAsyncHttpClient(context);
         RequestParams requestParams = new RequestParams();
@@ -66,8 +79,10 @@ public class DoLogin {
         });
     }
 
-    // interface
-    // abstract function declared here, defined in LoginActivity.java
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Interface function to pass Boolean and String to LoginActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface OnDoLoginComplete {
 
         public void loginCompleted(Boolean success, String message);

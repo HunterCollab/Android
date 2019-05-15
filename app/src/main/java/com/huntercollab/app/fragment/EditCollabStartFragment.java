@@ -52,7 +52,8 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Used to update the correct collaboration
+        //@author: Hugh Leow
+        //@brief: Used to update the correct collaboration
         collabid = dataPasser.onDataPass();
 
         // Inflate the layout for this fragment
@@ -63,7 +64,10 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
         editDateButton = (Button) view.findViewById(R.id.button_date);
         editTimeButton = (Button) view.findViewById(R.id.button_time);
 
-        // letting user select date and time
+        //@author: Hugh Leow
+        //@brief: Opens a Date Picker Dialog box for user to select a new date
+        //@pre condition: Date field is empty
+        //@post condition: Date field is filled out
         editDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +94,10 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
             }
         });
 
+        //@author: Hugh Leow
+        //@brief: Opens a Time Picker Dialog box for user to select a new time
+        //@pre condition: Time field is empty
+        //@post condition: Time field is filled out
         editTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             @SuppressWarnings("deprecation")
@@ -123,9 +131,13 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
         });
 
 
-        // Takes users new selected values and converts to milliseconds
-        // API call to update the collaboration data from user input (converted)
-        // See: UpdateCollabData.java
+        //@author: Hugh Leow
+        //@brief:
+        //Takes users new selected values and converts to milliseconds
+        //API call to update the collaboration data from user input (converted)
+        //See: UpdateCollabData.java
+        //@pre condition: New information not updated in database
+        //@post condition: Request to update database with new information
         saveStartButton = (Button) view.findViewById(R.id.saveStart);
         saveStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,8 +166,13 @@ public class EditCollabStartFragment extends Fragment implements UpdateCollabDat
         return view;
     }
 
-    // Interface function for ASYNC HTTP request from UpdateCollabData.java
-    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from UpdateCollabData.java
+    //If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@params: [Boolean success]
+    //@pre condition: New information not updated in database
+    //@post condition: Database updated with new information if success = 'true'
     @Override
     public void updateCollabComplete(Boolean success) {
         if (success) {

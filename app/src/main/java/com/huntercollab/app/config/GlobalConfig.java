@@ -6,7 +6,8 @@
 
 package com.huntercollab.app.config;
 
-// initialized base URL here
+//@author: Hugh Leow & Edwin Quintuna
+//@brief: Base URL is initialized here so it will be the same for ALL ASYNC HTTP requests
 public class GlobalConfig {
 
     public static final String HOST = "13.58.204.157";

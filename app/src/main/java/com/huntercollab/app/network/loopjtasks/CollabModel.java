@@ -20,6 +20,7 @@ public class CollabModel implements Parcelable {
     private ArrayList<String> members = new ArrayList<>();
     private String collabId;
 
+    //@author: Hugh Leow & Edwin Quintuna
     CollabModel(
             int id,
             String owner,
@@ -52,6 +53,9 @@ public class CollabModel implements Parcelable {
         this.collabId = collabId;
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Constructor to copy values from the Parcel into the above variables
+    //@params: [Parcel in]
     public CollabModel(Parcel in) {
         id = in.readInt();
         owner = in.readString();
@@ -69,6 +73,8 @@ public class CollabModel implements Parcelable {
         collabId = in.readString();
     }
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Create CollabModel(s) from a parcel
     public static final Creator<CollabModel> CREATOR = new Creator<CollabModel>() {
         @Override
         public CollabModel createFromParcel(Parcel in) {

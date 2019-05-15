@@ -20,14 +20,26 @@ public class DoRegister {
     private final Context context;
     private final OnDoRegisterComplete registerCompleteListener;
 
-    // constructor
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Constructor with a listener for the register function
+    //@params: [Context context] [OnDoRegisterComplete listener]
     public DoRegister(Context context, OnDoRegisterComplete listener) {
         this.context = context;
         this.registerCompleteListener = listener;
     }
 
-    // Async task for HTTP request
-    // First Step: Create a fucntion that takes email and password as parameters
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Takes user input for 'email' and 'password' and sends to the server
+    //AsyncHttpClient asyncHttpClient
+    //ASYNC HTTP PUT request, sends 'email' and 'password' as a JSON
+    //If registration successful, return Boolean 'true' to the interface function
+    //See: RegisterActivity.java
+    //If successful, stores the authentication token for future use with other API calls on protected routes
+    //If unsuccessful, return Boolean 'false' and error message from the server to the interface function
+    //@params: [String email] [String password]
+    //@pre condition: No request sent to the server to register
+    //@post condition: Request sent to server to register, receive response for interface
     public void doRegister(String email, String password) {
         // Second Step: Use AsyncHttpClient to execute HTTP requests
         // This creates the client
@@ -61,8 +73,10 @@ public class DoRegister {
         });
     }
 
-    // interface
-    // abstract function declared here
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Interface function to pass Boolean and String to RegisterActivity.java
+    //@pre condition: No request sent and/or response not received
+    //@post condition: Response received and values passed
     public interface OnDoRegisterComplete {
         public void registerCompleted(Boolean success, String message);
     }

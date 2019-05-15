@@ -33,8 +33,12 @@ public class EditLinkedInFragment extends Fragment implements SetUserData.Update
         View view = inflater.inflate(R.layout.fragment_edit_linked_in, container, false);
         editLinkedIn = (EditText) view.findViewById(R.id.editText);
 
-        // API call to update the user's information with user input
-        // See: SetUserData.java
+        //@author: Hugh Leow
+        //@brief:
+        //API call to update the user's information with user input
+        //See: SetUserData.java
+        //@pre condition: New information not updated in database
+        //@post condition: Request to update database with new information
         saveLinkedInButton = (Button) view.findViewById(R.id.saveLinkedIn);
         saveLinkedInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +54,13 @@ public class EditLinkedInFragment extends Fragment implements SetUserData.Update
         return view;
     }
 
-    // Interface function for ASYNC HTTP request from SetUserData.java
-    // If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@author: Hugh Leow
+    //@brief
+    //Interface function for ASYNC HTTP request from SetUserData.java
+    //If the database is updated successfully, close the fragment + activity, otherwise notify the user
+    //@params: [Boolean success] [String message]
+    //@pre condition: New information not updated in database
+    //@post condition: Database updated with new information if success = 'true'
     @Override
     public void dataUpdateComplete(Boolean success, String message) {
         if (success) {

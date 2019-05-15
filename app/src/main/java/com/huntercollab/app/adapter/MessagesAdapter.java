@@ -25,31 +25,49 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     private MessagesAdapter instance;
 
-    // Constructor initialized with values passed into the adapter
+    //@author: Hugh Leow
+    //@brief: Constructor initialized with values passed into the adapter
+    //@params: [Context context] [ArrayList<MessageModel> messageList] [String userEmail]
     public MessagesAdapter(Context context, ArrayList<MessageModel> messageList, String userEmail) {
         mContext = context;
         mMessageList = messageList == null ? new ArrayList<MessageModel>() : messageList;
         mUserEmail = userEmail;
     }
 
-    // Sets logged in user into a string
-    // Used to determine if they are the sender or not and what views need to be inflated
+    //@author: Hugh Leow
+    //@brief:
+    //Sets logged in user into a string
+    //Used to determine if they are the sender or not and what views need to be inflated
+    //@params: [String mUserEmail]
+    //@pre condition: User has no value
+    //@post condition: User has a value
     public void setUser(String mUserEmail) {
         this.mUserEmail = mUserEmail;
     }
 
-    // Sets messages passed into the adapter into an Arraylist
+    //@author: Hugh Leow
+    //@brief:
+    //Sets messages passed into the adapter into an Arraylist
+    //All messages are of class MessageModel.java
+    //@params: [ArrayList<MessageModel> mMessageList]
+    //@pre condition: Messages are not available to view/use
+    //@post condition: Message are available to view/use
     public void setMessages(ArrayList<MessageModel> mMessageList) {
         this.mMessageList = mMessageList;
     }
 
-    // Returns the total number of messages
+    //@author: Hugh Leow
+    //@brief: Returns the total number of messages
+    //@return: int of total number of messages for the view
     @Override
     public int getItemCount() {
         return mMessageList.size();
     }
 
-    // Determines the appropriate ViewType according to the sender of the message.
+    //@author: Hugh Leow
+    //@brief: Determines if message was sent by user or someone else
+    //@params: [int position]
+    //@return: int for VIEW_TYPE_MESSAGE_SENT or VIEW_TYPE_MESSAGE_RECEIVED
     @Override
     public int getItemViewType(int position) {
         MessageModel message = (MessageModel) mMessageList.get(position);
@@ -63,7 +81,12 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
     }
 
-    // Inflates the appropriate layout according to the ViewType.
+    //@author: Hugh Leow
+    //@brief: Inflates either the item_message_sent.xml or item_message_received.xml based on if the message was from 'self' or others
+    //@params: [ViewGroup parent] [int viewType]
+    //@pre condition: Nothing inflated inside the view
+    //@post condition: Rows inflated based on 'viewType'
+    //@return: ViewHolder with the inflated views
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -81,7 +104,11 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         return null;
     }
 
-    // Passes the message object to a ViewHolder so that the contents can be bound to UI.
+    //@author: Hugh Leow
+    //@brief: Passes message object to a ViewHolder so that contents can be bound to UI
+    //@params: [ViewHolder holder] [int position]
+    //@pre condition: views are not binded to the view holder
+    //@post condition: views are binded to the view holder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageModel message = (MessageModel) mMessageList.get(position);
@@ -95,7 +122,8 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
     }
 
-    // Stores and recycles 'sent messages' views as they are scrolled off the screen
+    //@author: Hugh Leow
+    //@brief: Stores and recycles 'sent messages' views as they are scrolled off the screen
     private class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
@@ -118,7 +146,8 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
     }
 
-    // Stores and recycles 'received messages' views as they are scrolled off the screen
+    //@author: Hugh Leow
+    //@brief: Stores and recycles 'received messages' views as they are scrolled off the screen
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText, nameText;
         //ImageView profileImage;

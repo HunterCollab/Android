@@ -59,7 +59,12 @@ public class CollabListActivity extends AppCompatActivity
     private ArrayList<String> skillsArray;
     private ArrayList<String> classesArray;
 
-    // spinner for drop down menu for user to select
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Drop down menu for user to select filters for their collaboration feed
+    //Defaults to "All Collabs"
+    //@pre condition: No way to filter collaborations
+    //@post condition: Drop down menu to filter collaborations that are relevant to the user
     private Spinner spinner;
     private static final String[] paths = {"collabs", "active collabs"};
 
@@ -78,7 +83,8 @@ public class CollabListActivity extends AppCompatActivity
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        // User clicks button to open a screen to add new collaborations
+        //@author: Hugh Leow
+        //@brief: User clicks button to open a screen to add new collaborations
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +160,11 @@ public class CollabListActivity extends AppCompatActivity
 
     }
 
-    // menu navigation
+    //@author: Hugh Leow
+    //@brief: Opens the navigation menu for user to use
+    //@pre condition: No menu for user to navigate the application
+    //@post condition: Menu for user to navigate the application
+    //@return: boolean 'true' or 'false' if selected item is valid
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -191,9 +201,14 @@ public class CollabListActivity extends AppCompatActivity
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, listOfCollabs));
     }
 
-    // Interface function for ASYNC HTTP request from GetCollabsData.java
-    // If data is successfully retrieved from the database, RecyclerView is built with the retrieved data
-    // If request fails, let user know
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetCollabsData.java
+    //If data is successfully retrieved from the database, RecyclerView is built with the retrieved data
+    //If request fails, let user know
+    //@params: [Boolean success]
+    //@pre condition: Collaboration feed is empty, nothing is retrieved from the server
+    //@post condition: Collaborations are retrieved from the server if success = 'true'
     @Override
     public void getAllCollabs(Boolean success) {
         if(success){
@@ -255,10 +270,12 @@ public class CollabListActivity extends AppCompatActivity
 
     // HERE'S WHERE WE PLACE THE COSTUME VIEW FOR OUR RECYCLER VIEW ADAPTER
     // SIMILAR TO OUR ADAPTER FOR SKILLS AND CLASSES
-    // RecyclerView is built here to show collaborations to the user
-    // Fragment is called from here if/when user clicks 'details'
-    // moves them to CollabDetailActivity.java
 
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief:
+    //RecyclerView is built here to show collaborations to the user
+    //Fragment is called from here if/when user clicks 'details'
+    //Moves them to CollabDetailActivity.java
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 

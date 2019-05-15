@@ -12,7 +12,12 @@ import cz.msebera.android.httpclient.cookie.Cookie;
 
 public class GeneralTools {
 
-    //Creates an ASyncHttpClient, sets cookies, and returns it.
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Creates an ASYNC HTTP client, sets cookies and returns it
+    //@params: [Context context]
+    //@pre condition: No authentication in cookies set, or cookies are invalid
+    //@post condition: New authentication token set in cookies
+    //@return: AsyncHttpClient returned
     public static AsyncHttpClient createAsyncHttpClient(Context context) {
         AsyncHttpClient client = new AsyncHttpClient();
         //Retrieve cookie store for this application context.
@@ -23,14 +28,21 @@ public class GeneralTools {
         return client;
     }
 
-    //Creates an ASyncHttpClient, doesn't set cookies.
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Creates an ASYNC HTTP client, doesn't set cookies
+    //@pre condition: cookies already set prior
+    //@post condition: access protected routes with cookies
+    //@return: AsyncHttpClient returned
     public static AsyncHttpClient createAsyncHttpClient() {
         AsyncHttpClient client = new AsyncHttpClient();
 
         return client;
     }
 
-    // Gets JWT authentication token from the server
+    //@author: Hugh Leow & Edwin Quintuna
+    //@brief: Gets JWT authentication token from the server
+    //@pre condition: No valid JWT token locally stored
+    //@post condition: Valid JWT token retrieved and stored
     public static String getAuthToken(Context context) {
         PersistentCookieStore cookieStore = new PersistentCookieStore(context.getApplicationContext());
         List<Cookie> cks = cookieStore.getCookies();
@@ -42,8 +54,10 @@ public class GeneralTools {
         return null;
     }
 
-    // Logs user out and sends them back to the login screen
-    // restarts the app
+    //@author: Hugh Leow
+    //@brief: Logs user out and sends them back to the login screen
+    //@pre condition: User is logged in
+    //@post condition: User is logged out
     public static void doRestart(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

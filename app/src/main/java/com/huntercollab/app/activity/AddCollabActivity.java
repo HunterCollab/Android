@@ -91,7 +91,9 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         addSkillButton = (Button) findViewById(R.id.btn_skill);
         addClassButton = (Button) findViewById(R.id.btn_class);
 
-        // listView for skills and classes
+        //@author: Hugh Leow
+        //@brief: List view to display skills user wants to add, and remove button for each
+        //@brief: List view to display classes user wants to add, and remove button for each
         skillsListView = (ListView) findViewById(R.id.skillsListView);
         skillAdapter = new ArrayAdapter<String>(this, R.layout.addcollab_skilllistview, R.id.skillView, skillsArray);
         skillsListView.setAdapter(skillAdapter);
@@ -100,13 +102,25 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         classAdapter = new ArrayAdapter<String>(this, R.layout.addcollab_classlistview, R.id.classView, classesArray);
         classesListView.setAdapter(classAdapter);
 
-        // user selects date and time through a dialog box
+        //@author: Hugh Leow
+        //@brief: User selects date through a 'Date Picker Dialog' box
+        //@pre condition: Date field is empty
+        //@post condition: Date field is filled out
         btnDatePicker.setOnClickListener(this);
+
+        //@author: Hugh Leow
+        //@brief: User selects time through a 'Time Picker Dialog' box
+        //@pre condition: Time field is empty
+        //@post condition: Time field is filled out
         btnTimePicker.setOnClickListener(this);
 
-        // when user clicks, does an internal check for duplicate/empty entry and tells user accordingly
-        // if the skill is valid, it will be added to the 'skillsArray'
-        // text box will be cleared for new entry, and list view will be updated
+        //@author: Hugh Leow
+        //@brief:
+        //When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        //If the skill is valid, it will be added to the 'skillsArray'
+        //Text box will be cleared for new entry, and list view will be updated
+        //@pre condition: Skill in text box, not added to array
+        //@post condition: Skill added to the array, text box cleared
         addSkillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,9 +144,13 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-        // when user clicks, does an internal check for duplicate/empty entry and tells user accordingly
-        // if the class is valid, it will be added to the 'classesArray'
-        // text box will be cleared for new entry, and list view will be updated
+        //@author: Hugh Leow
+        //@brief:
+        //When user clicks, does an internal check for duplicate/empty entry and tells user accordingly
+        //If the class is valid, it will be added to the 'classesArray'
+        //Text box will be cleared for new entry, and list view will be updated
+        //@pre condition: Class in text box, not added to array
+        //@post condition: Class added to the array, text box cleared
         addClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,10 +174,14 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-        // When user clicks, takes values that the user entered and does necessary conversions (ie: time in milliseconds, etc)
-        // Checks if any fields are empty or invalid (if so, prompt user)
-        // API call to add the collaboration
-        // See: GetCollabsData.java
+        //@author: Hugh Leow
+        //@brief:
+        //When user clicks, takes values that the user entered and does necessary conversions (ie: time in milliseconds, etc)
+        //Checks if any fields are empty or invalid (if so, prompt user)
+        //API call to add the collaboration
+        //See: GetCollabsData.java
+        //@pre condition: Collaboration is not added to database
+        //@post condition: New request to add the collaboration to the database
         confirmAddCollab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,8 +249,13 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
      **** Hack to fix the issue of not showing all the items of the ListView
      **** when placed inside a ScrollView
      **** https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view ****/
-    // Takes in a ListView argument and adjusts the view accordingly whether something is added or deleted from the list view
-    // Used for classes and skills list view
+    //@author: Hugh Leow
+    //@brief:
+    //Takes in a ListView argument and adjusts the view accordingly whether something is added or deleted from the list view
+    //Used for classes and skills list view
+    //@params: [ListView listView]
+    //@pre condition: Items in the listView are not adjusted to the amount of items properly
+    //@post condition: listView shrinks and expands as items are added/removed
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
@@ -250,10 +277,14 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         listView.setLayoutParams(params);
     }
 
-    // remove skill/class handler
-    // Handles removal of a unwanted skill/class
-    // Used in 'addcollab_skilllistview.xml' + 'addcollab_classlistview for ImageButton
-    // User can click button to remove
+    //@author: Hugh Leow
+    //@brief:
+    //Handles removal of a unwanted skill
+    //Used in 'addcollab_skilllistview.xml' for ImageButton
+    //User can click button to remove
+    //@params: View view
+    //@pre condition: Skill is inside the view
+    //@post condition: Skill is removed from the view and array
     public void removeSkillHandler(View view) {
         int positionForView = skillsListView.getPositionForView(view);
         skillsArray.remove(positionForView);
@@ -261,6 +292,14 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
         setListViewHeightBasedOnChildren(skillsListView);
     }
 
+    //@author: Hugh Leow
+    //@brief:
+    //Handles removal of a unwanted class
+    //Used in 'addcollab_classlistview.xml' for ImageButton
+    //User can click button to remove
+    //@params: View view
+    //@pre condition: Class is inside the view
+    //@post condition: Class is removed from the view and array
     public void removeClassHandler(View view) {
         int positionForView = classesListView.getPositionForView(view);
         classesArray.remove(positionForView);
@@ -332,9 +371,14 @@ public class AddCollabActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    // Interface function for ASYNC HTTP request from GetCollabsData.java
-    // If collaboration is successfully added to the database, screen will close
-    // If failed to add, will show error message to user
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetCollabsData.java
+    //If collaboration is successfully added to the database, screen will close
+    //If failed to add, will show error message to user
+    //@params: [Boolean success]
+    //@pre condition: Collaboration is not added to the database
+    //@post condition: Collaboration is added to the database if success = 'true'
     @Override
     public void addCollabComplete (Boolean success) {
         if (success) {

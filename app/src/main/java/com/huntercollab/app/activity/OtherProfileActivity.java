@@ -64,6 +64,10 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
         skills = (TextView) findViewById(R.id.skillsList);
         classes = (TextView) findViewById(R.id.classesList);
 
+        //@author: Hugh Leow
+        //@brief: User can send another user a direct message from here
+        //@pre condition: User is viewing profile page of another user
+        //@post condition: User is sent to a messaging screen for direct messaging between them and the user they are viewing
         sendUserMessage = (Button) findViewById(R.id.send_message_to_user);
         sendUserMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +82,8 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
         if (currentUser.equals(memberUsername))
             sendUserMessage.setVisibility(View.INVISIBLE);
 
+        //@author: Hugh Leow
+        //@brief: Used for API call to retrieve user information from the database
         userDetails = new GetUserData(getApplicationContext(), instance, instance, instance);
         userDetails.getOtherUserData(memberUsername);
     }
@@ -89,9 +95,20 @@ public class OtherProfileActivity extends AppCompatActivity implements Interface
 
     }
 
-    // Interface function for ASYNC HTTP request from GetUserData.java
-    // If information is successfully received from the database, populate the screen with user information
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function for ASYNC HTTP request from GetUserData.java
+    //If information is successfully received from the database, populate the screen with user information
+    //Name
+    //Github (converted into a link)
+    //LinkedIn (converted into a link)
+    //Classes
+    //Skills
+    //Profile Picture (using Picasso)
     //See: GetUserData.java
+    //@params: [Boolean success]
+    //@pre condition: Profile data not retrieved for the profile being viewed
+    //@post condition: Profile data retrieved if success = 'true'
     @Override
     public void downloadProfileComplete(Boolean success) {
         if (success) {

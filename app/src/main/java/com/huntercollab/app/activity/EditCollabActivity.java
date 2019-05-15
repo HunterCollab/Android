@@ -18,6 +18,10 @@ public class EditCollabActivity extends AppCompatActivity implements EditCollabT
     private int size = 0;
     public String collabId = "";
 
+    //@author: Hugh Leow
+    //@brief:
+    //Fragments built on this activity based on key values from previous activity/fragment (CollabDetailActivity.java / CollabDetailFragment.java)
+    //See: Associated 'fragment' files
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,15 +64,21 @@ public class EditCollabActivity extends AppCompatActivity implements EditCollabT
 
     }
 
-    // Returns collabId
-    // used in the fragment(s) to edit the correct collaboration
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function
+    //Used in the fragment(s) to edit the correct collaboration (using collab id)
+    //@return: collaboration id string
     @Override
     public String onDataPass() {
         return collabId;
     }
 
-    // Returns size of collab
-    // Used in "edit size of fragment" for error checking
+    //@author: Hugh Leow
+    //@brief:
+    //Interface function
+    //Used in "edit size of fragment" for error checking
+    //@return: size of collaboration int
     @Override
     public int onSizePass() {
         return size;
