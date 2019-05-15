@@ -1,40 +1,63 @@
-# FrontEnd
-
-HOW TO WORK ON THIS REPO: (replace name with you name)
-
-
-First, clone the repo using the following command "git clone https://github.com/csci49900Gather/FrontEnd.git"
-
-Now type the command "git status", it should say you are on branch master. DO NOT GIT PUSH OR COMMIT ON THE MASTER BRANCH!
-
-Branch off the master branch by typing "git branch nameBranch"
-
-Now type "git status", it should still say that you are on the master branch. To start working on your branch, you need to type "git checkout nameBranch"
+#ANDROID FRONTEND  
+##Table of Contents (Search by ex: 1a, 2a, 5ai, etc)  
+##Activities  
+AddCollabActivity.java (Add collaboration screen)  
+CollabDetailActivity.java (Collab detail screen [holds fragments])  
+CollabListActivity.java ('Home' screen with collab feed)  
+ConversationsActivity.java (List of active conversations screen)  
+EditCollabActivity.java (Edit collaboration screen [holds fragments])  
+EditCollabClassesActivity.java (Edit collaboration classes screen)  
+EditCollabSkillsActivity.java (Edit collaboration skills screen)  
+EditProfileActivity.java (Edit profile activity [holds fragments]  
+LoginActivity.java (Login screen)  
+MessagingActivity.java (Messaging screen)  
+OtherProfileActivity.java (Viewing other member profiles screen)  
+ProfileActivity.java (Viewing user's own profile screen)  
+RegisterActivity.java (Register screen)  
+UserClassesActivity.java (Editing user's own classes screen)  
+UserSkillsActivity.java (Editing user's own skills screen)  
+ViewMembersOfCollabActivity.java (Viewing members of a collaboration)  
   
-Now type "git status", it should say that you are on the nameBranch.
+##Adapters  
+AutoCompleteAdapter.java (Used for autocomplete when user enters skills and classes for their profile or collabs)  
+ConversationAdapter.java (Used for list of conversations)  
+MessagesAdapter.java (Used for messaging)  
+UserListAdapter.java (Used for editing skills and classes)  
+ViewMembersAdapter.java (Used to view members of a collaboration)  
   
+##Config  
+GlobalConfig.java (Used for base URL, avoid typos)  
   
+##Fragments  
+CollabDetailFragment.java (View all collaboration details, buttons, etc.)  
+EditCollabDescripFragment.java (Edit collaboration description)  
+EditCollabEndFragment.java (Edit collaboration end date)  
+EditCollabLocationFragment.java (Edit collaboration location)  
+EditCollabSizeFragment.java (Edit collaboration size)  
+EditCollabStartFragment.java (Edit collaboration start date/time)  
+EditCollabTitleFragment.java (Edit collaboration title)  
+EditGithubFragment.java (Edit user Github link)  
+EditLinkedInFragment.java (Edit user LinkedIn link)  
+EditNameFragment.java (Edit user name)  
   
-You can commit all changes using the command "git commit --all --message "Commit message""
-That only does a local commit.
-To push your changes to the actual github server, type "git push -u origin nameBranch" BUT you DON'T need to do it, just keep your branch local to your machine.
-
-DO NOT PUSH TO MASTER, DO NOT WORK ON THE MASTER, DO NOT COMMIT TO MASTER!!!
-
-
--------------------------------------------------------------------------------------------------------------------
-Please consult Ram/Edwin before doing any of the following if it's your first time because it might screw things up:
-
-If you finished a feature and tested it completely, you can do the following to merge update the master branch:
-
-First, update all your master branch to the latest version the remote server has by running "git remote update", "git checkout master", "git pull".
-
-Now, use "git checkout nameBranch" to switch to your branch and while on your branch, run the command "git rebase master" --> 
-
-This will "rebase" your branch. i.e. get the lastest version of the master branch and re-add all your changes onto it. You will have code conflicts after this, so you have to fix them and test the app again and make sure its working before doing the following:
-
-So now your branch is rebased to the latest master branch code and you fixed all the conflicts and after testing, everything is working.
+##Network.loopjtasks  
+###Folder: realtime  
+RealtimeAsync.java (Real time messaging ASYNC)  
+RMSProtocol.java (Real time messaging protocol)  
+CollabModel.java (Used to build collaboration objects)  
+DoClassSearch.java (Used for autocomplete class search)  
+DoLogin.java (Used for network/API calls to login to the app)  
+DoRegister.java (Used for network/API calls to register an account)  
+DoSkillSearch.java (Used for autocomplete skill search)  
+GetCollabsData.java (Used for network/API calls to retrieve and add collaboration data)  
+GetUserData.java (Used for network/API calls to retrieve user data)  
+JoinDropCollab.java (Used for network/API calls to join, leave, and delete collaborations)  
+MessageModel.java (Used to create Message objects)  
+MessagingAPI.java (Used for network/API calls for messaging)  
+SetUserData.java  
+UpdateCollabData.java  
   
-You can finally run "git checkout master" to change to the master branch and then run "git merge nameBranch" on the master branch to merge the code. Once that's done, run "git push -u origin master" to publish the changes to the remote server.
+##Utils  
+GeneralTools.java (General tools used throughout the application)  
+Interfaces.java (Interfaces for GetUserData.java)  
 
-https://hackernoon.com/git-merge-vs-rebase-whats-the-diff-76413c117333
