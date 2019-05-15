@@ -57,7 +57,7 @@ JoinDropCollab.java (Used for network/API calls to join, leave, and delete colla
 MessageModel.java (Used to create Message objects)  
 MessagingAPI.java (Used for network/API calls for messaging)  
 SetUserData.java (Used to update user information)  
-UpdateCollabData.java  (Used to update collaboration information)  :wq
+UpdateCollabData.java  (Used to update collaboration information)  
 
   
 ## Utils  
