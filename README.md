@@ -56,8 +56,9 @@ GetUserData.java (Used for network/API calls to retrieve user data)
 JoinDropCollab.java (Used for network/API calls to join, leave, and delete collaborations)  
 MessageModel.java (Used to create Message objects)  
 MessagingAPI.java (Used for network/API calls for messaging)  
-SetUserData.java  
-UpdateCollabData.java  
+SetUserData.java (Used to update user information)  
+UpdateCollabData.java  (Used to update collaboration information)  :wq
+
   
 ## Utils  
 GeneralTools.java (General tools used throughout the application)  
