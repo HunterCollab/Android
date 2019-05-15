@@ -1,5 +1,5 @@
 # ANDROID FRONTEND  
-## Table of Contents (Search by ex: 1a, 2a, 5ai, etc)  
+## Table of Contents  
 ## Activities  
 AddCollabActivity.java (Add collaboration screen)  
 CollabDetailActivity.java (Collab detail screen [holds fragments])  
