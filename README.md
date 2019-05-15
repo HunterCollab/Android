@@ -44,6 +44,8 @@ EditNameFragment.java (Edit user name)
 ### Folder: realtime  
 RealtimeAsync.java (Real time messaging ASYNC)  
 RMSProtocol.java (Real time messaging protocol)  
+  
+### Not in folder:  
 CollabModel.java (Used to build collaboration objects)  
 DoClassSearch.java (Used for autocomplete class search)  
 DoLogin.java (Used for network/API calls to login to the app)  
