@@ -1,6 +1,6 @@
-#ANDROID FRONTEND  
-##Table of Contents (Search by ex: 1a, 2a, 5ai, etc)  
-##Activities  
+# ANDROID FRONTEND  
+## Table of Contents (Search by ex: 1a, 2a, 5ai, etc)  
+## Activities  
 AddCollabActivity.java (Add collaboration screen)  
 CollabDetailActivity.java (Collab detail screen [holds fragments])  
 CollabListActivity.java ('Home' screen with collab feed)  
@@ -18,17 +18,17 @@ UserClassesActivity.java (Editing user's own classes screen)
 UserSkillsActivity.java (Editing user's own skills screen)  
 ViewMembersOfCollabActivity.java (Viewing members of a collaboration)  
   
-##Adapters  
+## Adapters  
 AutoCompleteAdapter.java (Used for autocomplete when user enters skills and classes for their profile or collabs)  
 ConversationAdapter.java (Used for list of conversations)  
 MessagesAdapter.java (Used for messaging)  
 UserListAdapter.java (Used for editing skills and classes)  
 ViewMembersAdapter.java (Used to view members of a collaboration)  
   
-##Config  
+## Config  
 GlobalConfig.java (Used for base URL, avoid typos)  
   
-##Fragments  
+## Fragments  
 CollabDetailFragment.java (View all collaboration details, buttons, etc.)  
 EditCollabDescripFragment.java (Edit collaboration description)  
 EditCollabEndFragment.java (Edit collaboration end date)  
@@ -40,8 +40,8 @@ EditGithubFragment.java (Edit user Github link)
 EditLinkedInFragment.java (Edit user LinkedIn link)  
 EditNameFragment.java (Edit user name)  
   
-##Network.loopjtasks  
-###Folder: realtime  
+## Network.loopjtasks  
+### Folder: realtime  
 RealtimeAsync.java (Real time messaging ASYNC)  
 RMSProtocol.java (Real time messaging protocol)  
 CollabModel.java (Used to build collaboration objects)  
@@ -57,7 +57,7 @@ MessagingAPI.java (Used for network/API calls for messaging)
 SetUserData.java  
 UpdateCollabData.java  
   
-##Utils  
+## Utils  
 GeneralTools.java (General tools used throughout the application)  
 Interfaces.java (Interfaces for GetUserData.java)  
 
