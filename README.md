@@ -1,4 +1,6 @@
 # ANDROID FRONTEND  
+## Import into Android Studio to run program
+
 ## Table of Contents  
 ## Activities  
 AddCollabActivity.java (Add collaboration screen)  
