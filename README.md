@@ -1,7 +1,7 @@
 # ANDROID FRONTEND  
 Import into Android Studio to run program
 
-## Table of Contents  
+## Table of Contents  (app --> src/main --> java/com/huntercollab/app)
 ## Activities  
 AddCollabActivity.java (Add collaboration screen)  
 CollabDetailActivity.java (Collab detail screen [holds fragments])  
