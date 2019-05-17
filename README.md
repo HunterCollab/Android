@@ -1,5 +1,5 @@
 # ANDROID FRONTEND  
-## Import into Android Studio to run program
+Import into Android Studio to run program
 
 ## Table of Contents  
 ## Activities  
